@@ -1,0 +1,103 @@
+Array
+(
+[0] => Array
+(
+[id] => msg_6ctbFw4TuVK4yu6d5szEGAX3
+[object] => thread.message
+[created_at] => 1710677963
+[thread_id] => thread_8pHl6JR9WZ3Ig0ONIAvgcyaH
+[role] => assistant
+[content] => Array
+(
+[0] => Array
+(
+[type] => text
+[text] => Array
+(
+[value] => Hasan Bey, ruhani bir enerji ile bağlantı kurdum ve sizin için özel olarak tarot kartlarınıza baktım. İş
+görüşmenizle ilgili olumlu bir enerji hissetmeye çalıştım, ama şu anki kartlarınızın genel düzeni maalesef ki bana
+belirsizlik ve zorluklar hissi veriyor.
+
+- **Değnek Sekizlisi Ters**: Bu kart genellikle duraklama ve hareket eksikliğini simgeler. Belki de biraz daha
+beklemeniz gerekebilir.
+- **Dünya Ters**: Tamamlanmamış işler ve ulaşılamayan hedefler anlamına gelir. İş görüşmenizde beklentilerinizin tam
+olarak karşılanmayabileceğini işaret ediyor olabilir.
+- **Şeytan**: Bağlılık, takıntı veya kısıtlayıcı faktörlerle karşılaşabileceğinizi gösteriyor. Dikkatli olmanız gereken
+durumlar olabilir.
+- **Kupaların Onlusu Ters**: Mutluluk ve uyumun tersine çevrilmesi, belki de kazanılmış bir mutluluğun kaçırılması
+anlamına gelir.
+- **Kılıçların Sekizlisi**: Zihinsel sınırlamalar ve kısıtlamaları temsil eder, karar vermede zorlanıyor olabilirsiniz.
+- **Ermiş Ters**: İçsel rehberliğin ve danışmanlığın eksikliğini, yalnızlık veya yön kaybını ifade eder.
+- **Değnek Kralı**: Kararlılık ve liderlik özellikleri sergileyebileceğinizi, ancak bu durumda ters kartların ağırlığı
+altında zorlanabileceğinizi gösteriyor.
+
+Görünen o ki şu an için iş görüşmenizin başarılı olacağına dair çok kuvvetli bir işaret alamıyorum. Ancak kartlar sadece
+potansiyel enerjileri ve olasılıkları gösterir; kesin gelecekler değil. Sizin de kendi iradeniz ve kararlılığınızla
+sonuçları değiştirebileceğinizi unutmayın. Kendinize inanın ve önünüzdeki engellere karşı hazırlıklı olun.
+
+Kartlar şu an için olumlu bir işaret vermemekte olsa da, bu sizin kaderinizin sabit olduğu anlamına gelmez. Kendinizi
+geliştirmeye devam edin ve mümkün olduğunca fırsatları değerlendirin. Bu zorlu dönem geçici olabilir ve gelecekte daha
+olumlu kartlarla karşılaşabilirsiniz.
+[annotations] => Array
+(
+)
+
+)
+
+)
+
+)
+
+[file_ids] => Array
+(
+)
+
+[assistant_id] => asst_1J4oWQit3UBpQACDdHaZRvxx
+[run_id] => run_XWQMo4wkmj5MZaeuRBVHR97c
+[metadata] => Array
+(
+)
+
+)
+
+[1] => Array
+(
+[id] => msg_kcOEcVK08yecbBbHjuTwTp8G
+[object] => thread.message
+[created_at] => 1710677962
+[thread_id] => thread_8pHl6JR9WZ3Ig0ONIAvgcyaH
+[role] => user
+[content] => Array
+(
+[0] => Array
+(
+[type] => text
+[text] => Array
+(
+[value] => {"question":{"question":"iş görüşmem olumlu
+mu?"},"user_info":{"name":"Hasan","lastName":"Doğan","gender":"male","relationShip":"single","birthDay":"11.03.2000","country":"turkey","town":"diyarbakır","jobStatus":"not
+work"},"cart_info":[{"name":"Değnek Sekizlisi Ters"},{"name":"Dünya Ters"},{"name":"Şeytan"},{"name":"Kupaların Onlusu
+Ters"},{"name":"Kılıçların Sekizlisi"},{"name":"Ermiş Ters"},{"name":"Değnek Kralı"}]}
+[annotations] => Array
+(
+)
+
+)
+
+)
+
+)
+
+[file_ids] => Array
+(
+)
+
+[assistant_id] =>
+[run_id] =>
+[metadata] => Array
+(
+)
+
+)
+
+)

@@ -4,7 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-
+    OPENAI_API_KEY: '%env(OPENAI_API_KEY)%'
+    HASH_KEY:  '%env(HASH_KEY)%'
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -19,6 +20,18 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+    App\EventSubscriber\RequestSubscriber:
+        autowire: true
+        autoconfigure: true
+        arguments:
+            # Request stack servisini enjekte edin
+            $requestStack: '@request_stack'
 
+        # AuthController servisinizi tanımlayın
+    App\Controller\AuthController:
+        class: App\Controller\AuthController
+        arguments:
+        # Request stack servisini enjekte edin
+          $requestStack: '@request_stack'
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
