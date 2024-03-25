@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  falfal_database:
+    image: mysql:8.1
+    container_name: falfal_database
+    environment:
+      MYSQL_DATABASE: 'app'
+      MYSQL_PASSWORD: 'root'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+    command: '--default-authentication-plugin=mysql_native_password'
+    networks:
+      - falfal_network
+
+  falfal_webserver:
+      build: ./nginx/
+      restart: always
+      container_name: falfal_webserver
+      ports:
+        - "80:80"
+      volumes:
+        - ../:/var/www/html/symfony
+      links:
+        - falfal_database
+      networks:
+        - falfal_network
+
+
+
+networks:
+  falfal_network:
+    driver: bridge
+
