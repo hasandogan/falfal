@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\userAuth;
+use App\Entity\UserLimit;
 use Doctrine\ORM\EntityManagerInterface;
 use Predis\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AuthController extends AbstractController
 {
     const HASH_KEY = "05414261116";
-
+    const TAROT_LIMIT = 2;
     private $requestStack;
 
     public function __construct(RequestStack $requestStack)
@@ -56,6 +57,12 @@ class AuthController extends AbstractController
             $user->setName($content->name);
             $user->setLastName($content->lastName);
             $entityManager->persist($user);
+            $entityManager->flush();
+
+            $userLimit = new UserLimit();
+            $userLimit->setUser($user->getId());
+            $userLimit->setTarotFortuneLimit(self::TAROT_LIMIT);
+            $entityManager->persist($userLimit);
             $entityManager->flush();
         }catch (\Exception $exception){
             $exceptionArray = [
