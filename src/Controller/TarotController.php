@@ -176,7 +176,6 @@ class TarotController extends AbstractController
         }
         $process = $entityManager->getRepository(Process::class)->findOneBy(['processId' => '65f6f82209acb']);
         $tarotFall = $this->getTarotfall($entityManager,$process->getFortuneId());
-        dd($tarotFall);
 
 
         return $this->json($process);

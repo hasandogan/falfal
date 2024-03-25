@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Entity\User;
+use App\Entity\UserLimit;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,6 +13,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class AuthenticationService
 {
+    const TAROT_LIMIT = 2;
 
     private EntityManagerInterface $entityManager;
     private ValidatorInterface $validator;
@@ -35,6 +37,16 @@ class AuthenticationService
         $entity->setPassword($this->userPasswordHasher->hashPassword($entity, $requestBody['password']));
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
+        $this->createUserLimit($entity);
         return $entity;
+    }
+
+    public function createUserLimit($user)
+    {
+        $entity = new UserLimit();
+        $entity->setUser($user->getId());
+        $entity->setTarotFortuneLimit(self::TAROT_LIMIT);
+        $this->entityManager->persist($entity);
+        $this->entityManager->flush();
     }
 }
