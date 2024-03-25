@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\UniqueConstraint;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity]
 #[UniqueConstraint(name: "email", columns: ["email"])]
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -20,7 +23,7 @@ class User
     private string $name;
     #[ORM\Column(length: 255)]
     private string $lastName;
-    #[ORM\Column(length: 255,nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     private string|null $birthTime = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -40,6 +43,15 @@ class User
 
     #[ORM\Column(length: 255, nullable: true)]
     private string|null $gender = null;
+
+    #[ORM\Column(type: 'json')]
+    private $roles = [];
+
+    #[ORM\Column(type: 'string')]
+    private $password;
+
+    #[ORM\Column(type: 'boolean')]
+    private $isValid = 0;
 
     public function getId(): int
     {
@@ -152,4 +164,31 @@ class User
     }
 
 
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);    }
+
+    public function eraseCredentials(): void
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
 }
