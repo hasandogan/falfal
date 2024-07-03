@@ -19,7 +19,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class AuthController extends AbstractController
 {
     const HASH_KEY = "05414261116";
-    const TAROT_LIMIT = 2;
     private $requestStack;
 
     public function __construct(RequestStack $requestStack)

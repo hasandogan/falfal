@@ -20,13 +20,6 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
-    App\EventSubscriber\RequestSubscriber:
-        autowire: true
-        autoconfigure: true
-        arguments:
-            # Request stack servisini enjekte edin
-            $requestStack: '@request_stack'
-
         # AuthController servisinizi tanımlayın
     App\Controller\AuthController:
         class: App\Controller\AuthController
