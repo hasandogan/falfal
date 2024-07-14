@@ -18,6 +18,9 @@ class userTarotFortune
     #[ORM\Column(type:'json')]
     private string $fortune;
 
+    #[ORM\Column(type:'text')]
+    private string $context;
+
     public function getId(): int
     {
         return $this->id;
@@ -48,6 +51,14 @@ class userTarotFortune
         $this->fortune = $fortune;
     }
 
+    public function getContext(): string
+    {
+        return $this->context;
+    }
 
+    public function setContext(string $context): void
+    {
+        $this->context = $context;
+    }
 
 }

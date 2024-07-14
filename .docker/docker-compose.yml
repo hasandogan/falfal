@@ -29,7 +29,24 @@ services:
       networks:
         - falfal_network
 
+  redis:
+    container_name: container_redis
+    image: redis:alpine
+    ports:
+      - "6379:6379"
 
+  rabbit:
+    container_name: container_rabbit
+    hostname: rabbit
+    image: rabbitmq:3-management
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    volumes:
+      - ./.data/rabbitmq/:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
 
 networks:
   falfal_network:

@@ -3,23 +3,32 @@
 namespace App\Controller;
 
 use App\Entity\Process;
+use App\Entity\User;
 use App\Entity\userTarotFortune;
 use Doctrine\ORM\EntityManagerInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use OpenAI;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Attribute\AsController;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 
 #[AsController]
 class TarotController extends AbstractController
 {
+
+    public function __construct(JWTTokenManagerInterface $jwtManager, TokenStorageInterface $tokenStorage)
+    {
+        parent::__construct($jwtManager, $tokenStorage);
+    }
+
     const JSON_FILE = 'tarot.json';
 
-    public function getTarotReading(Request $request, EntityManagerInterface $entityManager,$processId)
+    public function getTarotReading(Request $request, EntityManagerInterface $entityManager, User $user)
     {
         $question = json_decode($request->getContent());
         $cardNumber = $this->getCardForFal();
@@ -30,9 +39,7 @@ class TarotController extends AbstractController
             $cardArray[] = $json['cards'][$number][$position[rand(0, 1)]];
 
         }
-        $client = new \Predis\Client();
-        $user = $client->get($request->headers->get('authorization'));
-        $this->sendOpenAi($cardArray, $question, json_decode($user), $entityManager,$processId);
+       return $this->sendOpenAi($cardArray, $question, $user, $entityManager);
     }
 
 
@@ -48,24 +55,28 @@ class TarotController extends AbstractController
         return $array;
     }
 
-    protected function sendOpenAi($cards, $question, $user, $entityManager,$processId)
+    protected function sendOpenAi($cards, $question, $user, $entityManager)
     {
-
+        /**
+         * @var User $user
+         */
         $createData = [
             'question' => $question,
             'user_info' => [
-                'name' => $user->name,
-                'lastName' => $user->lastName,
-                'gender' => $user->gender,
-                'relationShip' => $user->relationShip,
-                'birthDay' => $user->birthTime,
-                'country' => $user->country,
-                'town' => $user->town,
-                'jobStatus' => $user->jobStatus
+                'name' => $user->getName(),
+                'lastName' => $user->getLastName(),
+                'gender' => $user->getGender(),
+                'relationShip' => $user->getRelationShip(),
+                'birthDay' => $user->getBirthTime(),
+                'country' => $user->getCountry(),
+                'town' => $user->getCountry(),
+                'jobStatus' => $user->getJobStatus()
             ],
             'cart_info' => $cards
         ];
-        $yourApiKey = $this->getParameter('OPENAI_API_KEY');
+        // envden alamadım amk
+        $yourApiKey = "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";
+
         $client = OpenAI::client($yourApiKey);
 
         $response = $client->threads()->createAndRun(
@@ -74,7 +85,8 @@ class TarotController extends AbstractController
                 'model' => 'gpt-4-1106-preview',
                 'instructions' => 'Sen bir tarot falcısısın, sana gelen datalar ile tarot falı bak, 
                 bir medyum gibi davran,  sana kullanıcı ile ilgili verdiğim datayı yorum yapamk için kullan,
-                 kartların geneli poizitif ise sorunun cevabının evet olacağını ve rastgele bir sürede gerçekleşceğini söyle,',
+                kartların geneli poizitif ise sorunun cevabının evet olacağını ve rastgele bir sürede gerçekleşceğini söyle
+                örneğin 3 ay içerisinde veya 6 ay içersinde veya 5 vakt, 10 vakit ,3 vakit gibi süre tahminlerinde bulun,',
                 'thread' => [
                     'messages' =>
                         [
@@ -95,20 +107,15 @@ class TarotController extends AbstractController
         if ($response->status == 'completed') {
             $messages = $client->threads()->messages()->list($response->threadId);
             $tarot = new userTarotFortune();
-            $tarot->setEmail($user->email);
+            $tarot->setEmail($user->getEmail());
             $tarot->setFortune(json_encode($messages['data'], JSON_PRETTY_PRINT));
+            $tarot->setContext('tarot');
             $entityManager->persist($tarot);
-            $entityManager->flush();
-            $process = new Process();
-            $process->setProcessId($processId);
-            $process->setProcessStatus($response->status);
-            $process->setProcessOwnMail($user->email);
-            $process->setFortuneId($tarot->getId());
-            $entityManager->persist($process);
             $entityManager->flush();
         } else {
             echo $response->status;
         }
+        return $tarot;
     }
 
     public function getTarotfall($entityManager, $id)
@@ -125,15 +132,18 @@ class TarotController extends AbstractController
 
     #[Route(
         name: 'tarotforemail',
-        path: 'api/tarots/email',
+        path: 'api/tarots/{email}',
         methods: ['POST'],
     )]
     public function getTarotForEmail(Request $request, EntityManagerInterface $entityManager)
     {
-        $client = new \Predis\Client();
-        $user = $client->get($request->headers->get('authorization'));
-        $email = json_decode($user)->email;
-        $tarots = $entityManager->getRepository(userTarotFortune::class)->findBy(['email' => $email]);
+
+        $token = $request->headers->get('Authorization');
+        $user = $request->getContent();
+        if (!$token) {
+            return new JsonResponse(['message' => 'Güvenlik sebebiyle işlem yapılamadı'], JsonResponse::HTTP_BAD_REQUEST);
+        }
+        $tarots = $entityManager->getRepository(userTarotFortune::class)->findBy(['email' => json_decode($user)->email]);
         $fortunes = [];
         foreach ($tarots as $tarot) {
             $fortunes[] = [
@@ -141,6 +151,7 @@ class TarotController extends AbstractController
                 'fortune' => json_decode($tarot->getFortune())[0]->content[0]->text->value
             ];
         }
+
         return new JsonResponse($fortunes);
     }
 
@@ -151,10 +162,13 @@ class TarotController extends AbstractController
     )]
     public function getTarotForUserLast(Request $request, EntityManagerInterface $entityManager)
     {
-        $client = new \Predis\Client();
-        $user = $client->get($request->headers->get('authorization'));
-        $email = json_decode($user)->email;
-        $tarots = $entityManager->getRepository(userTarotFortune::class)->findOneBy(['email' => $email], ['id' => 'desc']);
+        $token = $request->headers->get('Authorization');
+        $user = $request->getContent();
+        if (!$token) {
+            return new JsonResponse(['message' => 'Güvenlik sebebiyle işlem yapılamadı'], JsonResponse::HTTP_BAD_REQUEST);
+        }
+
+        $tarots = $entityManager->getRepository(userTarotFortune::class)->findOneBy(['email' => json_decode($user)->email], ['id' => 'desc']);
         $fortunes = [
             'id' => $tarots->getId(),
             'fortune' => json_decode($tarots->getFortune())[0]->content[0]->text->value
@@ -168,17 +182,24 @@ class TarotController extends AbstractController
         path: 'api/process/{fortune}',
         methods: ['POST'],
     )]
-    public function startProcess(Request $request, EntityManagerInterface $entityManager, string $fortune)
+    public function startProcess(Request $request, EntityManagerInterface $entityManager, string $fortune,SerializerInterface $serializer)
     {
-        $processId = uniqid();
-        if ($fortune == 'tarot') {
-           // $this->getTarotReading($request, $entityManager,$processId);
+        $token = $request->headers->get('Authorization');
+        $user = $request->getContent();
+        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => json_decode($user)->email]);
+        if (!$token) {
+            return new JsonResponse(['message' => 'Güvenlik sebebiyle işlem yapılamadı'], JsonResponse::HTTP_BAD_REQUEST);
         }
-        $process = $entityManager->getRepository(Process::class)->findOneBy(['processId' => '65f6f82209acb']);
-        $tarotFall = $this->getTarotfall($entityManager,$process->getFortuneId());
-
-
-        return $this->json($process);
+        $verify = $this->verifyToken($token,$user);
+        if ($verify && $fortune == 'tarot') {
+         $tarot = $this->getTarotReading($request, $entityManager, $user);
+        }
+        $jsonData = $serializer->serialize($tarot, 'json');
+        return new JsonResponse([
+            'message' => 'Tarot Falınız hazırlanıyor',
+            'status' => 200,
+            'tarot_Id' => $tarot->getId()
+        ]);
     }
 
 }

@@ -5,7 +5,7 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     OPENAI_API_KEY: '%env(OPENAI_API_KEY)%'
-    HASH_KEY:  '%env(HASH_KEY)%'
+
 services:
 
     app.jwt_manager:
@@ -13,25 +13,24 @@ services:
         public: false
         arguments: [ '@lexik_jwt_authentication.jwt_manager' ]
 
-    # default configuration for services in *this* file
     _defaults:
-        autowire: true      # Automatically injects dependencies in your services.
-        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        autowire: true
+        autoconfigure: true
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/'
         exclude:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
-        # AuthController servisinizi tanımlayın
+
+    App\Controller\:
+        resource: '../src/Controller'
+        autowire: true
+        autoconfigure: true
+        tags: [ 'controller.service_arguments' ]
+
+        # AuthController servisini açıkça tanımlayın ve tag ekleyin
     App\Controller\AuthController:
-        class: App\Controller\AuthController
-        arguments:
-        # Request stack servisini enjekte edin
-          $requestStack: '@request_stack'
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+        tags: [ 'controller.service_arguments' ]
 

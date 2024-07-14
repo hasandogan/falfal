@@ -10,11 +10,16 @@ import { ReactElement } from 'react';
 import { login } from '../../services/login/login';
 import { ILoginRequest } from '../../services/login/models/login/ILoginRequest';
 import Cookies from 'js-cookie';
+import { ToastContainer, toast } from 'react-toastify';
+import { useRouter } from 'next/router';
+
+
 
 const SignIn = () => {
   // Form verilerini saklayacak state'leri tanımlayın
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter();
 
   // Form gönderildiğinde çağrılacak fonksiyon
   const handleSubmit = async (event) => {
@@ -22,7 +27,7 @@ const SignIn = () => {
 
     // Kullanıcı giriş bilgilerini bir objeye toplayın
     const requestData: ILoginRequest = {
-      username: username,
+      email: email,
       password: password,
     };
 
@@ -30,23 +35,17 @@ const SignIn = () => {
       // API isteğini yapın
       const response = await login(requestData);
 
-      // API yanıtını konsola yazdırın (opsiyonel)
-      console.log('API Response:', response);
+      toast.success(response.message || 'Bilgiler doğru yönlendiriliyorsunuz', {
+        onClose: () => router.push('/home'),
+        autoClose: 5000,
+      });
 
-      // Başarılı işlem mesajını gösterin (opsiyonel)
-      alert('Giriş başarıyla yapıldı.');
-
-      // Formu sıfırlayın veya diğer işlemleri yapın (opsiyonel)
-      setUsername('');
+      setEmail('');
       setPassword('');
 
     } catch (error) {
-
-      // Hata durumunda konsola yazdırın (opsiyonel)
       console.error('API Error:', error);
-
-      // Hata mesajını kullanıcıya gösterin (opsiyonel)
-      alert('Giriş sırasında bir hata oluştu.');
+      toast.error(error.message || 'Kullanıcı kaydı sırasında bir hata oluştu.');
     }
   };
 
@@ -57,12 +56,12 @@ const SignIn = () => {
           <h1>Sign in</h1>
           <Input
             type="text"
-            id="username"
-            name="username"
-            placeholder="Kullanıcı adınızı giriniz"
-            label="Kullanıcı Adı"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            id="email"
+            name="email"
+            placeholder="email adresinizi giriniz"
+            label="Email adresi"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <Input
             type="password"
