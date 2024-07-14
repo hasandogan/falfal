@@ -6,26 +6,27 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 export async function register(
-  request: IRegisterRequest
+    request: IRegisterRequest
 ): Promise<IApiResponse<IRegisterResponse>> {
   const client = createClient();
 
   const response = await client.post<IApiResponse<IRegisterResponse>>(
-    '/register',
-    request,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
+      '/register',
+      request,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
   );
-  const  token  = response.data;
+  const token = response.data; // Bu, IApiResponse<IRegisterResponse> türünde olacaktır
 
-  const setTokenCookie = (token) => {
-    Cookies.set('auth_token', token, { expires: 7, secure: true, sameSite: 'strict' });
+  const setTokenCookie = (token: IApiResponse<IRegisterResponse>) => {
+    Cookies.set('auth_token', token.token, { expires: 7, secure: true, sameSite: 'strict' });
   };
 
+  setTokenCookie(token);
+
   return response.data;
+
 }
-
-
