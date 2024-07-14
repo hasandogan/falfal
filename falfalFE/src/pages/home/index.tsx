@@ -9,10 +9,7 @@ const Home = () => {
   const router = useRouter();
 
   const getChar = async () => {
-    // Kullanıcının daha önce fal bakıp bakmadığını kontrol edin
-    // Bu örnekte statik bir kontrol kullanıyorum.
-    // Gerçek dünya uygulamasında bu veriyi API çağrısı ile almanız gerekebilir.
-    const userHasCheckedHoroscope = false; // Örneğin, API yanıtı burada kontrol edilecek
+    const userHasCheckedHoroscope = false;
     setHasCheckedHoroscope(userHasCheckedHoroscope);
   };
 
@@ -21,7 +18,7 @@ const Home = () => {
   }, []);
 
   const handleCheckHoroscope = () => {
-    router.push('/horoscope'); // Fal bakma ekranına yönlendirme
+    router.push('/horoscope');
   };
 
   return (

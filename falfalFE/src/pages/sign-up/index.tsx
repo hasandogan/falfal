@@ -10,10 +10,10 @@ import * as Styled from '../../styles/sign-up.styled';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ReactElement } from 'react';
-import { register } from '../../services/register/register'; // register fonksiyonunu import edin
-import { IRegisterRequest } from '../../services/register/models/register/IRegisterRequest'; // Kullanıcı giriş modelini import edin
+import { register } from '@/services/register/register'; // register fonksiyonunu import edin
+import { IRegisterRequest } from '@/services/register/models/register/IRegisterRequest'; // Kullanıcı giriş modelini import edin
 
-const SignIn = () => {
+const SignUp = () => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -123,6 +123,6 @@ const SignIn = () => {
   );
 };
 
-SignIn.getLayout = (page: ReactElement) => <SimpleLayout>{page}</SimpleLayout>;
+SignUp.getLayout = (page: ReactElement) => <SimpleLayout>{page}</SimpleLayout>;
 
-export default SignIn;
+export default SignUp;
