@@ -48,7 +48,6 @@ RUN ln -s /etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled/defau
 RUN sed -i "s/user  nginx;/user  www-data;/g" /etc/nginx/nginx.conf
 
 
-
 # Expose ports.
 EXPOSE 80
 #EXPOSE 443

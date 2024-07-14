@@ -43,7 +43,6 @@ class AuthController extends AbstractController
            $user = $authenticationService->createUser($request->toArray());
            $token = $this->jwtManager->create($user);
             $jsonData = $serializer->serialize($user, 'json');
-
             return new JsonResponse([
                 'message' => 'Kaydınız başarıyla tamamlandı! Falınıza bakabilmemiz için sadece bir adım kaldı. Şimdi içeriye girmeye hazırsınız.',
                 'status' => 200,
@@ -65,12 +64,10 @@ class AuthController extends AbstractController
     ]
     public function login(Request $request, AuthenticationService $authenticationService,SerializerInterface $serializer): JsonResponse
     {
-        // Kullanıcı bilgilerini request'ten al
         $data = json_decode($request->getContent(), true);
         $email = $data['email'] ?? null;
         $password = $data['password'] ?? null;
 
-        // Eğer e-posta veya şifre yoksa hata döndür
         if (!$email || !$password) {
             return new JsonResponse(['message' => 'E-posta veya şifre eksik'], JsonResponse::HTTP_BAD_REQUEST);
         }
@@ -105,9 +102,6 @@ class AuthController extends AbstractController
         if ($tokenValid === false) {
             return new JsonResponse(['error' => 'Unauthorized'], 401);
         }
-        // Kullanıcı profili bulunuyor.
-
-        // SerializerInterface kullanarak entity'i JSON formatına dönüştürme.
         $jsonData = $serializer->serialize($user, 'json');
 
         return new JsonResponse($jsonData, 200, [], true);
