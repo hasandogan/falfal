@@ -9,7 +9,6 @@ use App\Request\User\RegisterRequest;
 use App\Services\AuthenticationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
-use Predis\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +16,9 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 class AuthController extends AbstractController
 {
@@ -62,10 +64,13 @@ class AuthController extends AbstractController
         return null;
     }
 
-    #[Route('/api/login', name: 'app_login', methods: ['POST'])]
-    public function login(Request $request): JsonResponse
+    #[
+        Route('/api/login',
+        name: 'app_login',
+        methods: ['POST'])
+    ]
+    public function login(Request $request,AuthenticationService $authenticationService): JsonResponse
     {
-        dd($request->request->all());
         // Kullanıcı bilgilerini request'ten al
         $data = json_decode($request->getContent(), true);
         $email = $data['email'] ?? null;
@@ -76,19 +81,26 @@ class AuthController extends AbstractController
             return new JsonResponse(['message' => 'E-posta veya şifre eksik'], JsonResponse::HTTP_BAD_REQUEST);
         }
 
-        // Kullanıcıyı veritabanından bul
-        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['email' => $email]);
+        $user = $authenticationService->finduserAuth($email,$password);
 
-        // Eğer kullanıcı yoksa veya şifre doğrulanamazsa hata döndür
-        if (!$user || !$this->passwordEncoder->isPasswordValid($user, $password)) {
-            return new JsonResponse(['message' => 'Geçersiz e-posta veya şifre'], JsonResponse::HTTP_UNAUTHORIZED);
-        }
-
-        // JWT token oluştur
         $token = $this->jwtManager->create($user);
+        return new JsonResponse(['token' => $token,  'message' => 'Giriş başarılı'], JsonResponse::HTTP_OK);
+    }
 
-        // Başarılı giriş mesajı ve token'i döndür
-        return new JsonResponse(['token' => $token, 'message' => 'Giriş başarılı'], JsonResponse::HTTP_OK);
+    #[
+        Route('/api/profile/{id}',
+            name: 'app_login',
+            methods: ['POST'])
+    ]
+    public function profile(int $id,Request $request,AuthenticationService $authenticationService): JsonResponse
+    {
+        // to do buraya jwt kontrolü eklenmeli.
+        $user = $authenticationService->findUserProfile($id);
+
+        $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new
+        JsonEncoder()));
+        $json = $serializer->serialize($user, 'json');
+        return new JsonResponse($json);
     }
 
     public function getRequestStack(): RequestStack

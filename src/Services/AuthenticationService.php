@@ -61,6 +61,30 @@ class AuthenticationService
 
     }
 
+    public function finduserAuth($email,$password)
+    {
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+        if ($user == null) {
+            return throw new \Exception('Kullanıcı bulunamadı');
+        }
+        $this->userPasswordHasher->isPasswordValid($user, $password);
+        if (!$this->userPasswordHasher->isPasswordValid($user, $password)) {
+            return throw new \Exception('Şifre Doğru değil gibi görünüyor. Tekrar deneyin.');
+        }
+        return $user;
+
+    }
+
+    public function findUserProfile($id)
+    { // üst method ile birleştirilebilir.
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['id' => $id]);
+        if ($user == null) {
+            return throw new \Exception('Kullanıcı bulunamadı');
+        }
+        return $user;
+
+    }
+
     /**
      * Kullanıcıyı e-posta ve şifre ile doğrulayarak döndürür.
      *
