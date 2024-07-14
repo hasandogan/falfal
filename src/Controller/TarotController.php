@@ -172,7 +172,7 @@ class TarotController extends AbstractController
     {
         $processId = uniqid();
         if ($fortune == 'tarot') {
-           // $this->getTarotReading($request, $entityManager,$processId);
+           $this->getTarotReading($request, $entityManager,$processId);
         }
         $process = $entityManager->getRepository(Process::class)->findOneBy(['processId' => '65f6f82209acb']);
         $tarotFall = $this->getTarotfall($entityManager,$process->getFortuneId());

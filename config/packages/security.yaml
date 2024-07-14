@@ -25,6 +25,12 @@ security:
             pattern: ^/api/profile
             stateless: true
             security: false
+
+        tarots:
+            pattern: ^/api/tarots
+            stateless: true
+            security: false
+
         api:
             provider: app_user_provider
             pattern:   /api
@@ -35,4 +41,5 @@ security:
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/user, roles: ROLE_USER }
+        - { path: ^/api/tarots, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /api,       roles: IS_AUTHENTICATED_FULLY }
