@@ -53,5 +53,4 @@ RUN sed -i "s/user  nginx;/user  www-data;/g" /etc/nginx/nginx.conf
 EXPOSE 80
 #EXPOSE 443
 WORKDIR /var/www/html/symfony
-
 CMD service php8.2-fpm start && nginx -g "daemon off;"
