@@ -15,7 +15,7 @@
         "erdum/php-open-ai-assistant-sdk": "^1.0",
         "guzzlehttp/guzzle": "^7.8",
         "lexik/jwt-authentication-bundle": "^2.20",
-        "nelmio/cors-bundle": "^2.4",
+        "nelmio/cors-bundle": "^2.5",
         "openai-php/client": "^0.8.4",
         "openai-php/symfony": "^0.8.2",
         "phpdocumentor/reflection-docblock": "^5.3",

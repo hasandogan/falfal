@@ -53,6 +53,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isValid = 0;
 
+    private $role = ['ROLE_USER'];
+
     public function getId(): int
     {
         return $this->id;
@@ -191,4 +193,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->password = $password;
     }
+
 }
