@@ -1,4 +1,5 @@
 import { NextPage } from 'next';
+import { appWithTranslation } from 'next-i18next';
 import { AppProps } from 'next/app';
 import { ReactElement, ReactNode } from 'react';
 import '../styles/globals.css';
@@ -17,4 +18,4 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   return getLayout(<Component {...pageProps} />);
 };
 
-export default App;
+export default appWithTranslation(App);
