@@ -57,6 +57,8 @@ class TarotController extends AbstractController
 
     protected function sendOpenAi($cards, $question, $user, $entityManager)
     {
+        //todo burası kuyruğa alınacak messenger ile hallet
+        // command ile hallet ???
         /**
          * @var User $user
          */

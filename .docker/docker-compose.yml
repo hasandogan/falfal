@@ -40,8 +40,8 @@ services:
     hostname: rabbit
     image: rabbitmq:3-management
     environment:
-      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
-      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+      RABBITMQ_DEFAULT_USER: falfal
+      RABBITMQ_DEFAULT_PASS: falfal
     volumes:
       - ./.data/rabbitmq/:/var/lib/rabbitmq
     ports:
