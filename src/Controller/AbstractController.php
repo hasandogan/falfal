@@ -18,6 +18,9 @@ class AbstractController
         $this->tokenStorage = $tokenStorage;
     }
 
+    //todo: responselar ile ilgili metodlar yqz her yerde kullanılabilecek.
+    // error responseları ile ilgili succes ve error response metodları oluştur.
+    //exception durumlarını logla ve json response atsın
     public function getJwtManager(): JWTTokenManagerInterface
     {
         return $this->jwtManager;
@@ -36,25 +39,5 @@ class AbstractController
     public function setTokenStorage(TokenStorageInterface $tokenStorage): void
     {
         $this->tokenStorage = $tokenStorage;
-    }
-
-    public function verifyToken(string $token, UserInterface $user): bool
-    {
-        try {
-            // JWTUserToken nesnesini oluştururken $user parametresini geçirin
-            $jwtToken = new JWTUserToken(['ROLE_USER'], $user, $token);
-
-            // JWTManager ile token'i doğrulayın
-            $decodedToken = $this->jwtManager->decode($jwtToken);
-
-            if ($decodedToken['email'] !== $user->getEmail()) {
-                return false;
-            }
-
-            // Token doğrulaması başarılıysa devam edin
-            return true;
-        } catch (JWTDecodeFailureException $e) {
-            return false;
-        }
     }
 }

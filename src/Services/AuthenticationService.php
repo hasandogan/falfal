@@ -75,9 +75,9 @@ class AuthenticationService
 
     }
 
-    public function findUserProfile($id): array
+    public function findUserProfile($id): User
     { // üst method ile birleştirilebilir.
-        $user = $this->entityManager->getRepository(User::class)->findBy(['id' => $id]);
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['id' => $id]);
         if ($user == null) {
             return throw new \Exception('Kullanıcı bulunamadı');
         }
