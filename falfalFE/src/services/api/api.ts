@@ -24,6 +24,35 @@ export function withIpAddress(instance: AxiosInstance, ipAddress?: string) {
   return modifiedInstance;
 }
 
+// Cookie'den auth_token'i almak için yardımcı fonksiyon
+function getCookie(name: string) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop()?.split(';').shift();
+}
+
+// Axios örneğini oluşturun
+const apiClient = axios.create({
+  baseURL: process.env.API_BASE_URL || 'http://localhost:3000', // Base URL'i projenize göre ayarlayın
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+// Interceptor tanımlayın
+apiClient.interceptors.request.use(
+    (config) => {
+      const authToken = getCookie('auth_token'); // auth_token'i cookie'den al
+      if (authToken) {
+        config.headers['Authorization'] = `Bearer ${authToken}`;
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+);
+
 export function createClient() {
   let client = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,

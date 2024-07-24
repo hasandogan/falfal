@@ -31,11 +31,20 @@ const ProfileSave = () => {
         <Styled.ProfileWrapper>
           <h1>Profile</h1>
           <Input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="name"
+              label="Adınız"
+              value={profileData.name}
+              onChange={handleChange}
+          />
+          <Input
             type="text"
             id="email"
             name="email"
-            placeholder="Kullanıcı adınızı giriniz"
-            label="Kullanıcı Adı"
+            placeholder="email"
+            label="Email adresi"
             value={profileData.email}
             onChange={handleChange}
           />

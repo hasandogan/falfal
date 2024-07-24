@@ -1,7 +1,7 @@
 'use client';
 import { IProfileRequest } from '@/services/profile/models/profile/IProfileRequest';
-import { Profile } from '@/services/profile/profile';
-import { useState } from 'react';
+import { Profile, getProfile } from '@/services/profile/profile'; // GET isteği için ekleme
+import { useState, useEffect } from 'react';
 
 const ProfileLogic = () => {
   const initialForm: IProfileRequest = {
@@ -56,14 +56,29 @@ const ProfileLogic = () => {
       label: 'Yüksek Lisans ve Doktora',
     },
   ];
+
   const [profileData, setProfileData] = useState<IProfileRequest>(initialForm);
 
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const response = await getProfile(); // Profil verilerini GET isteği ile al
+        setProfileData(response.data); // Gelen veriyi profileData state'ine aktar
+      } catch (error) {
+        console.error('API Error:', error);
+      }
+    };
+
+    fetchProfileData();
+  }, []);
+
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+      e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setProfileData((prevState) => ({ ...prevState, [name]: value }));
   };
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
@@ -75,6 +90,7 @@ const ProfileLogic = () => {
       alert('Profil güncelleme sırasında bir hata oluştu.');
     }
   };
+
   return {
     handleChange,
     handleSubmit,
