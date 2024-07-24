@@ -10,8 +10,8 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { GetServerSideProps } from 'next/types';
 import DatePicker from '../../components/basic/Datepicker';
 import Select from '../../components/basic/Select';
+import ProfileLogic from '../../hooks/Profile.logic';
 import { parseCookies } from '../../utils/helpers/parseCookies';
-import useProfileLogic from './useProfileLogic';
 
 const ProfileSave = () => {
   const {
@@ -23,7 +23,7 @@ const ProfileSave = () => {
     employmentStatusOptions,
     hasChildrenOptions,
     educationLevelOptions,
-  } = useProfileLogic();
+  } = ProfileLogic();
 
   return (
     <Card type="vertical">

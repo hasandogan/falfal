@@ -4,12 +4,12 @@ import { ReactElement } from 'react';
 import Card from '../../components/advanced/Card';
 import Button from '../../components/basic/Button';
 import Input from '../../components/basic/Input';
+import SignInLogic from '../../hooks/SignIn.logic';
 import SimpleLayout from '../../layouts/SimpleLayout/SimpleLayout';
 import * as Styled from '../../styles/sign-in.styled';
-import useSignInLogic from './useSignInLogic';
 
 const SignIn = () => {
-  const { signInData, handleChange, handleSubmit } = useSignInLogic();
+  const { signInData, handleChange, handleSubmit } = SignInLogic();
   return (
     <Card type="vertical">
       <form onSubmit={handleSubmit}>

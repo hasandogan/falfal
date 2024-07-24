@@ -6,12 +6,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import Card from '../../components/advanced/Card';
 import Button from '../../components/basic/Button';
 import Input from '../../components/basic/Input';
+import SignUpLogic from '../../hooks/SignUp.logic';
 import SimpleLayout from '../../layouts/SimpleLayout/SimpleLayout';
 import * as Styled from '../../styles/sign-up.styled';
-import useSignUpLogic from './useSignUpLogic';
 
 const SignUp = () => {
-  const { signUpData, handleSubmit, handleChange } = useSignUpLogic();
+  const { signUpData, handleSubmit, handleChange } = SignUpLogic();
   return (
     <Card type="vertical">
       <ToastContainer />

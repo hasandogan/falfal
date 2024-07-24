@@ -1,8 +1,9 @@
+'use client';
+import { IProfileRequest } from '@/services/profile/models/profile/IProfileRequest';
+import { Profile } from '@/services/profile/profile';
 import { useState } from 'react';
-import { IProfileRequest } from '../../services/profile/models/profile/IProfileRequest';
-import { Profile } from '../../services/profile/profile';
 
-const useProfileLogic = () => {
+const ProfileLogic = () => {
   const initialForm: IProfileRequest = {
     email: '',
     name: '',
@@ -86,4 +87,4 @@ const useProfileLogic = () => {
   };
 };
 
-export default useProfileLogic;
+export default ProfileLogic;

@@ -1,11 +1,12 @@
+'use client';
+import { IRegisterRequest } from '@/services/register/models/register/IRegisterRequest';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import { IRegisterRequest } from '../../services/register/models/register/IRegisterRequest';
 
 import { Register } from '@/services/register/register';
 
-const useSignUpLogic = () => {
+const SignUpLogic = () => {
   const router = useRouter();
   const initialForm = {
     email: '',
@@ -50,4 +51,4 @@ const useSignUpLogic = () => {
   return { signUpData, handleSubmit, handleChange };
 };
 
-export default useSignUpLogic;
+export default SignUpLogic;

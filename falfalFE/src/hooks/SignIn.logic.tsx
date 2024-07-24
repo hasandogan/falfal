@@ -1,10 +1,11 @@
+'use client';
+import { Login } from '@/services/login/login';
+import { ILoginRequest } from '@/services/login/models/login/ILoginRequest';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import { Login } from '../../services/login/login';
-import { ILoginRequest } from '../../services/login/models/login/ILoginRequest';
 
-const useSignInLogic = () => {
+const SignInLogic = () => {
   const router = useRouter();
   const initialForm = {
     email: '',
@@ -43,4 +44,4 @@ const useSignInLogic = () => {
   };
 };
 
-export default useSignInLogic;
+export default SignInLogic;
