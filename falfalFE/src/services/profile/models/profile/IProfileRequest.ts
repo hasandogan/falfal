@@ -1,15 +1,16 @@
 export interface IProfileRequest {
-  name: string,
-  lastName: string,
-  email: string,
-  password: string,
-  relationship: string,
-  age: number,
-  gender: string,
-  kids: number,
-  birthdate: string,
-  birthtime: string,
-  job: string,
-  jobStatus: string,
-  education: string
+  email: string;
+  name: string;
+  lastName: string;
+  password: string;
+  maritalStatus: string;
+  age: string;
+  gender: string;
+  hasChildren: string;
+  birthDate: string;
+  birthTime: string;
+  employmentStatus: string;
+  educationLevel: string;
+  occupation: string;
+  city: string;
 }

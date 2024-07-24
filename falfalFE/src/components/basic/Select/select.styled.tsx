@@ -5,7 +5,7 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const Input = styled.input`
+const Select = styled.select`
   background: #091522;
   border: 2px solid #ffffff;
   border-radius: 44px;
@@ -25,4 +25,4 @@ const Input = styled.input`
   }
 `;
 
-export { Container, Input };
+export { Container, Select };

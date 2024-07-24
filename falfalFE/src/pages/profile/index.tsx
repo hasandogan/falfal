@@ -1,7 +1,5 @@
-import { IProfileRequest } from '@/services/profile/models/profile/IProfileRequest';
-import { Profile } from '@/services/profile/profile';
 import Link from 'next/link';
-import { ReactElement, useState } from 'react';
+import { ReactElement } from 'react';
 import Card from '../../components/advanced/Card';
 import Button from '../../components/basic/Button';
 import Input from '../../components/basic/Input';
@@ -10,82 +8,22 @@ import * as Styled from '../../styles/profile.styled';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { GetServerSideProps } from 'next/types';
+import DatePicker from '../../components/basic/Datepicker';
+import Select from '../../components/basic/Select';
 import { parseCookies } from '../../utils/helpers/parseCookies';
+import useProfileLogic from './useProfileLogic';
 
 const ProfileSave = () => {
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [password, setPassword] = useState('');
-  const [maritalStatus, setMaritalStatus] = useState<
-    'married' | 'single' | 'engaged' | 'widowed'
-  >('single');
-  const [age, setAge] = useState<number | ''>('');
-  const [gender, setGender] = useState<'male' | 'female' | 'prefer not to say'>(
-    'prefer not to say'
-  );
-  const [hasChildren, setHasChildren] = useState<'yes' | 'no'>('no');
-  const [birthDate, setBirthDate] = useState('');
-  const [birthTime, setBirthTime] = useState('');
-  const [employmentStatus, setEmploymentStatus] = useState<
-    'full-time' | 'part-time' | 'unemployed'
-  >('unemployed');
-  const [educationLevel, setEducationLevel] = useState<
-    | 'primary school'
-    | 'secondary school'
-    | 'high school'
-    | 'vocational school'
-    | 'university'
-    | 'master`s or doctoral'
-  >('primary school');
-  const [occupation, setOccupation] = useState('');
-  const [city, setCity] = useState('');
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    const requestData: IProfileRequest = {
-      email,
-      name,
-      lastName,
-      password,
-      maritalStatus,
-      age: age !== '' ? parseInt(age) : undefined,
-      gender,
-      hasChildren,
-      birthDate,
-      birthTime,
-      employmentStatus,
-      educationLevel,
-      occupation,
-      city,
-    };
-
-    try {
-      const response = await Profile(requestData);
-      console.log('API Response:', response);
-      alert('Profil başarıyla güncellendi.');
-
-      // Formu sıfırlamak için state'leri sıfırlayabilirsiniz
-      setEmail('');
-      setName('');
-      setLastName('');
-      setPassword('');
-      setMaritalStatus('single');
-      setAge('');
-      setGender('prefer not to say');
-      setHasChildren('no');
-      setBirthDate('');
-      setBirthTime('');
-      setEmploymentStatus('unemployed');
-      setEducationLevel('primary school');
-      setOccupation('');
-      setCity('');
-    } catch (error) {
-      console.error('API Error:', error);
-      alert('Profil güncelleme sırasında bir hata oluştu.');
-    }
-  };
+  const {
+    handleChange,
+    handleSubmit,
+    profileData,
+    maritalStatusOptions,
+    genderOptions,
+    employmentStatusOptions,
+    hasChildrenOptions,
+    educationLevelOptions,
+  } = useProfileLogic();
 
   return (
     <Card type="vertical">
@@ -98,8 +36,8 @@ const ProfileSave = () => {
             name="email"
             placeholder="Kullanıcı adınızı giriniz"
             label="Kullanıcı Adı"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={profileData.email}
+            onChange={handleChange}
           />
           <Input
             type="password"
@@ -107,26 +45,16 @@ const ProfileSave = () => {
             name="password"
             placeholder="Şifrenizi giriniz"
             label="Şifre"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={profileData.password}
+            onChange={handleChange}
           />
-          <Input
-            type="select"
+          <Select
             id="maritalStatus"
             name="maritalStatus"
             label="İlişki Durumu"
-            value={maritalStatus}
-            onChange={(e) =>
-              setMaritalStatus(
-                e.target.value as 'married' | 'single' | 'engaged' | 'widowed'
-              )
-            }
-            options={[
-              { value: 'married', label: 'Evli' },
-              { value: 'single', label: 'Bekar' },
-              { value: 'engaged', label: 'Nişanlı' },
-              { value: 'widowed', label: 'Dul' },
-            ]}
+            value={profileData.maritalStatus}
+            onChange={handleChange}
+            options={maritalStatusOptions}
           />
           <Input
             type="number"
@@ -134,46 +62,32 @@ const ProfileSave = () => {
             name="age"
             placeholder="Yaşınızı giriniz"
             label="Yaşınız"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
+            value={profileData.age}
+            onChange={handleChange}
           />
-          <Input
-            type="select"
+          <Select
             id="gender"
             name="gender"
             label="Cinsiyet"
-            value={gender}
-            onChange={(e) =>
-              setGender(
-                e.target.value as 'male' | 'female' | 'prefer not to say'
-              )
-            }
-            options={[
-              { value: 'male', label: 'Erkek' },
-              { value: 'female', label: 'Kadın' },
-              { value: 'prefer not to say', label: 'Belirtmek İstemiyorum' },
-            ]}
+            value={profileData.gender}
+            onChange={handleChange}
+            options={genderOptions}
           />
-          <Input
-            type="select"
+          <Select
             id="hasChildren"
             name="hasChildren"
             label="Çocuk Durumu"
-            value={hasChildren}
-            onChange={(e) => setHasChildren(e.target.value as 'yes' | 'no')}
-            options={[
-              { value: 'yes', label: 'Evet' },
-              { value: 'no', label: 'Hayır' },
-            ]}
+            onChange={handleChange}
+            value={profileData.hasChildren}
+            options={hasChildrenOptions}
           />
-          <Input
-            type="text"
+          <DatePicker
             id="birthDate"
             name="birthDate"
-            placeholder="Doğum tarihinizi giriniz"
+            placeholder="Doğum tarihiniz giriniz"
             label="Doğum Tarihi"
-            value={birthDate}
-            onChange={(e) => setBirthDate(e.target.value)}
+            value={profileData.birthDate}
+            onChange={handleChange}
           />
           <Input
             type="text"
@@ -181,54 +95,24 @@ const ProfileSave = () => {
             name="birthTime"
             placeholder="Doğum saatinizi giriniz"
             label="Doğum Saati"
-            value={birthTime}
-            onChange={(e) => setBirthTime(e.target.value)}
+            value={profileData.birthTime}
+            onChange={handleChange}
           />
-          <Input
-            type="select"
+          <Select
             id="employmentStatus"
             name="employmentStatus"
             label="İş Durumu"
-            value={employmentStatus}
-            onChange={(e) =>
-              setEmploymentStatus(
-                e.target.value as 'full-time' | 'part-time' | 'unemployed'
-              )
-            }
-            options={[
-              { value: 'full-time', label: 'Tam Zamanlı' },
-              { value: 'part-time', label: 'Yarı Zamanlı' },
-              { value: 'unemployed', label: 'Çalışmıyor' },
-            ]}
+            value={profileData.employmentStatus}
+            options={employmentStatusOptions}
+            onChange={handleChange}
           />
-          <Input
-            type="select"
+          <Select
             id="educationLevel"
             name="educationLevel"
             label="Eğitim Durumu"
-            value={educationLevel}
-            onChange={(e) =>
-              setEducationLevel(
-                e.target.value as
-                  | 'primary school'
-                  | 'secondary school'
-                  | 'high school'
-                  | 'vocational school'
-                  | 'university'
-                  | 'master`s or doctoral'
-              )
-            }
-            options={[
-              { value: 'primary school', label: 'İlköğretim' },
-              { value: 'secondary school', label: 'Orta Öğretim' },
-              { value: 'high school', label: 'Lise' },
-              { value: 'vocational school', label: 'Meslek Yüksek Okulu' },
-              { value: 'university', label: 'Üniversite' },
-              {
-                value: 'master`s or doctoral',
-                label: 'Yüksek Lisans ve Doktora',
-              },
-            ]}
+            value={profileData.educationLevel}
+            options={educationLevelOptions}
+            onChange={handleChange}
           />
           <Input
             type="text"
@@ -236,8 +120,8 @@ const ProfileSave = () => {
             name="occupation"
             placeholder="Mesleğinizi giriniz"
             label="Meslek"
-            value={occupation}
-            onChange={(e) => setOccupation(e.target.value)}
+            value={profileData.occupation}
+            onChange={handleChange}
           />
           <Input
             type="text"
@@ -245,8 +129,8 @@ const ProfileSave = () => {
             name="city"
             placeholder="Şehir bilginizi giriniz"
             label="Şehir"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
+            value={profileData.city}
+            onChange={handleChange}
           />
           <Button type="submit">Kaydet</Button>
           <div className="separator">

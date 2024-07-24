@@ -1,54 +1,15 @@
-import { useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { ReactElement } from 'react';
 import Card from '../../components/advanced/Card';
 import Button from '../../components/basic/Button';
 import Input from '../../components/basic/Input';
 import SimpleLayout from '../../layouts/SimpleLayout/SimpleLayout';
 import * as Styled from '../../styles/sign-in.styled';
-import Image from 'next/image';
-import Link from 'next/link';
-import { ReactElement } from 'react';
-import { login } from '../../services/login/login';
-import { ILoginRequest } from '../../services/login/models/login/ILoginRequest';
-import Cookies from 'js-cookie';
-import { ToastContainer, toast } from 'react-toastify';
-import { useRouter } from 'next/router';
-
-
+import useSignInLogic from './useSignInLogic';
 
 const SignIn = () => {
-  // Form verilerini saklayacak state'leri tanımlayın
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const router = useRouter();
-
-  // Form gönderildiğinde çağrılacak fonksiyon
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    // Kullanıcı giriş bilgilerini bir objeye toplayın
-    const requestData: ILoginRequest = {
-      email: email,
-      password: password,
-    };
-
-    try {
-      // API isteğini yapın
-      const response = await login(requestData);
-
-      toast.success(response.message || 'Bilgiler doğru yönlendiriliyorsunuz', {
-        onClose: () => router.push('/home'),
-        autoClose: 5000,
-      });
-
-      setEmail('');
-      setPassword('');
-
-    } catch (error) {
-      console.error('API Error:', error);
-      toast.error(error.message || 'Kullanıcı kaydı sırasında bir hata oluştu.');
-    }
-  };
-
+  const { signInData, handleChange, handleSubmit } = useSignInLogic();
   return (
     <Card type="vertical">
       <form onSubmit={handleSubmit}>
@@ -58,10 +19,10 @@ const SignIn = () => {
             type="text"
             id="email"
             name="email"
-            placeholder="email adresinizi giriniz"
+            placeholder="Email adresinizi giriniz"
             label="Email adresi"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={signInData.email}
+            onChange={handleChange}
           />
           <Input
             type="password"
@@ -69,10 +30,9 @@ const SignIn = () => {
             name="password"
             placeholder="Şifrenizi giriniz"
             label="Şifre"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={signInData.password}
+            onChange={handleChange}
           />
-          {/* Diğer giriş alanlarını buraya ekleyebilirsiniz */}
           <Button type="submit">Sign in</Button>
           <div className="seperator">
             <div className="seperator-text">or sign in using</div>

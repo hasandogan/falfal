@@ -1,6 +1,6 @@
+import React, { ReactNode } from 'react';
 import Header from '../../components/advanced/Header';
 import StickyBar from '../../components/advanced/StickyBar';
-import React, { ReactNode } from 'react';
 import TempMenu from '../../components/advanced/TempMenu';
 import * as Styled from './LoggedInLayout.styled';
 

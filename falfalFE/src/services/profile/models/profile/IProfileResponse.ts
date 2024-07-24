@@ -1,4 +1,5 @@
 // ILoginResponse.ts
-export interface IRegisterResponse {
+export interface IProfileResponse {
   // Yanıt verileri buraya eklenir
+  token: string;
 }

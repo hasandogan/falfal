@@ -2,9 +2,8 @@ import { createClient } from '../api/api';
 import { IApiResponse } from '../api/models/IApiResponse';
 import { ILoginRequest } from './models/login/ILoginRequest';
 import { ILoginResponse } from './models/login/ILoginResponse';
-import axios from 'axios';
 
-export async function login(
+export async function Login(
   request: ILoginRequest
 ): Promise<IApiResponse<ILoginResponse>> {
   const client = createClient();
