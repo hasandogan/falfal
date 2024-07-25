@@ -7,6 +7,7 @@ import Input from '../../components/basic/Input';
 import SignInLogic from '../../hooks/SignIn.logic';
 import SimpleLayout from '../../layouts/SimpleLayout/SimpleLayout';
 import * as Styled from '../../styles/sign-in.styled';
+import { ToastContainer } from 'react-toastify';
 
 const SignIn = () => {
   const { signInData, handleChange, handleSubmit } = SignInLogic();
@@ -47,6 +48,7 @@ const SignIn = () => {
           </Styled.AppleLogin>
         </Styled.SignInWrapper>
       </form>
+      <ToastContainer /> {/* ToastContainer burada eklenmiştir */}
       <Styled.ActionLink>
         Don’t have an account?
         <Link href={'/sign-up'}>Sign Up</Link>
