@@ -58,7 +58,7 @@ export function createClient() {
     baseURL: process.env.NEXT_PUBLIC_API_URL,
   });
 
-  client = withAuth(client, cookie.get('Token'));
+  client = withAuth(client, cookie.get('auth_token'));
 
   return client;
 }

@@ -24,7 +24,6 @@ const ProfileSave = () => {
     hasChildrenOptions,
     educationLevelOptions,
   } = ProfileLogic();
-
   return (
     <Card type="vertical">
       <form onSubmit={handleSubmit}>

@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Services\AuthenticationService;
 use Doctrine\ORM\EntityManagerInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Predis\Client;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -16,18 +18,40 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class ProfileController extends AbstractController
 {
-    #[\Symfony\Component\Routing\Annotation\Route('/api/profile/{id}', name: 'app_profil', methods: ['GET'])]
-    public function profile(int $id, Request $request, AuthenticationService $authenticationService, SerializerInterface $serializer): JsonResponse
+
+    protected JWTTokenManagerInterface $jwtManager;
+
+    public function __construct(JWTTokenManagerInterface $jwtManager)
     {
-        $user = $authenticationService->findUserProfile($id);
-        if ($this->getTokenStorage()->getToken()->getUser()->getId() != $user->getId()) {
-            //todo: exception return json
-            throw new \Exception("İnvalid user credentials");
+        $this->jwtManager = $jwtManager;
+    }
+
+    #[Route('/api/profile', name: 'app_profile', methods: ['GET'])]
+    public function profile(Request $request, AuthenticationService $authenticationService, SerializerInterface $serializer): JsonResponse
+    {
+        $token = $request->headers->get('Authorization');
+        if (!$token || strpos($token, 'Bearer ') !== 0) {
+            return new JsonResponse(['error' => 'Invalid token'], 401);
         }
 
-        $jsonData = $serializer->serialize($user, 'json');
+        $token = str_replace('Bearer ', '', $token);
 
-        return new JsonResponse($jsonData, 200, [], true);
+        try {
+            $data = $this->jwtManager->parse($token);
+            $userId = $data['email']; // Kullanıcı ID'sini token'dan alın
+
+            $user = $authenticationService->findUserProfile($userId);
+
+            if ($user === null) {
+                return new JsonResponse(['error' => 'User not found'], 404);
+            }
+
+            $jsonData = $serializer->serialize($user, 'json');
+            return new JsonResponse($jsonData, 200, [], true);
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            return new JsonResponse(['error' => 'Invalid token'], 401);
+        }
     }
 
     #[\Symfony\Component\Routing\Annotation\Route(
@@ -62,5 +86,6 @@ class ProfileController extends AbstractController
         return $this->json($user);
 
     }
+
 
 }
