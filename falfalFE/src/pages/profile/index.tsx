@@ -12,15 +12,16 @@ import DatePicker from '../../components/basic/Datepicker';
 import Select from '../../components/basic/Select';
 import ProfileLogic from '../../hooks/Profile.logic';
 import { parseCookies } from '../../utils/helpers/parseCookies';
+import {ToastContainer} from "react-toastify";
 
 const ProfileSave = () => {
   const {
     handleChange,
     handleSubmit,
     profileData,
-    maritalStatusOptions,
+    relationShipOptions,
     genderOptions,
-    employmentStatusOptions,
+    jobStatusOptions,
     hasChildrenOptions,
     educationLevelOptions,
   } = ProfileLogic();
@@ -57,21 +58,12 @@ const ProfileSave = () => {
             onChange={handleChange}
           />
           <Select
-            id="maritalStatus"
-            name="maritalStatus"
+            id="relationShip"
+            name="relationShip"
             label="İlişki Durumu"
-            value={profileData.maritalStatus}
+            value={profileData.relationShip}
             onChange={handleChange}
-            options={maritalStatusOptions}
-          />
-          <Input
-            type="number"
-            id="age"
-            name="age"
-            placeholder="Yaşınızı giriniz"
-            label="Yaşınız"
-            value={profileData.age}
-            onChange={handleChange}
+            options={relationShipOptions}
           />
           <Select
             id="gender"
@@ -107,11 +99,11 @@ const ProfileSave = () => {
             onChange={handleChange}
           />
           <Select
-            id="employmentStatus"
-            name="employmentStatus"
+            id="jobStatus"
+            name="jobStatus"
             label="İş Durumu"
-            value={profileData.employmentStatus}
-            options={employmentStatusOptions}
+            value={profileData.jobStatus}
+            options={jobStatusOptions}
             onChange={handleChange}
           />
           <Select
@@ -133,12 +125,21 @@ const ProfileSave = () => {
           />
           <Input
             type="text"
-            id="city"
-            name="city"
+            id="town"
+            name="town"
             placeholder="Şehir bilginizi giriniz"
             label="Şehir"
-            value={profileData.city}
+            value={profileData.town}
             onChange={handleChange}
+          />
+          <Input
+              type="text"
+              id="country"
+              name="country"
+              placeholder="Ülke bilginizi girini"
+              label="Ülke"
+              value={profileData.country}
+              onChange={handleChange}
           />
           <Button type="submit">Kaydet</Button>
           <div className="separator">
@@ -146,6 +147,7 @@ const ProfileSave = () => {
           </div>
         </Styled.ProfileWrapper>
       </form>
+      <ToastContainer /> {/* ToastContainer burada eklenmiştir */}
       <Styled.ActionLink>
         Hesabınız yok mu?
         <Link href={'/sign-up'}>Kaydolun</Link>

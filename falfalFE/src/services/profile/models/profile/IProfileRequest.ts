@@ -3,14 +3,14 @@ export interface IProfileRequest {
   name: string;
   lastName: string;
   password: string;
-  maritalStatus: string;
-  age: string;
+  relationShip: string;
   gender: string;
   hasChildren: string;
   birthDate: string;
   birthTime: string;
-  employmentStatus: string;
+  jobStatus: string;
   educationLevel: string;
   occupation: string;
-  city: string;
+  town: string;
+  country: string;
 }

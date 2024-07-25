@@ -44,6 +44,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private string|null $gender = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private string|null $educationLevel = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private string|null $birthDate = null;
+
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private string|null $hasChildren = null;
+
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private string|null $occupation = null;
+
     #[ORM\Column(type: 'json')]
     private $roles = [];
 
@@ -192,6 +206,46 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPassword($password)
     {
         $this->password = $password;
+    }
+
+    public function getEducationLevel(): ?string
+    {
+        return $this->educationLevel;
+    }
+
+    public function setEducationLevel(?string $educationLevel): void
+    {
+        $this->educationLevel = $educationLevel;
+    }
+
+    public function getBirthDate(): ?string
+    {
+        return $this->birthDate;
+    }
+
+    public function setBirthDate(?string $birthDate): void
+    {
+        $this->birthDate = $birthDate;
+    }
+
+    public function getHasChildren(): ?string
+    {
+        return $this->hasChildren;
+    }
+
+    public function setHasChildren(?string $hasChildren): void
+    {
+        $this->hasChildren = $hasChildren;
+    }
+
+    public function getOccupation(): ?string
+    {
+        return $this->occupation;
+    }
+
+    public function setOccupation(?string $occupation): void
+    {
+        $this->occupation = $occupation;
     }
 
 }

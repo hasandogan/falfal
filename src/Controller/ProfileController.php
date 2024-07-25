@@ -41,7 +41,6 @@ class ProfileController extends AbstractController
             $userId = $data['email']; // Kullanıcı ID'sini token'dan alın
 
             $user = $authenticationService->findUserProfile($userId);
-
             if ($user === null) {
                 return new JsonResponse(['error' => 'User not found'], 404);
             }
@@ -55,37 +54,55 @@ class ProfileController extends AbstractController
     }
 
     #[\Symfony\Component\Routing\Annotation\Route(
-        path: 'api/profile/update/{id}',
+        path: 'api/profile/update',
         name: 'app_profile_update',
         methods: ['POST']
     )]
-    public function userUpdate(int $id, Request $request, EntityManagerInterface $entityManager)
+    public function userUpdate(Request $request, EntityManagerInterface $entityManager, AuthenticationService $authenticationService, SerializerInterface $serializer)
     {
-        $userRequest = json_decode($request->getContent());
-        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $userRequest->email]);
-        if (isset($user)) {
-            $user->setBirthTime($userRequest->birthTime ?? $user->getBirthTime());
-            $user->setPrivacyApproved(1);
-            $user->setCountry($userRequest->country ?? $user->getCountry());
-            $user->setTown($userRequest->town ?? $user->getTown());
-            $user->setJobStatus($userRequest->jobStatus ?? $user->getJobStatus());
-            $user->setRelationShip($userRequest->relationShip ?? $user->getRelationShip());
-            $user->setGender($userRequest->gender ?? $user->getGender());
-            $entityManager->persist($user);
-            $entityManager->flush();
-            $encoders = [new XmlEncoder(), new JsonEncoder()];
-            $normalizers = [new ObjectNormalizer()];
-
-            $serializer = new Serializer($normalizers, $encoders);
-            $client = new Client();
-            $client->set($request->headers->get('authorization'), $serializer->serialize($user, 'json'));
-        } else {
-            throw new \Exception("Kullanıcı bulunamadı");
+        $token = $request->headers->get('Authorization');
+        if (!$token || strpos($token, 'Bearer ') !== 0) {
+            return new JsonResponse(['error' => 'Invalid token'], 401);
         }
 
-        return $this->json($user);
+        $token = str_replace('Bearer ', '', $token);
 
-    }
+        try {
+            $data = $this->jwtManager->parse($token);
+            $userId = $data['email']; // Kullanıcı ID'sini token'dan alın
 
+            $user = $authenticationService->findUserProfile($userId);
 
+            if ($user === null) {
+                return new JsonResponse(['error' => 'User not found'], 404);
+            }
+
+            $userRequest = json_decode($request->getContent());
+            $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $userRequest->email]);
+            if (isset($user)) {
+                $user->setBirthTime($userRequest->birthTime ?? $user->getBirthTime());
+                $user->setPrivacyApproved(1);
+                $user->setCountry($userRequest->country ?? $user->getCountry());
+                $user->setTown($userRequest->town ?? $user->getTown());
+                $user->setJobStatus($userRequest->jobStatus ?? $user->getJobStatus());
+                $user->setRelationShip($userRequest->relationShip ?? $user->getRelationShip());
+                $user->setEducationLevel($userRequest->educationLevel ?? $user->getEducationLevel());
+                $user->setGender($userRequest->gender ?? $user->getGender());
+                $user->setBirthDate($userRequest->birthDate ?? $user->getBirthDate());
+                $user->setHasChildren($userRequest->hasChildren ?? $user->getHasChildren());
+                $user->setOccupation($userRequest->occupation ?? $user->getOccupation());
+                $entityManager->persist($user);
+                $entityManager->flush();
+            } else {
+                throw new \Exception("Kullanıcı bulunamadı");
+            }
+            $user = $serializer->serialize($user, 'json');
+
+            return new JsonResponse($user, 200, [], true);
+
+        }catch (\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()], 401);
+        }
+
+}
 }

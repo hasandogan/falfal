@@ -2,25 +2,25 @@
 import { IProfileRequest } from '@/services/profile/models/profile/IProfileRequest';
 import { setProfile, getProfile } from '@/services/profile/profile'; // GET isteği için ekleme
 import { useState, useEffect } from 'react';
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const ProfileLogic = () => {
   const initialForm: IProfileRequest = {
     email: '',
     name: '',
     lastName: '',
     password: '',
-    maritalStatus: 'single',
-    age: '',
+    relationShip: 'single',
     gender: 'prefer not to say',
     hasChildren: 'no',
     birthDate: '',
     birthTime: '',
-    employmentStatus: 'unemployed',
+    jobStatus: 'unemployed',
     educationLevel: 'primary school',
     occupation: '',
-    city: '',
+    town: '',
   };
-  enum MaritalStatus {
+  enum RelationShip {
     '1' = 'married',
     '2' = 'single',
     '3' = 'engaged',
@@ -38,7 +38,7 @@ const ProfileLogic = () => {
     '2' = 'no',
   }
 
-  enum EmploymentStatus {
+  enum jobStatus {
     '1' = 'full-time',
     '2' = 'part-time',
     '3' = 'unemployed',
@@ -53,40 +53,37 @@ const ProfileLogic = () => {
     '6' = 'master`s or doctoral',
   }
 
-  const maritalStatusOptions = [
-    { value: 'married', label: 'Evli' },
-    { value: 'single', label: 'Bekar' },
-    { value: 'engaged', label: 'Nişanlı' },
-    { value: 'widowed', label: 'Dul' },
+  const relationShipOptions = [
+    { value: RelationShip['1'], label: 'Evli' },
+    { value: RelationShip['2'], label: 'Bekar' },
+    { value: RelationShip['3'], label: 'Nişanlı' },
+    { value: RelationShip['4'], label: 'Dul' },
   ];
 
   const genderOptions = [
-    { value: 'male', label: 'Erkek' },
-    { value: 'female', label: 'Kadın' },
-    { value: 'prefer not to say', label: 'Belirtmek İstemiyorum' },
+    { value: Gender['1'], label: 'Erkek' },
+    { value: Gender['2'], label: 'Kadın' },
+    { value: Gender['3'], label: 'Belirtmek İstemiyorum' },
   ];
 
   const hasChildrenOptions = [
-    { value: 'yes', label: 'Evet' },
-    { value: 'no', label: 'Hayır' },
+    { value: HasChildren['1'], label: 'Evet' },
+    { value: HasChildren['2'], label: 'Hayır' },
   ];
 
-  const employmentStatusOptions = [
-    { value: 'full-time', label: 'Tam Zamanlı' },
-    { value: 'part-time', label: 'Yarı Zamanlı' },
-    { value: 'unemployed', label: 'Çalışmıyor' },
+  const jobStatusOptions = [
+    { value: jobStatus['1'], label: 'Tam Zamanlı' },
+    { value: jobStatus['2'], label: 'Yarı Zamanlı' },
+    { value: jobStatus['3'], label: 'Çalışmıyor' },
   ];
 
   const educationLevelOptions = [
-    { value: 'primary school', label: 'İlköğretim' },
-    { value: 'secondary school', label: 'Orta Öğretim' },
-    { value: 'high school', label: 'Lise' },
-    { value: 'vocational school', label: 'Meslek Yüksek Okulu' },
-    { value: 'university', label: 'Üniversite' },
-    {
-      value: 'master`s or doctoral',
-      label: 'Yüksek Lisans ve Doktora',
-    },
+    { value: EducationLevel['1'], label: 'İlköğretim' },
+    { value: EducationLevel['2'], label: 'Orta Öğretim' },
+    { value: EducationLevel['3'], label: 'Lise' },
+    { value: EducationLevel['4'], label: 'Meslek Yüksek Okulu' },
+    { value: EducationLevel['5'], label: 'Üniversite' },
+    { value: EducationLevel['6'], label: 'Yüksek Lisans ve Doktora' },
   ];
 
   const [profileData, setProfileData] = useState<IProfileRequest>(initialForm);
@@ -115,11 +112,10 @@ const ProfileLogic = () => {
     event.preventDefault();
     try {
       const response = await setProfile(profileData);
-      console.log('API Response:', response);
-      alert('Profil başarıyla güncellendi.');
+      toast.success('Profilini başarıyla güncelledin. Artık fallarına daha detaylı bakabileceğiz. 🎉');
     } catch (error) {
-      console.error('API Error:', error);
-      alert('Profil güncelleme sırasında bir hata oluştu.');
+      toast.error('Bir şeyler yanlış gitti, bizden kaynaklı bir hata olabilir. Lütfen tekrar dene. 🙏');
+
     }
   };
 
@@ -127,9 +123,9 @@ const ProfileLogic = () => {
     handleChange,
     handleSubmit,
     profileData,
-    maritalStatusOptions,
+    relationShipOptions,
     genderOptions,
-    employmentStatusOptions,
+    jobStatusOptions,
     hasChildrenOptions,
     educationLevelOptions,
   };

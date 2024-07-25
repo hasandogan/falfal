@@ -22,7 +22,7 @@ export async function setProfile(
     const client = createClient();
 
     const response = await client.post<IApiResponse<IProfileResponse>>(
-        '/profile',
+        '/profile/update',
         request,
         {
             headers: {
