@@ -21,8 +21,8 @@ const useStickyBarLogic = () => {
     },
     {
       icon: IconMore,
-      title: 'More',
-      url: null,
+      title: 'Fallar',
+      url: '/fortunes',
       type: 0,
       subMenu: [
         {

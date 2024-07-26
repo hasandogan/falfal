@@ -1,4 +1,3 @@
-import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 import { createClient } from '../api/api';
 import { IApiResponse } from '../api/models/IApiResponse';
@@ -20,17 +19,7 @@ export async function Login(
         },
       }
     );
-    const token = response.data.data?.token;
 
-    if (token) {
-      Cookies.set('auth_token', token, {
-        expires: 7,
-        secure: true,
-        sameSite: 'strict',
-      });
-    } else {
-      throw new Error('Token alınamadı.');
-    }
     return response.data;
   } catch (error: any) {
     toast.error('Giriş yapılırken bir hata oluştu. Lütfen tekrar deneyin.');

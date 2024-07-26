@@ -8,11 +8,11 @@ import * as Styled from '../../styles/profile.styled';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { GetServerSideProps } from 'next/types';
+import { ToastContainer } from 'react-toastify';
 import DatePicker from '../../components/basic/Datepicker';
 import Select from '../../components/basic/Select';
 import ProfileLogic from '../../hooks/Profile.logic';
 import { parseCookies } from '../../utils/helpers/parseCookies';
-import {ToastContainer} from "react-toastify";
 
 const ProfileSave = () => {
   const {
@@ -31,13 +31,13 @@ const ProfileSave = () => {
         <Styled.ProfileWrapper>
           <h1>Profile</h1>
           <Input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="name"
-              label="Adınız"
-              value={profileData.name}
-              onChange={handleChange}
+            type="text"
+            id="name"
+            name="name"
+            placeholder="name"
+            label="Adınız"
+            value={profileData.name}
+            onChange={handleChange}
           />
           <Input
             type="text"
@@ -133,13 +133,13 @@ const ProfileSave = () => {
             onChange={handleChange}
           />
           <Input
-              type="text"
-              id="country"
-              name="country"
-              placeholder="Ülke bilginizi girini"
-              label="Ülke"
-              value={profileData.country}
-              onChange={handleChange}
+            type="text"
+            id="country"
+            name="country"
+            placeholder="Ülke bilginizi girini"
+            label="Ülke"
+            value={profileData.country}
+            onChange={handleChange}
           />
           <Button type="submit">Kaydet</Button>
           <div className="separator">
