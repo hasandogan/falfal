@@ -46,19 +46,19 @@ class ProfileController extends AbstractController
             }
 
             $jsonData = $serializer->serialize($user, 'json');
-            
+
             return new JsonResponse([
                 'message' => null,
                 'status' => 200,
                 'success' => 'true',
-                'response' => json_decode($jsonData),
+                'data' => json_decode($jsonData),
             ]);
         } catch (\Exception $e) {
             return new JsonResponse([
                 'message' => $e->getMessage(),
                 'status' => 400,
                 'success' => 'false',
-                'response' => null,
+                'data' => null,
             ]);
         }
     }
