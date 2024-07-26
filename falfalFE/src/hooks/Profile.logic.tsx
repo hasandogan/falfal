@@ -1,98 +1,77 @@
 'use client';
-import { IProfileRequest } from '@/services/profile/models/profile/IProfileRequest';
-import { setProfile, getProfile } from '@/services/profile/profile'; // GET isteği için ekleme
-import { useState, useEffect } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
+import { getProfile, setProfile } from '@/services/profile/profile'; // GET isteği için ekleme
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { IProfile } from '../services/profile/models/profile/IProfile';
+import { EducationLevelEnum } from '../utils/enums/EducationLevelEnum';
+import { GenderEnum } from '../utils/enums/GenderEnum';
+import { HasChildrenEnum } from '../utils/enums/HasChildrenEnum';
+import { JobStatusEnum } from '../utils/enums/JobStatusEnum';
+import { RelationShipEnum } from '../utils/enums/RelationShipEnum';
 const ProfileLogic = () => {
-  const initialForm: IProfileRequest = {
+  const initialForm: IProfile = {
     email: '',
     name: '',
     lastName: '',
     password: '',
-    relationShip: 'single',
-    gender: 'prefer not to say',
+    relationShip: '',
+    gender: '',
     hasChildren: 'no',
     birthDate: '',
     birthTime: '',
-    jobStatus: 'unemployed',
-    educationLevel: 'primary school',
+    jobStatus: '',
+    educationLevel: '',
     occupation: '',
     town: '',
+    country: '',
   };
-  enum RelationShip {
-    '1' = 'married',
-    '2' = 'single',
-    '3' = 'engaged',
-    '4' = 'widowed',
-  }
-
-  enum Gender {
-    '1' = 'male',
-    '2' = 'female',
-    '3' = 'prefer not to say',
-  }
-
-  enum HasChildren {
-    '1' = 'yes',
-    '2' = 'no',
-  }
-
-  enum jobStatus {
-    '1' = 'full-time',
-    '2' = 'part-time',
-    '3' = 'unemployed',
-  }
-
-  enum EducationLevel {
-    '1' = 'primary school',
-    '2' = 'secondary school',
-    '3' = 'high school',
-    '4' = 'vocational school',
-    '5' = 'university',
-    '6' = 'master`s or doctoral',
-  }
 
   const relationShipOptions = [
-    { value: RelationShip['1'], label: 'Evli' },
-    { value: RelationShip['2'], label: 'Bekar' },
-    { value: RelationShip['3'], label: 'Nişanlı' },
-    { value: RelationShip['4'], label: 'Dul' },
+    { value: RelationShipEnum.married, label: 'Evli' },
+    { value: RelationShipEnum.single, label: 'Bekar' },
+    { value: RelationShipEnum.engaged, label: 'Nişanlı' },
+    { value: RelationShipEnum.widowed, label: 'Dul' },
   ];
 
   const genderOptions = [
-    { value: Gender['1'], label: 'Erkek' },
-    { value: Gender['2'], label: 'Kadın' },
-    { value: Gender['3'], label: 'Belirtmek İstemiyorum' },
+    { value: GenderEnum.male, label: 'Erkek' },
+    { value: GenderEnum.female, label: 'Kadın' },
+    { value: GenderEnum.preferNotToSay, label: 'Belirtmek İstemiyorum' },
   ];
 
   const hasChildrenOptions = [
-    { value: HasChildren['1'], label: 'Evet' },
-    { value: HasChildren['2'], label: 'Hayır' },
+    { value: HasChildrenEnum.yes, label: 'Evet' },
+    { value: HasChildrenEnum.no, label: 'Hayır' },
   ];
 
   const jobStatusOptions = [
-    { value: jobStatus['1'], label: 'Tam Zamanlı' },
-    { value: jobStatus['2'], label: 'Yarı Zamanlı' },
-    { value: jobStatus['3'], label: 'Çalışmıyor' },
+    { value: JobStatusEnum.fullTime, label: 'Tam Zamanlı' },
+    { value: JobStatusEnum.partTime, label: 'Yarı Zamanlı' },
+    { value: JobStatusEnum.unemployed, label: 'Çalışmıyor' },
   ];
 
   const educationLevelOptions = [
-    { value: EducationLevel['1'], label: 'İlköğretim' },
-    { value: EducationLevel['2'], label: 'Orta Öğretim' },
-    { value: EducationLevel['3'], label: 'Lise' },
-    { value: EducationLevel['4'], label: 'Meslek Yüksek Okulu' },
-    { value: EducationLevel['5'], label: 'Üniversite' },
-    { value: EducationLevel['6'], label: 'Yüksek Lisans ve Doktora' },
+    { value: EducationLevelEnum.primarySchool, label: 'İlköğretim' },
+    { value: EducationLevelEnum.secondarySchool, label: 'Orta Öğretim' },
+    { value: EducationLevelEnum.highSchool, label: 'Lise' },
+    {
+      value: EducationLevelEnum.vocationalSchool,
+      label: 'Meslek Yüksek Okulu',
+    },
+    { value: EducationLevelEnum.university, label: 'Üniversite' },
+    { value: EducationLevelEnum.doctoral, label: 'Yüksek Lisans ve Doktora' },
   ];
 
-  const [profileData, setProfileData] = useState<IProfileRequest>(initialForm);
+  const [profileData, setProfileData] = useState<IProfile>(initialForm);
 
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await getProfile(); // Profil verilerini GET isteği ile al
-        setProfileData(response); // Gelen veriyi profileData state'ine aktar
+        const response = await getProfile();
+        if (response.data) {
+          setProfileData(response.data);
+        }
       } catch (error) {
         console.error('API Error:', error);
       }
@@ -102,7 +81,7 @@ const ProfileLogic = () => {
   }, []);
 
   const handleChange = (
-      e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setProfileData((prevState) => ({ ...prevState, [name]: value }));
@@ -112,10 +91,13 @@ const ProfileLogic = () => {
     event.preventDefault();
     try {
       const response = await setProfile(profileData);
-      toast.success('Profilini başarıyla güncelledin. Artık fallarına daha detaylı bakabileceğiz. 🎉');
+      toast.success(
+        'Profilini başarıyla güncelledin. Artık fallarına daha detaylı bakabileceğiz. 🎉'
+      );
     } catch (error) {
-      toast.error('Bir şeyler yanlış gitti, bizden kaynaklı bir hata olabilir. Lütfen tekrar dene. 🙏');
-
+      toast.error(
+        'Bir şeyler yanlış gitti, bizden kaynaklı bir hata olabilir. Lütfen tekrar dene. 🙏'
+      );
     }
   };
 
