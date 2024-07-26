@@ -46,10 +46,20 @@ class ProfileController extends AbstractController
             }
 
             $jsonData = $serializer->serialize($user, 'json');
-            return new JsonResponse($jsonData, 200, [], true);
+            
+            return new JsonResponse([
+                'message' => null,
+                'status' => 200,
+                'success' => 'true',
+                'response' => json_decode($jsonData),
+            ]);
         } catch (\Exception $e) {
-            dd($e->getMessage());
-            return new JsonResponse(['error' => 'Invalid token'], 401);
+            return new JsonResponse([
+                'message' => $e->getMessage(),
+                'status' => 400,
+                'success' => 'false',
+                'response' => null,
+            ]);
         }
     }
 
