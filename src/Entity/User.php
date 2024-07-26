@@ -2,13 +2,18 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints\Date;
 
 #[ORM\Entity]
 #[UniqueConstraint(name: "email", columns: ["email"])]
+#[HasLifecycleCallbacks]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -21,8 +26,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private string $name;
+
     #[ORM\Column(length: 255)]
     private string $lastName;
+
     #[ORM\Column(length: 255, nullable: true)]
     private string|null $birthTime = null;
 
@@ -59,7 +66,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private string|null $occupation = null;
 
     #[ORM\Column(type: 'json')]
-    private $roles = [];
+    private $roles = ['ROLE_USER'];
 
     #[ORM\Column(type: 'string')]
     private $password;
@@ -67,7 +74,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isValid = 0;
 
-    private $role = ['ROLE_USER'];
+    #[ORM\OneToMany(targetEntity: TarotProcess::class, mappedBy: "user")]
+    private Collection $processes;
+
+    #[ORM\Column(name: "created_at", type: Types::DATETIME_MUTABLE, nullable: true)]
+    private \DateTime $createdAt;
+
+    #[ORM\Column(name: "updated_at", type: Types::DATETIME_MUTABLE, nullable: true)]
+    private \DateTime $updatedAt;
 
     public function getId(): int
     {
@@ -191,7 +205,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
-        return array_unique($roles);    }
+        return array_unique($roles);
+    }
 
     public function eraseCredentials(): void
     {
@@ -200,7 +215,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     public function setPassword($password)
@@ -246,6 +261,40 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setOccupation(?string $occupation): void
     {
         $this->occupation = $occupation;
+    }
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new \DateTime();
+        $this->setUpdatedAtValue();
+    }
+
+    #[ORM\PreUpdate]
+    public function setUpdatedAtValue(): void
+    {
+        $this->updatedAt = new \DateTime();
+    }
+
+    public function getProcesses(): Collection
+    {
+        return $this->processes;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
     }
 
 }

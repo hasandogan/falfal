@@ -1,6 +1,8 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Exception\JWTDecodeFailureException;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\Authentication\Token\JWTUserToken;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
@@ -9,35 +11,24 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class AbstractController
 {
-    protected JWTTokenManagerInterface $jwtManager;
-    protected TokenStorageInterface $tokenStorage;
+    private TokenStorageInterface $tokenStorage;
+    protected EntityManagerInterface $entityManager;
 
-    public function __construct(JWTTokenManagerInterface $jwtManager, TokenStorageInterface $tokenStorage)
-    {
-        $this->jwtManager = $jwtManager;
-        $this->tokenStorage = $tokenStorage;
-    }
-
-    //todo: responselar ile ilgili metodlar yqz her yerde kullanılabilecek.
-    // error responseları ile ilgili succes ve error response metodları oluştur.
-    //exception durumlarını logla ve json response atsın
-    public function getJwtManager(): JWTTokenManagerInterface
-    {
-        return $this->jwtManager;
-    }
-
-    public function setJwtManager(JWTTokenManagerInterface $jwtManager): void
-    {
-        $this->jwtManager = $jwtManager;
-    }
-
-    public function getTokenStorage(): TokenStorageInterface
-    {
-        return $this->tokenStorage;
-    }
-
-    public function setTokenStorage(TokenStorageInterface $tokenStorage): void
+    public function __construct(
+                                TokenStorageInterface $tokenStorage,
+                                EntityManagerInterface $entityManager
+    )
     {
         $this->tokenStorage = $tokenStorage;
+        $this->entityManager = $entityManager;
+    }
+
+
+    /**
+     * @return User
+     */
+    protected function getUser()
+    {
+        return $this->tokenStorage->getToken()->getUser();
     }
 }
