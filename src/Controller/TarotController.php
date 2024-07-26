@@ -3,40 +3,31 @@
 namespace App\Controller;
 
 use App\Entity\TarotProcess;
-use App\Entity\User;
 use App\Enums\TarotProcessEnum;
-use Doctrine\ORM\EntityManagerInterface;
-use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 
 
 #[AsController]
 class TarotController extends AbstractController
 {
-
-    public function __construct(JWTTokenManagerInterface $jwtManager, TokenStorageInterface $tokenStorage)
-    {
-        parent::__construct($jwtManager, $tokenStorage);
-    }
-
-
     #[Route(
         path: 'api/tarots',
         name: 'tarot.all',
         methods: ['GET'],
     )]
-    public function allTarot(Request $request, EntityManagerInterface $entityManager)
+    public function allTarot(Request $request)
     {
-        $tarots = $entityManager->getRepository(TarotProcess::class)->findBy(['user' => $this->getUser()->getId()]);
+        $tarots = $this->entityManager
+            ->getRepository(TarotProcess::class)
+            ->findBy(['user' => $this->getUser()->getId()]);
         $fortunes = [];
         foreach ($tarots as $tarot) {
             $fortunes[] = [
                 'id' => $tarot->getId(),
+                'status' => $tarot->getStatus(),
                 'fortune' => $tarot->getResponse()[0]->content[0]->text->value
             ];
         }
@@ -49,13 +40,14 @@ class TarotController extends AbstractController
         name: 'tarot.last',
         methods: ['GET'],
     )]
-    public function lastTarot(Request $request, EntityManagerInterface $entityManager)
+    public function lastTarot(Request $request)
     {
         /** @var TarotProcess $tarot */
-        $tarot = $entityManager->getRepository(TarotProcess::class)
+        $tarot = $this->entityManager->getRepository(TarotProcess::class)
             ->findOneBy(['user' => $this->getUser()->getId()], ['id' => 'desc']);
         $fortunes = [
             'id' => $tarot->getId(),
+            'status' => $tarot->getStatus(),
             'fortune' => $tarot->getResponse()[0]->content[0]->text->value
         ];
 
@@ -63,21 +55,21 @@ class TarotController extends AbstractController
     }
 
     #[Route(
-        path: 'api/process/start',
-        name: 'process.start',
+        path: 'api/tarot/process/start',
+        name: 'tarot.process.start',
         methods: ['POST'],
     )]
     public function startTarotProcess(Request $request)
     {
-        $requestData = $request->request->all();
-       $tarotProcess = new TarotProcess();
-       $tarotProcess->setUser($this->getUser());
-       $tarotProcess->setStatus(TarotProcessEnum::STARTED);
-       $tarotProcess->setQuestion($requestData['question']);
-       $tarotProcess->setSelectedCards($requestData['selectedCards']);
-       $tarotProcess->setProcessFinishTime((new \DateTime("+30 minutes")));
-       $this->entityManager->persist($tarotProcess);
-       $this->entityManager->flush();
+        $tarotProcess = new TarotProcess();
+        $tarotProcess->setUser($this->getUser());
+        $tarotProcess->setStatus(TarotProcessEnum::STARTED);
+        $tarotProcess->setQuestion($request->get('question'));
+        $tarotProcess->setSelectedCards($request->get('selectedCards'));
+        $tarotProcess->setProcessFinishTime((new \DateTime("+30 minutes")));
+        $this->entityManager->persist($tarotProcess);
+        $this->entityManager->flush();
+
         return new JsonResponse([
             'message' => 'Tarot Falınız hazırlanıyor',
             'status' => 200,
