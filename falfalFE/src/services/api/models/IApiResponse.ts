@@ -3,4 +3,5 @@ export interface IApiResponse<T> {
   message: string | null;
   statatus: number;
   data?: T;
+  token?: string;
 }

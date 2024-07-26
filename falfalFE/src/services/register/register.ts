@@ -1,4 +1,4 @@
-import Cookies from 'js-cookie';
+import { setTokenCookie } from '../../utils/helpers/setTokenCookie';
 import { createClient } from '../api/api';
 import { IApiResponse } from '../api/models/IApiResponse';
 import { IRegisterRequest } from './models/register/IRegisterRequest';
@@ -18,17 +18,10 @@ export async function Register(
       },
     }
   );
-  const token = response.data; // Bu, IApiResponse<IRegisterResponse> türünde olacaktır
 
-  const setTokenCookie = (token: IApiResponse<IRegisterResponse>) => {
-    Cookies.set('auth_token', token.data?.token!, {
-      expires: 7,
-      secure: true,
-      sameSite: 'strict',
-    });
-  };
-
-  setTokenCookie(token);
+  if (response?.data?.token) {
+    setTokenCookie(response?.data?.token);
+  }
 
   return response.data;
 }
