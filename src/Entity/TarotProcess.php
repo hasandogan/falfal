@@ -22,9 +22,6 @@ class TarotProcess
     #[JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
     private User $user;
 
-    #[ORM\Column(length: 255)]
-    private $processId;
-
     #[ORM\Column(name: "status", length: 255)]
     private $status;
 
@@ -40,8 +37,8 @@ class TarotProcess
     #[ORM\Column(name: "process_finish_time", type: Types::DATETIME_MUTABLE, nullable: true)]
     private $processFinishTime;
 
-    #[ORM\Column(name: "response", type: "json", nullable: true)]
-    private array $response = [];
+    #[ORM\Column(name: "response", type: "text", nullable: true)]
+    private string $response;
 
     #[ORM\Column(name: "open_aithread_id", type: "text", nullable: true)]
     private string $openAIThreadId;
@@ -54,14 +51,6 @@ class TarotProcess
 
     #[ORM\Column(name: "updated_at", type: Types::DATETIME_MUTABLE, nullable: true)]
     private \DateTime $updatedAt;
-
-    /**
-     * @param mixed $processId
-     */
-    public function setProcessId($processId): void
-    {
-        $this->processId = $processId;
-    }
 
     public function getId(): int
     {
@@ -187,12 +176,12 @@ class TarotProcess
         return $this->createdAt;
     }
 
-    public function getResponse(): array
+    public function getResponse(): string
     {
         return $this->response;
     }
 
-    public function setResponse(array $response): void
+    public function setResponse(string $response): void
     {
         $this->response = $response;
     }

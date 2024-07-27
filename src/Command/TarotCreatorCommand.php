@@ -16,8 +16,8 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 #[AsCommand(
-    name: 'TarotCreatorCommand',
-    description: 'Add a short description for your command',
+    name: 'tarot:create',
+    description: 'Tarot processleri işler',
 )]
 class TarotCreatorCommand extends Command
 {
@@ -39,11 +39,16 @@ class TarotCreatorCommand extends Command
         $io->success('Tarot Creator Command Started');
         /** @var TarotProcess[] $tarotProcesses */
         $tarotProcesses = $this->entityManager->getRepository(TarotProcess::class)->findBy(['status' => TarotProcessEnum::STARTED]);
-
-        foreach ($tarotProcesses as $tarotProcess) {
-            $tarotOpenAIData = $this->createOpenAIData($tarotProcess);
-            $tarotProcesses = $this->callOpenAI($tarotProcess, $tarotOpenAIData);
-
+        try {
+            foreach ($tarotProcesses as $tarotProcess) {
+                $tarotOpenAIData = $this->createOpenAIData($tarotProcess);
+                $tarotProcess = $this->callOpenAI($tarotProcess, $tarotOpenAIData);
+                $this->entityManager->persist($tarotProcess);
+                $this->entityManager->flush();
+            }
+        }catch (\Exception $exception){
+            //todo: burayı tekrar bakalım
+            dd($exception);
         }
         return Command::SUCCESS;
     }
@@ -77,6 +82,9 @@ class TarotCreatorCommand extends Command
         );
         $tarotProcess->setOpenAIThreadId($response->threadId);
         $tarotProcess->setOpenAIResponseId($response->id);
+        $this->entityManager->persist($tarotProcess);
+        $this->entityManager->flush();
+        //todo: burada bzen timeout alıyoruz bunun için başka bir command çalıştırmamız gerekiyor.
         while (in_array($response->status, ['queued', 'in_progress', 'cancelling'])) {
             sleep(1); // Wait for 1 second
             $response = $client->threads()->runs()->retrieve($response->threadId, $response->id);
@@ -84,7 +92,7 @@ class TarotCreatorCommand extends Command
         if ($response->status === 'completed') {
             $messages = $client->threads()->messages()->list($response->threadId);
             $tarotProcess->setStatus(TarotProcessEnum::COMPLETED);
-            $tarotProcess->setResponse($messages['data']);
+            $tarotProcess->setResponse($messages['data'][0]['content'][0]['text']["value"]);
         } else {
             $tarotProcess->setStatus(TarotProcessEnum::FAILED);
             $tarotProcess->setStatusMessage("Failed buraya bir şeyler bulalım");

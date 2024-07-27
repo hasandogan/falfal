@@ -61,11 +61,12 @@ class TarotController extends AbstractController
     )]
     public function startTarotProcess(Request $request)
     {
+       $requestData = json_decode($request->getContent(),true);
         $tarotProcess = new TarotProcess();
         $tarotProcess->setUser($this->getUser());
-        $tarotProcess->setStatus(TarotProcessEnum::STARTED);
-        $tarotProcess->setQuestion($request->get('question'));
-        $tarotProcess->setSelectedCards($request->get('selectedCards'));
+        $tarotProcess->setStatus(TarotProcessEnum::STARTED->value);
+        $tarotProcess->setQuestion($requestData["question"]);
+        $tarotProcess->setSelectedCards($requestData["selectedCards"]);
         $tarotProcess->setProcessFinishTime((new \DateTime("+30 minutes")));
         $this->entityManager->persist($tarotProcess);
         $this->entityManager->flush();
