@@ -4,15 +4,14 @@ namespace App\Command;
 
 use App\Entity\TarotProcess;
 use App\Enums\TarotProcessEnum;
+use App\Services\TarotService;
 use Doctrine\ORM\EntityManagerInterface;
-use OpenAI;
-use Random\RandomException;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 #[AsCommand(
@@ -23,14 +22,21 @@ class TarotCreatorCommand extends Command
 {
     private EntityManagerInterface $entityManager;
     private KernelInterface $kernel;
-    private ParameterBagInterface $parameterBag;
+    private TarotService $tarotService;
+    private LoggerInterface $logger;
 
-    public function __construct(EntityManagerInterface $entityManager, KernelInterface $kernel, ParameterBagInterface $parameterBag)
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        KernelInterface        $kernel,
+        TarotService           $tarotService,
+        LoggerInterface        $logger
+    )
     {
         parent::__construct();
         $this->entityManager = $entityManager;
         $this->kernel = $kernel;
-        $this->parameterBag = $parameterBag;
+        $this->tarotService = $tarotService;
+        $this->logger = $logger;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -46,9 +52,10 @@ class TarotCreatorCommand extends Command
                 $this->entityManager->persist($tarotProcess);
                 $this->entityManager->flush();
             }
-        }catch (\Exception $exception){
-            //todo: burayı tekrar bakalım
-            dd($exception);
+        } catch (\Exception $exception) {
+            $this->logger->log($exception->getCode(), $exception->getMessage(), ['trace' => $exception->getTrace()]);
+            $tarotProcess->setStatus(TarotProcessEnum::FAILED);
+            $tarotProcess->setStatusMessage("Bu fala bakacak yetenekte bir falcı bulamadık. Kendimizi geliştiricez söz veriyoruz.");
         }
         return Command::SUCCESS;
     }
@@ -60,37 +67,33 @@ class TarotCreatorCommand extends Command
      */
     private function callOpenAI(TarotProcess $tarotProcess, $tarotOpenAIData)
     {
-        $client = OpenAI::client($this->parameterBag->get('OPENAI_API_KEY'));
-        $response = $client->threads()->createAndRun(
-            [
-                'assistant_id' => 'asst_1J4oWQit3UBpQACDdHaZRvxx',
-                'model' => 'gpt-4-1106-preview',
-                'instructions' => 'Sen bir tarot falcısısın, sana gelen datalar ile tarot falı bak, 
-                    bir medyum gibi davran,  sana kullanıcı ile ilgili verdiğim datayı yorum yapamk için kullan,
-                    kartların geneli poizitif ise sorunun cevabının evet olacağını ve rastgele bir sürede gerçekleşceğini söyle
-                    örneğin 3 ay içerisinde veya 6 ay içersinde veya 5 vakt, 10 vakit ,3 vakit gibi süre tahminlerinde bulun,',
-                'thread' => [
-                    'messages' =>
-                        [
-                            [
-                                'role' => 'user',
-                                'content' => json_encode($tarotOpenAIData, JSON_UNESCAPED_UNICODE),
-                            ],
-                        ],
-                ],
-            ],
-        );
+        $response = null;
+        try {
+            $response = $this->tarotService->createRequest($tarotOpenAIData);
+        } catch (\Exception $exception) {
+            $this->logger->log($exception->getCode(), $exception->getMessage(), ['trace' => $exception->getTrace()]);
+        }
+        if ($response === null) {
+            $tarotProcess->setStatus(TarotProcessEnum::FAILED->value);
+            $tarotProcess->setStatusMessage("Falınıza bakacak uygun bir falcı bulamadık. Çok ilginç bir kaderiniz olmalı.");
+            $this->entityManager->persist($tarotProcess);
+            $this->entityManager->flush();
+            return $tarotProcess;
+        }
         $tarotProcess->setOpenAIThreadId($response->threadId);
         $tarotProcess->setOpenAIResponseId($response->id);
         $this->entityManager->persist($tarotProcess);
         $this->entityManager->flush();
-        //todo: burada bzen timeout alıyoruz bunun için başka bir command çalıştırmamız gerekiyor.
-        while (in_array($response->status, ['queued', 'in_progress', 'cancelling'])) {
-            sleep(1); // Wait for 1 second
-            $response = $client->threads()->runs()->retrieve($response->threadId, $response->id);
+
+        try {
+            $response = $this->tarotService->checkAndGetResponse($response->threadId,$response->id);
+        }catch (\Exception $exception){
+            $this->logger->log($exception->getCode(), $exception->getMessage(), ['trace' => $exception->getTrace()]);
+            $tarotProcess->setStatus(TarotProcessEnum::IN_PROGRESS->value);
+            $tarotProcess->setStatusMessage("Falınıza bakacak uygun bir falcı bulamadık. Aramaya devam ediyoruz. Mutlaka bulacağız.");
         }
         if ($response->status === 'completed') {
-            $messages = $client->threads()->messages()->list($response->threadId);
+            $messages = $this->tarotService->getResponseContent($response);
             $tarotProcess->setStatus(TarotProcessEnum::COMPLETED);
             $tarotProcess->setResponse($messages['data'][0]['content'][0]['text']["value"]);
         } else {
