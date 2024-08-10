@@ -94,10 +94,10 @@ class TarotCreatorCommand extends Command
         }
         if ($response->status === 'completed') {
             $messages = $this->tarotService->getResponseContent($response);
-            $tarotProcess->setStatus(TarotProcessEnum::COMPLETED);
+            $tarotProcess->setStatus(TarotProcessEnum::WAITING->value);
             $tarotProcess->setResponse($messages['data'][0]['content'][0]['text']["value"]);
         } else {
-            $tarotProcess->setStatus(TarotProcessEnum::FAILED);
+            $tarotProcess->setStatus(TarotProcessEnum::FAILED->value);
             $tarotProcess->setStatusMessage("Failed buraya bir şeyler bulalım");
         }
         return $tarotProcess;

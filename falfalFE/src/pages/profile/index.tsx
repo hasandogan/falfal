@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { ReactElement } from 'react';
 import Card from '../../components/advanced/Card';
 import Button from '../../components/basic/Button';
@@ -142,16 +141,9 @@ const ProfileSave = () => {
             onChange={handleChange}
           />
           <Button type="submit">Kaydet</Button>
-          <div className="separator">
-            <div className="separator-text">or sign in using</div>
-          </div>
         </Styled.ProfileWrapper>
       </form>
-      <ToastContainer /> {/* ToastContainer burada eklenmiştir */}
-      <Styled.ActionLink>
-        Hesabınız yok mu?
-        <Link href={'/sign-up'}>Kaydolun</Link>
-      </Styled.ActionLink>
+      <ToastContainer />
     </Card>
   );
 };
