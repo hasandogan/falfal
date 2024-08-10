@@ -32,8 +32,9 @@ const SignInLogic = () => {
     const requestData: ILoginRequest = signInData;
     try {
       const response = await Login(requestData);
-      if (response?.data?.token) {
-        setTokenCookie(response?.data?.token);
+      console.log('response', response);
+      if (response?.token) {
+        setTokenCookie(response?.token);
       }
       toast.success(
         response.message ||

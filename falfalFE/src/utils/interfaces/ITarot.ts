@@ -1,12 +1,7 @@
 export interface ITarot {
+  id: number;
+  name: string;
   front: string;
-  straight: {
-    name: string;
-  };
-  revert: {
-    name: string;
-  };
-  result?: {
-    name: string;
-  };
+  revert: string;
+  result?: string;
 }

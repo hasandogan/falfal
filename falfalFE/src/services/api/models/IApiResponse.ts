@@ -1,7 +1,7 @@
 export interface IApiResponse<T> {
   success: boolean;
   message: string | null;
-  statatus: number;
+  status: number;
   data?: T;
   token?: string;
 }

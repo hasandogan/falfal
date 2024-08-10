@@ -41,16 +41,16 @@ const apiClient = axios.create({
 
 // Interceptor tanımlayın
 apiClient.interceptors.request.use(
-    (config) => {
-      const authToken = getCookie('auth_token'); // auth_token'i cookie'den al
-      if (authToken) {
-        config.headers['Authorization'] = `Bearer ${authToken}`;
-      }
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
+  (config) => {
+    const authToken = getCookie('auth_token'); // auth_token'i cookie'den al
+    if (authToken) {
+      config.headers['Authorization'] = `Bearer ${authToken}`;
     }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
 );
 
 export function createClient() {

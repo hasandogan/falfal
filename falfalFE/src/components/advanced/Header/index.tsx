@@ -23,15 +23,6 @@ const Header = ({ pageName }: HeaderProps) => {
             />
             <span>{'coinCount'}</span>
           </div>
-          <div className={'button'}>
-            <Image
-              src={'/images/basket.svg'}
-              alt={'market'}
-              width={22}
-              height={22}
-            />
-            <span>{'Market'}</span>
-          </div>
         </div>
         <div className="header-buttons-right">
           <div className={'profile'} onClick={onProfileClick}>

@@ -1,7 +1,9 @@
+import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
+import { toast } from 'react-toastify';
 import TarotCards from '../constants/tarotCards';
-import { getRandomBoolean } from '../utils/helpers/getRandomBoolean';
-import { getUniqueRandomElements } from '../utils/helpers/getUniqueRandomElements';
+import { SendTarot } from '../services/tarot/send-tarot';
+import { getUnselectedTarot } from '../utils/helpers/getUnselectedTarot';
 import { ITarot } from '../utils/interfaces/ITarot';
 
 const TarotLogic = () => {
@@ -9,39 +11,46 @@ const TarotLogic = () => {
     return (degrees * Math.PI) / 180;
   };
 
+  const router = useRouter();
+  const maxSelectableCardCount = 7;
   const stackRef = useRef<HTMLDivElement>(null);
-  const [selectedCardCount, setSelectedCardCount] = useState<number>(0);
   const [isQuestionAsked, setIsQuestionAsked] = useState<boolean>(false);
   const [question, setQuestion] = useState<string>('');
+  const [selectedCards, setSelectedCards] = useState<ITarot[]>([]);
 
   const sendQuestion = () => {
     setIsQuestionAsked(true);
   };
 
   const handleClick = () => {
-    if (selectedCardCount < 7) {
-      setSelectedCardCount(selectedCardCount + 1);
-    }
+    const newCards: ITarot = getUnselectedTarot(TarotCards, selectedCards);
+    setSelectedCards((prev) => [...prev, newCards]);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = e.target;
     setQuestion(value);
   };
-  const totalCardCount = Array.from({ length: 7 }, (_, i) => i + 1);
+  const totalCardCount = Array.from(
+    { length: maxSelectableCardCount },
+    (_, i) => i + 1
+  );
 
-  const getSelectedCards = () => {
-    const uniqueArray = getUniqueRandomElements(TarotCards, 7) as ITarot[];
-    const finalArray = uniqueArray.map((item) => {
-      return {
-        ...item,
-        result: getRandomBoolean() ? item.straight : item.revert,
-      };
-    });
-    return finalArray;
+  const submitTarotCards = async () => {
+    const request = {
+      question,
+      selectedTarotsCards: selectedCards.map((x) => x.id),
+    };
+    try {
+      const response = await SendTarot(request);
+      toast.success(response.message || 'Falin gönderildi');
+      router.push('/');
+    } catch (error: any) {
+      toast.error(error.message || 'Bir problem oluştu');
+    }
   };
 
-  useEffect(() => {
+  const drawCardCircle = () => {
     const stack = stackRef.current;
     if (stack) {
       const cDiv = stack.children;
@@ -56,6 +65,10 @@ const TarotLogic = () => {
         (cDiv[i] as HTMLElement).style.transform = `translate(${x}px, ${y}px)`;
       }
     }
+  };
+
+  useEffect(() => {
+    drawCardCircle();
   }, [isQuestionAsked]);
 
   return {
@@ -65,9 +78,10 @@ const TarotLogic = () => {
     handleClick,
     totalCardCount,
     isQuestionAsked,
-    selectedCardCount,
     stackRef,
-    getSelectedCards,
+    selectedCards,
+    maxSelectableCardCount,
+    submitTarotCards,
   };
 };
 export default TarotLogic;
