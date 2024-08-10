@@ -6,7 +6,7 @@ export async function Dashboard(): Promise<IApiResponse<IDashboardResponse>> {
   const client = createClient();
 
   const response =
-    await client.post<IApiResponse<IDashboardResponse>>('/dashboard');
+    await client.get<IApiResponse<IDashboardResponse>>('/dashboard');
 
   return response.data;
 }
