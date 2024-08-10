@@ -55,6 +55,23 @@ class TarotController extends AbstractController
     }
 
     #[Route(
+        path: 'api/tarots/{id}',
+        name: 'tarot.id',
+        methods: ['GET'],
+    )]
+    public function getTraotForId($id)
+    {
+        /** @var TarotProcess $tarot */
+        $tarot = $this->entityManager->getRepository(TarotProcess::class)
+            ->findOneBy(['user' => $this->getUser()->getId(), 'id' => $id]);
+        $fortunes = [
+            'fortune' => $tarot->getResponse()[0]->content[0]->text->value
+        ];
+
+        return new JsonResponse($fortunes);
+    }
+
+    #[Route(
         path: 'api/tarot/process/start',
         name: 'tarot.process.start',
         methods: ['POST'],

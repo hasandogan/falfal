@@ -29,25 +29,6 @@ services:
       networks:
         - falfal_network
 
-  redis:
-    container_name: container_redis
-    image: redis:alpine
-    ports:
-      - "6379:6379"
-
-  rabbit:
-    container_name: container_rabbit
-    hostname: rabbit
-    image: rabbitmq:3-management
-    environment:
-      RABBITMQ_DEFAULT_USER: falfal
-      RABBITMQ_DEFAULT_PASS: falfal
-    volumes:
-      - ./.data/rabbitmq/:/var/lib/rabbitmq
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-
 networks:
   falfal_network:
     driver: bridge
