@@ -9,7 +9,7 @@ export async function SendTarot(
   const client = createClient();
 
   const response = await client.post<IApiResponse<ISendTarotResponse>>(
-    '/sendtarot',
+    '/tarot/process/start',
     request
   );
 
