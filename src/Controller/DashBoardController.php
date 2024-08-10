@@ -59,8 +59,12 @@ class DashBoardController extends AbstractController
             'status' => 200,
             'message' => 'Tarot Falınız',
             'data' => [
-                'pendingProcessExpireDate' => $processTime,
-                'createAt' => $createdAt,
+                'pendingProcess' => [
+                    'status' => $processTime !== null ? true : false,
+                    'createAt' => $createdAt->format('Y-m-d H:i:s'),
+                    'endDate' => $processTime->format('Y-m-d H:i:s'),
+                    'serverResponseTime' => date('Y-m-d H:i:s')
+                ],
                 'fortunes' => $fortunes
             ],
         ]);
