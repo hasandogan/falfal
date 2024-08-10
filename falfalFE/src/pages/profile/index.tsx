@@ -2,7 +2,6 @@ import { ReactElement } from 'react';
 import Card from '../../components/advanced/Card';
 import Button from '../../components/basic/Button';
 import Input from '../../components/basic/Input';
-import SimpleLayout from '../../layouts/SimpleLayout/SimpleLayout';
 import * as Styled from '../../styles/profile.styled';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -11,9 +10,10 @@ import { ToastContainer } from 'react-toastify';
 import DatePicker from '../../components/basic/Datepicker';
 import Select from '../../components/basic/Select';
 import ProfileLogic from '../../hooks/Profile.logic';
+import LoggedInLayout from '../../layouts/LoggedInLayout/LoggedInLayout';
 import { parseCookies } from '../../utils/helpers/parseCookies';
 
-const ProfileSave = () => {
+const Profile = () => {
   const {
     handleChange,
     handleSubmit,
@@ -148,11 +148,11 @@ const ProfileSave = () => {
   );
 };
 
-ProfileSave.getLayout = (page: ReactElement) => (
-  <SimpleLayout>{page}</SimpleLayout>
+Profile.getLayout = (page: ReactElement) => (
+  <LoggedInLayout pageName={'HOME'}>{page}</LoggedInLayout>
 );
 
-export default ProfileSave;
+export default Profile;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = parseCookies(context.req.headers.cookie);

@@ -26,7 +26,7 @@ const FortuneNotFound = () => {
         <Link href={'/profile'}>
           <Button>Profilini düzenle</Button>
         </Link>
-        <Link href={'/fortune'}>
+        <Link href={'/tarot'}>
           <Button>Şimdi Fal baktır.</Button>
         </Link>
       </div>

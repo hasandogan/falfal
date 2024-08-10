@@ -6,7 +6,7 @@ import Button from '../../components/basic/Button';
 import TextArea from '../../components/basic/Textarea';
 import TarotCards from '../../constants/tarotCards';
 import TarotLogic from '../../hooks/Tarot.logic';
-import SimpleLayout from '../../layouts/SimpleLayout/SimpleLayout';
+import LoggedInLayout from '../../layouts/LoggedInLayout/LoggedInLayout';
 import * as Styled from '../../styles/tarot.styled';
 
 const Tarot = () => {
@@ -63,6 +63,8 @@ const Tarot = () => {
   );
 };
 
-Tarot.getLayout = (page: ReactElement) => <SimpleLayout>{page}</SimpleLayout>;
+Tarot.getLayout = (page: ReactElement) => (
+  <LoggedInLayout pageName={'TAROT'}>{page}</LoggedInLayout>
+);
 
 export default Tarot;
