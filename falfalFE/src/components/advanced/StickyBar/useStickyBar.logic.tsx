@@ -8,14 +8,7 @@ const useStickyBarLogic = () => {
     {
       icon: IconGlobe,
       title: 'Home',
-      url: '/',
-      subMenu: [],
-      type: 0,
-    },
-    {
-      icon: IconFavourites,
-      title: 'Favourites',
-      url: '/favourite',
+      url: '/home',
       subMenu: [],
       type: 0,
     },

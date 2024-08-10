@@ -16,9 +16,10 @@ const Tarot = () => {
     handleChange,
     handleClick,
     isQuestionAsked,
-    selectedCardCount,
     stackRef,
-    getSelectedCards,
+    selectedCards,
+    maxSelectableCardCount,
+    submitTarotCards,
   } = TarotLogic();
 
   return (
@@ -38,23 +39,22 @@ const Tarot = () => {
           </Styled.QuestionForm>
         ) : (
           <>
-            <div className="selected-cards">count {selectedCardCount}</div>
-            {selectedCardCount === 7 ? (
-              <>
-                {getSelectedCards().map((card, index) => (
-                  <div key={`card-${index}`}>{card.result.name}</div>
-                ))}
-              </>
-            ) : (
-              <div className="tarot-container" ref={stackRef}>
-                {TarotCards.map((card, index) => (
-                  <TarotCard
-                    key={`${card.front}-${index}`}
-                    handleClick={handleClick}
-                    totalCount={selectedCardCount}
-                  />
-                ))}
-              </div>
+            <div className="tarot-container" ref={stackRef}>
+              {TarotCards.map((card, index) => (
+                <TarotCard
+                  key={`${card.front}-${index}`}
+                  handleClick={handleClick}
+                  totalCount={selectedCards.length}
+                />
+              ))}
+            </div>
+            <div className={'selected-cards'}>
+              {selectedCards.map((_card, index) => (
+                <div key={`card-${index}`} className="card-showcase"></div>
+              ))}
+            </div>
+            {selectedCards.length === maxSelectableCardCount && (
+              <Button onClick={submitTarotCards}>Gönder</Button>
             )}
           </>
         )}

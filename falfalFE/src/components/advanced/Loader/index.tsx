@@ -1,19 +1,27 @@
-import * as Styled from './loader.styled';
+import { Vortex } from 'react-loader-spinner';
+import * as Styled from './Loader.styled';
+
 const Loader = () => {
   return (
     <Styled.Loader>
-      <div className="text">FalFal</div>
-      <svg
-        width="250"
-        height="250"
-        viewBox="0 0 250 250"
-        className="circular-progress"
-      >
-        <circle className="bg"></circle>
-        <circle className="fg"></circle>
-      </svg>
+      <Vortex
+        visible={true}
+        height="100%"
+        width="100%"
+        ariaLabel="vortex-loading"
+        wrapperStyle={{}}
+        wrapperClass="vortex-wrapper"
+        colors={[
+          '#a485e3',
+          '#1fcfbc',
+          '#08313a',
+          '#a485e3',
+          '#1fcfbc',
+          '#08313a',
+        ]}
+      />
+      <div className="logo"></div>
     </Styled.Loader>
   );
 };
-
 export default Loader;

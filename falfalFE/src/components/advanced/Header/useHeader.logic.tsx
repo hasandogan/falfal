@@ -1,6 +1,9 @@
+import { useRouter } from 'next/router';
+
 const useHeaderLogic = () => {
+  const router = useRouter();
   const onProfileClick = () => {
-    console.log('onProfileClick');
+    router.push('profile');
   };
 
   return { onProfileClick };

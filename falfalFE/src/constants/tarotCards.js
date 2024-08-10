@@ -1,706 +1,317 @@
 const TarotCards = [
     {
-        "front": "asilmis-adam",
-        "straight": {
-            "name": "Asılmış adam"
-        },
-        "revert": {
-            "name": "Asılmış adam ters"
-        }
-    },
-    {
-        "front": "tilsim-kralicesi",
-        "straight": {
-            "name": "Tılsımların Kraliçesi"
-        },
-        "revert": {
-            "name": "Tılsımların Kraliçesi Ters"
-        }
-    },
-    {
-        "front": "seytan",
-        "straight": {
-            "name": "Şeytan"
-        },
-        "revert": {
-            "name": "Şeytan Ters"
-        }
-    },
-    {
-        "front": "kuvvet",
-        "straight": {
-            "name": "Kuvvet"
-        },
-        "revert": {
-            "name": "Kuvvet Ters"
-        }
-    },
-    {
-        "front": "dünya",
-        "straight": {
-            "name": "Dünya"
-        },
-        "revert": {
-            "name": "Dünya Ters"
-        }
-    },
-    {
-        "front": "ay",
-        "straight": {
-            "name": "Ay"
-        },
-        "revert": {
-            "name": "Ay Ters"
-        }
-    },
-    {
-        "front": "kupa-asi",
-        "straight": {
-            "name": "Kupaların Ası"
-        },
-        "revert": {
-            "name": "Kupaların Ası Ters"
-        }
-    },
-    {
-        "front": "kiliclarin-prensi",
-        "straight": {
-            "name": "Kılıçların Prensi"
-        },
-        "revert": {
-            "name": "Kılıçların Prensi Ters"
-        }
-    },
-    {
-        "front": "tilsim-prensi",
-        "straight": {
-            "name": "Tılsımların Prensi"
-        },
-        "revert": {
-            "name": "Tılsımların Prensi Ters"
-        }
-    },
-    {
-        "front": "savas-arabasi",
-        "straight": {
-            "name": "Savaş Arabası"
-        },
-        "revert": {
-            "name": "Savaş Arabası Ters"
-        }
-    },
-    {
-        "front": "olum",
-        "straight": {
-            "name": "Ölüm"
-        },
-        "revert": {
-            "name": "Ölüm Ters"
-        }
-    },
-    {
-        "front": "buyucu",
-        "straight": {
-            "name": "Büyücü"
-        },
-        "revert": {
-            "name": "Büyücü Ters"
-        }
-    },
-    {
-        "front": "degnek-krali",
-        "straight": {
-            "name": "Değnek Kralı"
-        },
-        "revert": {
-            "name": "Değnek Kralı Ters"
-        }
-    },
-    {
-        "front": "kiliclarin-krali",
-        "straight": {
-            "name": "Kılıçların Kralı"
-        },
-        "revert": {
-            "name": "Kılıçların Kralı Ters"
-        }
-    },
-    {
-        "front": "kiliclarin-yedilisi",
-        "straight": {
-            "name": "Kılıçların Yedilisi"
-        },
-        "revert": {
-            "name": "Kılıçların Yedilisi Ters"
-        }
-    },
-    {
-        "front": "degnek-dortlusu",
-        "straight": {
-            "name": "Değnek Dörtlüsü"
-        },
-        "revert": {
-            "name": "Değnek Dörtlüsü Ters"
-        }
-    },
-    {
-        "front": "kupa-dokuzlusu",
-        "straight": {
-            "name": "Kupaların Dokuzlusu"
-        },
-        "revert": {
-            "name": "Kupaların Dokuzlusu Ters"
-        }
-    },
-    {
-        "front": "kiliclarin-dortlusu",
-        "straight": {
-            "name": "Kılıçların Dörtlüsü"
-        },
-        "revert": {
-            "name": "Kılıçların Dörtlüsü Ters"
-        }
-    },
-    {
-        "front": "degnek-ikilisi",
-        "straight": {
-            "name": "Değnek İkilisi"
-        },
-        "revert": {
-            "name": "Değnek İkilisi Ters"
-        }
-    },
-    {
-        "front": "tilsim-sekizlisi",
-        "straight": {
-            "name": "Tılsımların Sekizlisi"
-        },
-        "revert": {
-            "name": "Tılsımların Sekizlisi Ters"
-        }
-    },
-    {
-        "front": "kiliclarin-altilisi",
-        "straight": {
-            "name": "Kılıçların Altılısı"
-        },
-        "revert": {
-            "name": "Kılıçların Altılısı Ters"
-        }
-    },
-    {
-        "front": "tilsim-dortlusu",
-        "straight": {
-            "name": "Tılsımların Dörtlüsü"
-        },
-        "revert": {
-            "name": "Tılsımların Dörtlüsü Ters"
-        }
-    },
-    {
-        "front": "kupa-sovalyesi",
-        "straight": {
-            "name": "Kupaların Şövalyesi"
-        },
-        "revert": {
-            "name": "Kupaların Şövalyesi Ters"
-        }
-    },
-    {
-        "front": "kiliclarin-kralicesi",
-        "straight": {
-            "name": "Kılıçların Kraliçesi"
-        },
-        "revert": {
-            "name": "Kılıçların Kraliçesi Ters"
-        }
-    },
-    {
-        "front": "imparatorice",
-        "straight": {
-            "name": "İmparatoriçe"
-        },
-        "revert": {
-            "name": "İmparatoriçe Ters"
-        }
-    },
-    {
-        "front": "jojer",
-        "straight": {
-            "name": "Joker"
-        },
-        "revert": {
-            "name": "Joker Ters"
-        }
-    },
-    {
-        "front": "tilsim-krali",
-        "straight": {
-            "name": "Tılsımların Kralı"
-        },
-        "revert": {
-            "name": "Tılsımların Kralı Ters"
-        }
-    },
-    {
-        "front": "degnek-prensi",
-        "straight": {
-            "name": "Değnek Prensi"
-        },
-        "revert": {
-            "name": "Değnek Prensi Ters"
-        }
-    },
-    {
-        "front": "aziz",
-        "straight": {
-            "name": "Aziz"
-        },
-        "revert": {
-            "name": "Aziz Ters"
-        }
-    },
-    {
-        "front": "asiklar",
-        "straight": {
-            "name": "Aşıklar"
-        },
-        "revert": {
-            "name": "Aşıklar Ters"
-        }
-    },
-    {
-        "front": "denge",
-        "straight": {
-            "name": "Denge"
-        },
-        "revert": {
-            "name": "Denge Ters"
-        }
-    },
-    {
-        "front": "kupa-kralicesi",
-        "straight": {
-            "name": "Kupaların Kraliçesi"
-        },
-        "revert": {
-            "name": "Kupaların Kraliçesi Ters"
-        }
-    },
-    {
-        "front": "adalet",
-        "straight": {
-            "name": "Adalet (Düz)"
-        },
-        "revert": {
-            "name": "Adalet Ters"
-        }
-    },
-    {
-        "front": "tilsim-sovalyesi",
-        "straight": {
-            "name": "Tılsımların Şövalyesi"
-        },
-        "revert": {
-            "name": "Tılsımların Şövalyesi Ters"
-        }
-    },
-    {
-        "front": "degnek-kralicesi",
-        "straight": {
-            "name": "Değnek Kraliçesi"
-        },
-        "revert": {
-            "name": "Değnek Kraliçesi Ters"
-        }
-    },
-    {
-        "front": "imparator",
-        "straight": {
-            "name": "İmparator"
-        },
-        "revert": {
-            "name": "İmparator Ters"
-        }
-    },
-    {
-        "front": "kupa-krali",
-        "straight": {
-            "name": "Kupaların Kralı"
-        },
-        "revert": {
-            "name": "Kupaların Kralı Ters"
-        }
-    },
-    {
-        "front": "yildiz",
-        "straight": {
-            "name": "Yıldız"
-        },
-        "revert": {
-            "name": "Yıldız Ters"
-        }
-    },
-    {
-        "front": "degnek-sovalyesi",
-        "straight": {
-            "name": "Değnek Şövalyesi"
-        },
-        "revert": {
-            "name": "Değnek Şövalyesi Ters"
-        }
-    },
-    {
-        "front": "gunes",
-        "straight": {
-            "name": "Güneş"
-        },
-        "revert": {
-            "name": "Güneş Ters"
-        }
-    },
-    {
-        "front": "kader-carki",
-        "straight": {
-            "name": "Kader Çarkı"
-        },
-        "revert": {
-            "name": "Kader Çarkı Ters"
-        }
-    },
-    {
-        "front": "degnek-asi",
-        "straight": {
-            "name": "Değnek Ası"
-        },
-        "revert": {
-            "name": "Değnek Ası Ters"
-        }
-    },
-    {
-        "front": "degnek-altilisi",
-        "straight": {
-            "name": "Değnek Altılısı"
-        },
-        "revert": {
-            "name": "Değnek Altılısı Ters"
-        }
-    },
-    {
-        "front": "kupa-ikilisi",
-        "straight": {
-            "name": "Kupaların İkilisi"
-        },
-        "revert": {
-            "name": "Kupaların İkilisi Ters"
-        }
-    },
-    {
-        "front": "kiliclarin-beslisi",
-        "straight": {
-            "name": "Kılıçların Beşlisi"
-        },
-        "revert": {
-            "name": "Kılıçların Beşlisi Ters"
-        }
-    },
-    {
-        "front": "kiliclarin-onlusu",
-        "straight": {
-            "name": "Kılıçların Onlusu"
-        },
-        "revert": {
-            "name": "Kılıçların Onlusu Ters"
-        }
-    },
-    {
-        "front": "tilsim-dokuzlusu",
-        "straight": {
-            "name": "Tılsımların Dokuzlusu"
-        },
-        "revert": {
-            "name": "Tılsımların Dokuzlusu Ters"
-        }
-    },
-    {
-        "front": "degnek-uclusu",
-        "straight": {
-            "name": "Değnek Üçlüsü"
-        },
-        "revert": {
-            "name": "Değnek Üçlüsü Ters"
-        }
-    },
-    {
-        "front": "kupa-sekizlisi",
-        "straight": {
-            "name": "Kupaların Sekizlisi"
-        },
-        "revert": {
-            "name": "Kupaların Sekizlisi Ters"
-        }
-    },
-    {
-        "front": "kiliclarin-asi",
-        "straight": {
-            "name": "Kılıçların Ası"
-        },
-        "revert": {
-            "name": "Kılıçların Ası Ters"
-        }
-    },
-    {
-        "front": "kupa-uclusu",
-        "straight": {
-            "name": "Kupaların Üçlüsü"
-        },
-        "revert": {
-            "name": "Kupaların Üçlüsü Ters"
-        }
-    },
-    {
-        "front": "degnek-dokuzlusu",
-        "straight": {
-            "name": "Değnek Dokuzlusu"
-        },
-        "revert": {
-            "name": "Değnek Dokuzlusu Ters"
-        }
-    },
-    {
-        "front": "ermis",
-        "straight": {
-            "name": "Ermiş"
-        },
-        "revert": {
-            "name": "Ermiş Ters"
-        }
-    },
-    {
-        "front": "kiliclarin-dokuzlusu",
-        "straight": {
-            "name": "Kılıçların Dokuzlusu"
-        },
-        "revert": {
-            "name": "Kılıçların Dokuzlusu Ters"
-        }
-    },
-    {
-        "front": "kupa-yedilisi",
-        "straight": {
-            "name": "Kupaların Yedilisi"
-        },
-        "revert": {
-            "name": "Kupaların Yedilisi Ters"
-        }
-    },
-    {
-        "front": "kiliclarin-uclusu",
-        "straight": {
-            "name": "Kılıçların Üçlüsü"
-        },
-        "revert": {
-            "name": "Kılıçların Üçlüsü Ters"
-        }
-    },
-    {
-        "front": "degnek-beslisi",
-        "straight": {
-            "name": "Değnek Beşlisi"
-        },
-        "revert": {
-            "name": "Değnek Beşlisi Ters"
-        }
-    },
-    {
-        "front": "kiliclarin-ikilisi",
-        "straight": {
-            "name": "Kılıçların İkilisi"
-        },
-        "revert": {
-            "name": "Kılıçların İkilisi Ters"
-        }
-    },
-    {
-        "front": "tilsim-beslisi",
-        "straight": {
-            "name": "Tılsımların Beşlisi"
-        },
-        "revert": {
-            "name": "Tılsımların Beşlisi Ters"
-        }
-    },
-    {
-        "front": "kupa-onlusu",
-        "straight": {
-            "name": "Kupaların Onlusu"
-        },
-        "revert": {
-            "name": "Kupaların Onlusu Ters"
-        }
-    },
-    {
-        "front": "kupa-prensi",
-        "straight": {
-            "name": "Kupaların Prensi"
-        },
-        "revert": {
-            "name": "Kupaların Prensi Ters"
-        }
-    },
-    {
-        "front": "degnek-onlusu",
-        "straight": {
-            "name": "Değnek Onlusu"
-        },
-        "revert": {
-            "name": "Değnek Onlusu Ters"
-        }
-    },
-    {
-        "front": "kupa-dortlusu",
-        "straight": {
-            "name": "Kupaların Dörtlüsü"
-        },
-        "revert": {
-            "name": "Kupaların Dörtlüsü Ters"
-        }
-    },
-    {
-        "front": "kupa-beslisi",
-        "straight": {
-            "name": "Kupaların Beşlisi"
-        },
-        "revert": {
-            "name": "Kupaların Beşlisi Ters"
-        }
-    },
-    {
-        "front": "kule",
-        "straight": {
-            "name": "Yıkılan Kule"
-        },
-        "revert": {
-            "name": "Yıkılan Kule Ters"
-        }
-    },
-    {
-        "front": "tilsim-yedilisi",
-        "straight": {
-            "name": "Tılsımların Yedilisi"
-        },
-        "revert": {
-            "name": "Tılsımların Yedilisi Ters"
-        }
-    },
-    {
-        "front": "tilsim-altilisi",
-        "straight": {
-            "name": "Tılsımların Altılısı"
-        },
-        "revert": {
-            "name": "Tılsımların Altılısı Ters"
-        }
-    },
-    {
-        "front": "tilsim-uclusu",
-        "straight": {
-            "name": "Tılsımların Üçlüsü"
-        },
-        "revert": {
-            "name": "Tılsımların Üçlüsü Ters"
-        }
-    },
-    {
-        "front": "tilsim-onlusu",
-        "straight": {
-            "name": "Tılsımların Onlusu"
-        },
-        "revert": {
-            "name": "Tılsımların Onlusu Ters"
-        }
-    },
-    {
-        "front": "tilsim-ikilisi",
-        "straight": {
-            "name": "Tılsımların İkilisi"
-        },
-        "revert": {
-            "name": "Tılsımların İkilisi Ters"
-        }
-    },
-    {
-        "front": "degnek-sekizlisi",
-        "straight": {
-            "name": "Değnek Sekizlisi"
-        },
-        "revert": {
-            "name": "Değnek Sekizlisi Ters"
-        }
-    },
-    {
-        "front": "mahkeme",
-        "straight": {
-            "name": "Mahkeme"
-        },
-        "revert": {
-            "name": "Mahkeme Ters"
-        }
-    },
-    {
-        "front": "kupa-altisili",
-        "straight": {
-            "name": "Kupaların Altılısı"
-        },
-        "revert": {
-            "name": "Kupaların Altılısı Ters"
-        }
-    },
-    {
-        "front": "tilsim-asi",
-        "straight": {
-            "name": "Tılsımların Ası"
-        },
-        "revert": {
-            "name": "Tılsımların Ası Ters"
-        }
-    },
-    {
-        "front": "kiliclarin-sovalyesi",
-        "straight": {
-            "name": "Kılıçların Şövalyesi"
-        },
-        "revert": {
-            "name": "Kılıçların Şövalyesi Ters"
-        }
-    },
-    {
-        "front": "azize",
-        "straight": {
-            "name": "Azize"
-        },
-        "revert": {
-            "name": "Azize Ters"
-        }
-    },
-    {
-        "front": "kiliclarin-sekizlisi",
-        "straight": {
-            "name": "Kılıçların Sekizlisi"
-        },
-        "revert": {
-            "name": "Kılıçların Sekizlisi Ters"
-        }
-    },
-    {
-        "front": "degnek-yedilisi",
-        "straight": {
-            "name": "Değnek Yedilisi"
-        },
-        "revert": {
-            "name": "Değnek Yedilisi Ters"
-        }
-    }
-]
+        id: 1,
+        name: "asilmis-adam",
+        front: "Asılmış adam",
+        revert: "Asılmış adam ters",
+    },
+    {
+        id: 2,
+        name: "tilsim-kralicesi",
+        front: "Tılsımların Kraliçesi",
+        revert: "Tılsımların Kraliçesi Ters",
+    },
+    {
+        id: 3,
+        name: "seytan",
+        front: "Şeytan",
+        revert: "Şeytan Ters",
+    },
+    {
+        id: 4,
+        name: "kuvvet",
+        front: "Kuvvet",
+        revert: "Kuvvet Ters",
+    },
+    {
+        id: 5,
+        name: "dünya",
+        front: "Dünya",
+        revert: "Dünya Ters",
+    },
+    {
+        id: 6,
+        name: "ay",
+        front: "Ay",
+        revert: "Ay Ters",
+    },
+    {
+        id: 7,
+        name: "kupa-asi",
+        front: "Kupaların Ası",
+        revert: "Kupaların Ası Ters",
+    },
+    {
+        id: 8,
+        name: "kiliclarin-prensi",
+        front: "Kılıçların Prensi",
+        revert: "Kılıçların Prensi Ters",
+    },
+    {
+        id: 9,
+        name: "tilsim-prensi",
+        front: "Tılsımların Prensi",
+        revert: "Tılsımların Prensi Ters",
+    },
+    {
+        id: 10,
+        name: "savas-arabasi",
+        front: "Savaş Arabası",
+        revert: "Savaş Arabası Ters",
+    },
+    {
+        id: 11,
+        name: "olum",
+        front: "Ölüm",
+        revert: "Ölüm Ters",
+    },
+    {
+        id: 12,
+        name: "buyucu",
+        front: "Büyücü",
+        revert: "Büyücü Ters",
+    },
+    {
+        id: 13,
+        name: "degnek-krali",
+        front: "Değnek Kralı",
+        revert: "Değnek Kralı Ters",
+    },
+    {
+        id: 14,
+        name: "kiliclarin-krali",
+        front: "Kılıçların Kralı",
+        revert: "Kılıçların Kralı Ters",
+    },
+    {
+        id: 15,
+        name: "kiliclarin-yedilisi",
+        front: "Kılıçların Yedilisi",
+        revert: "Kılıçların Yedilisi Ters",
+    },
+    {
+        id: 16,
+        name: "degnek-dortlusu",
+        front: "Değnek Dörtlüsü",
+        revert: "Değnek Dörtlüsü Ters",
+    },
+    {
+        id: 17,
+        name: "kupa-dokuzlusu",
+        front: "Kupaların Dokuzlusu",
+        revert: "Kupaların Dokuzlusu Ters",
+    },
+    {
+        id: 18,
+        name: "kiliclarin-dortlusu",
+        front: "Kılıçların Dörtlüsü",
+        revert: "Kılıçların Dörtlüsü Ters",
+    },
+    {
+        id: 19,
+        name: "degnek-ikilisi",
+        front: "Değnek İkilisi",
+        revert: "Değnek İkilisi Ters",
+    },
+    {
+        id: 20,
+        name: "tilsim-sekizlisi",
+        front: "Tılsımların Sekizlisi",
+        revert: "Tılsımların Sekizlisi Ters",
+    },
+    {
+        id: 21,
+        name: "kiliclarin-altilisi",
+        front: "Kılıçların Altılısı",
+        revert: "Kılıçların Altılısı Ters",
+    },
+    {
+        id: 22,
+        name: "tilsim-dortlusu",
+        front: "Tılsımların Dörtlüsü",
+        revert: "Tılsımların Dörtlüsü Ters",
+    },
+    {
+        id: 23,
+        name: "kupa-sovalyesi",
+        front: "Kupaların Şövalyesi",
+        revert: "Kupaların Şövalyesi Ters",
+    },
+    {
+        id: 24,
+        name: "kiliclarin-kralicesi",
+        front: "Kılıçların Kraliçesi",
+        revert: "Kılıçların Kraliçesi Ters",
+    },
+    {
+        id: 25,
+        name: "imparatorice",
+        front: "İmparatoriçe",
+        revert: "İmparatoriçe Ters",
+    },
+    {
+        id: 26,
+        name: "jojer",
+        front: "Joker",
+        revert: "Joker Ters",
+    },
+    {
+        id: 27,
+        name: "tilsim-krali",
+        front: "Tılsımların Kralı",
+        revert: "Tılsımların Kralı Ters",
+    },
+    {
+        id: 28,
+        name: "degnek-prensi",
+        front: "Değnek Prensi",
+        revert: "Değnek Prensi Ters",
+    },
+    {
+        id: 29,
+        name: "aziz",
+        front: "Aziz",
+        revert: "Aziz Ters",
+    },
+    {
+        id: 30,
+        name: "asiklar",
+        front: "Aşıklar",
+        revert: "Aşıklar Ters",
+    },
+    {
+        id: 31,
+        name: "denge",
+        front: "Denge",
+        revert: "Denge Ters",
+    },
+    {
+        id: 32,
+        name: "kupa-kralicesi",
+        front: "Kupaların Kraliçesi",
+        revert: "Kupaların Kraliçesi Ters",
+    },
+    {
+        id: 33,
+        name: "adalet",
+        front: "Adalet",
+        revert: "Adalet Ters",
+    },
+    {
+        id: 34,
+        name: "tilsim-sovalyesi",
+        front: "Tılsımların Şövalyesi",
+        revert: "Tılsımların Şövalyesi Ters",
+    },
+    {
+        id: 35,
+        name: "degnek-kralicesi",
+        front: "Değnek Kraliçesi",
+        revert: "Değnek Kraliçesi Ters",
+    },
+    {
+        id: 36,
+        name: "imparator",
+        front: "İmparator",
+        revert: "İmparator Ters",
+    },
+    {
+        id: 37,
+        name: "kupa-krali",
+        front: "Kupaların Kralı",
+        revert: "Kupaların Kralı Ters",
+    },
+    {
+        id: 38,
+        name: "yildiz",
+        front: "Yıldız",
+        revert: "Yıldız Ters",
+    },
+    {
+        id: 39,
+        name: "degnek-sovalyesi",
+        front: "Değnek Şövalyesi",
+        revert: "Değnek Şövalyesi Ters",
+    },
+    {
+        id: 40,
+        name: "gunes",
+        front: "Güneş",
+        revert: "Güneş Ters",
+    },
+    {
+        id: 41,
+        name: "kader-carki",
+        front: "Kader Çarkı",
+        revert: "Kader Çarkı Ters",
+    },
+    {
+        id: 42,
+        name: "degnek-asi",
+        front: "Değnek Ası",
+        revert: "Değnek Ası Ters",
+    },
+    {
+        id: 43,
+        name: "degnek-altilisi",
+        front: "Değnek Altılısı",
+        revert: "Değnek Altılısı Ters",
+    },
+    {
+        id: 44,
+        name: "kupa-ikilisi",
+        front: "Kupaların İkilisi",
+        revert: "Kupaların İkilisi Ters",
+    },
+    {
+        id: 45,
+        name: "kiliclarin-beslisi",
+        front: "Kılıçların Beşlisi",
+        revert: "Kılıçların Beşlisi Ters",
+    },
+    {
+        id: 46,
+        name: "kiliclarin-onlusu",
+        front: "Kılıçların Onlusu",
+        revert: "Kılıçların Onlusu Ters",
+    },
+    {
+        id: 47,
+        name: "tilsim-dokuzlusu",
+        front: "Tılsımların Dokuzlusu",
+        revert: "Tılsımların Dokuzlusu Ters",
+    },
+    {
+        id: 48,
+        name: "degnek-uclusu",
+        front: "Değnek Üçlüsü",
+        revert: "Değnek Üçlüsü Ters",
+    },
+    {
+        id: 49,
+        name: "kupa-sekizlisi",
+        front: "Kupaların Sekizlisi",
+        revert: "Kupaların Sekizlisi Ters",
+    },
+    {
+        id: 50,
+        name: "tilsim-yedilisi",
+        front: "Tılsımların Yedilisi",
+        revert: "Tılsımların Yedilisi Ters",
+    },
+    {
+        id: 51,
+        name: "kupa-yedilisi",
+        front: "Kupaların Yedilisi",
+        revert: "Kupaların Yedilisi Ters",
+    },
+    {
+        id: 52,
+        name: "kupa-onlusu",
+        front: "Kupaların Onlusu",
+        revert: "Kupaların Onlusu Ters",
+    },
+];
+
 
 export default TarotCards;

@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react';
 import Header from '../../components/advanced/Header';
 import StickyBar from '../../components/advanced/StickyBar';
-import TempMenu from '../../components/advanced/TempMenu';
 import * as Styled from './LoggedInLayout.styled';
 
 type LoggedInLayoutProps = {
@@ -15,10 +14,9 @@ const LoggedInLayout: React.FC<LoggedInLayoutProps> = ({
 }) => {
   return (
     <>
-      <TempMenu />
       <Styled.LoggedInLayout>
         <Header pageName={pageName!} />
-        {children}
+        <div className="content">{children}</div>
         <StickyBar />
       </Styled.LoggedInLayout>
     </>
