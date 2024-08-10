@@ -27,6 +27,7 @@ class DashBoardController extends AbstractController
             ]);
         if ($preparedFortune) {
             $processTime = $preparedFortune->getProcessFinishTime();
+            $createdAt = $preparedFortune->getCreatedAt();
         } else {
             $processTime = null;
         }
@@ -59,6 +60,7 @@ class DashBoardController extends AbstractController
             'message' => 'Tarot Falınız',
             'data' => [
                 'pendingProcessExpireDate' => $processTime,
+                'createAt' => $createdAt,
                 'fortunes' => $fortunes
             ],
         ]);
