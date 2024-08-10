@@ -59,13 +59,20 @@ class TarotController extends AbstractController
         name: 'tarot.id',
         methods: ['GET'],
     )]
-    public function getTraotForId($id)
+    public function getTarotForId($id)
     {
         /** @var TarotProcess $tarot */
         $tarot = $this->entityManager->getRepository(TarotProcess::class)
             ->findOneBy(['user' => $this->getUser()->getId(), 'id' => $id]);
         $fortunes = [
-            'fortune' => $tarot->getResponse()[0]->content[0]->text->value
+            'success' => true,
+            'status' => 200,
+            'message' => 'Tarot Falınız',
+            'data' => [
+                'id' => $tarot->getId(),
+                'message' => $tarot->getResponse()[0]->content[0]->text->value,
+                'selectedCards' => $tarot->getSelectedCards()
+            ],
         ];
 
         return new JsonResponse($fortunes);
@@ -78,7 +85,20 @@ class TarotController extends AbstractController
     )]
     public function startTarotProcess(Request $request)
     {
-       $requestData = json_decode($request->getContent(),true);
+        $readyForTarot = $this->entityManager->getRepository(TarotProcess::class)
+            ->findBy([
+                'user' => $this->getUser()->getId(),
+                'status' => [TarotProcessEnum::STARTED, TarotProcessEnum::IN_PROGRESS]
+            ]);
+
+        if ($readyForTarot) {
+            return new JsonResponse([
+                'message' => 'Zaten bir falınız var. Lütfen önceki falınızın sonuçlanmasını bekleyin.',
+                'status' => 400
+            ]);
+        }
+
+        $requestData = json_decode($request->getContent(),true);
         $tarotProcess = new TarotProcess();
         $tarotProcess->setUser($this->getUser());
         $tarotProcess->setStatus(TarotProcessEnum::STARTED->value);
