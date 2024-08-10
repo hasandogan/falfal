@@ -39,7 +39,7 @@ class AuthenticationService
         $entity->setPassword($this->userPasswordHasher->hashPassword($entity, $requestBody['password']));
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
-        $this->createUserLimit($entity);
+       // $this->createUserLimit($entity);
         return $entity;
     }
 

@@ -11,8 +11,8 @@ class AbstractController
     protected EntityManagerInterface $entityManager;
 
     public function __construct(
-                                TokenStorageInterface $tokenStorage,
-                                EntityManagerInterface $entityManager
+    TokenStorageInterface $tokenStorage,
+    EntityManagerInterface $entityManager
     )
     {
         $this->tokenStorage = $tokenStorage;

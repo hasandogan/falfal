@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Services\AuthenticationService;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,11 +18,13 @@ use Symfony\Component\Serializer\SerializerInterface;
 class AuthController extends AbstractController
 {
     private $requestStack;
+    private $jwtManager;
 
-    public function __construct(JWTTokenManagerInterface $jwtManager, TokenStorageInterface $tokenStorage,RequestStack $requestStack)
+    public function __construct(EntityManagerInterface $entityManager, TokenStorageInterface $tokenStorage,RequestStack $requestStack, JWTTokenManagerInterface $jwtManager)
     {
-        parent::__construct($jwtManager, $tokenStorage);
+        parent::__construct($tokenStorage,$entityManager);
         $this->requestStack = $requestStack;
+        $this->jwtManager = $jwtManager;
     }
 
     #[Route(
