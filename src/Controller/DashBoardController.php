@@ -26,10 +26,11 @@ class DashBoardController extends AbstractController
                 'status' => [TarotProcessEnum::STARTED, TarotProcessEnum::IN_PROGRESS]
             ]);
         if ($preparedFortune) {
-            $processTime = $preparedFortune->getProcessFinishTime();
-            $createdAt = $preparedFortune->getCreatedAt();
+            $processTime = $preparedFortune->getProcessFinishTime()->format('Y-m-d H:i:s');
+            $createdAt = $preparedFortune->getCreatedAt()->format('Y-m-d H:i:s');
         } else {
             $processTime = null;
+            $createdAt = null;
         }
         $tarotFortunes = $this->entityManager
             ->getRepository(TarotProcess::class)
@@ -46,7 +47,7 @@ class DashBoardController extends AbstractController
                     'id' => $fortune->getId(),
                     'date' => $fortune->getCreatedAt(),
                     'type' => 'Tarot',
-                    'message' => $fortune->getResponse()[0]->content[0]->text->value
+                    'message' => $fortune->getResponse()
                 ];
             }
         }else{
@@ -61,9 +62,9 @@ class DashBoardController extends AbstractController
             'data' => [
                 'pendingProcess' => [
                     'status' => $processTime !== null ? true : false,
-                    'createAt' => $createdAt->format('Y-m-d H:i:s'),
-                    'endDate' => $processTime->format('Y-m-d H:i:s'),
-                    'serverResponseTime' => date('Y-m-d H:i:s')
+                    'createAt' => $createdAt ?? null,
+                    'endDate' => $processTime?? null,
+                    'serverResponseTime' => date('Y-m-d H:i:s') ?? null
                 ],
                 'fortunes' => $fortunes
             ],
