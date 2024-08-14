@@ -23,7 +23,7 @@ class DashBoardController extends AbstractController
             ->getRepository(TarotProcess::class)
             ->findOneBy([
                 'user' => $this->getUser()->getId(),
-                'status' => [TarotProcessEnum::STARTED, TarotProcessEnum::IN_PROGRESS]
+                'status' => [TarotProcessEnum::STARTED, TarotProcessEnum::IN_PROGRESS, TarotProcessEnum::WAITING]
             ]);
         if ($preparedFortune) {
             $processTime = $preparedFortune->getProcessFinishTime()->format('Y-m-d H:i:s');

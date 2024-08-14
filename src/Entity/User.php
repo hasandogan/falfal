@@ -73,9 +73,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'boolean')]
     private $isValid = 0;
-
+/**
     #[ORM\OneToMany(targetEntity: TarotProcess::class, mappedBy: "user")]
     private Collection $processes;
+**)*/
 
     #[ORM\Column(name: "created_at", type: Types::DATETIME_MUTABLE, nullable: true)]
     private \DateTime $createdAt;
@@ -276,10 +277,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->updatedAt = new \DateTime();
     }
 
+/**
     public function getProcesses(): Collection
     {
         return $this->processes;
     }
+**/
 
     /**
      * @return mixed
