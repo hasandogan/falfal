@@ -1,201 +1,248 @@
 [
   {
-  id: 1,
-  name: "Joker",
-  front: "Joker",
-  revert: "Joker Ters",
-  enFront: "The fool",
-  enRevert: "The fool - revert",
-  image: "falfalFE/public/images/cards/joker.png"
+  "id": 1,
+  "name": "Joker",
+  "front": "Joker",
+  "revert": "Joker Ters",
+  "enFront": "The fool",
+  "enRevert": "The fool - revert",
+  "image": "falfalFE/public/images/cards/joker.png"
 },
   {
-    id: 2,
-    name: "Büyücü,
-    front: "Büyücü",
-    revert: "Büyücü Ters",
-    enFront: "The magician",
-    enRevert: "The magician - revert",
-    image: "falfalFE/public/images/cards/buyucu.png"
+    "id": 2,
+    "name": "Büyücü,
+    "front": "Büyücü",
+    "revert": "Büyücü Ters",
+    "enFront": "The magician",
+    "enRevert": "The magician - revert",
+    "image": "falfalFE/public/images/cards/buyucu.png"
   },
 
   {
-    id: 2,
-    name: "Azice",
-    front: "Azice",
-    revert: "Azice Ters",
-    enFront: "The High Priestess",
-    enRevert: "The High Priestess - revert",
-    image: "falfalFE/public/images/cards/azize.png"
+    "id": 2,
+    "name": "Azice",
+    "front": "Azice",
+    "revert": "Azice Ters",
+    "enFront": "The High Priestess",
+    "enRevert": "The High Priestess - revert",
+    "image": "falfalFE/public/images/cards/azize.png"
   },
   {
-      id: 3,
-      name: "İmparatoriçe",
-      front: "İmparatoriçe",
-      revert: "İmparatoriçe Ters",
-      enFront: "The Empress",
-      enRevert: "The Empress - revert",
-      image: "falfalFE/public/images/cards/imparatorice.png"
+      "id": 3,
+      "name": "İmparatoriçe",
+      "front": "İmparatoriçe",
+      "revert": "İmparatoriçe Ters",
+      "enFront": "The Empress",
+      "enRevert": "The Empress - revert",
+      "image": "falfalFE/public/images/cards/imparatorice.png"
     },
     {
-      id: 4,
-      name: "İmparator",
-      front: "İmparator",
-      revert: "İmparator Ters",
-      enFront: "The Emperor",
-      enRevert: "The Emperor - revert",
-      image: "falfalFE/public/images/cards/imparator.png"
+      "id": 4,
+      "name": "İmparator",
+      "front": "İmparator",
+      "revert": "İmparator Ters",
+      "enFront": "The Emperor",
+      "enRevert": "The Emperor - revert",
+      "image": "falfalFE/public/images/cards/imparator.png"
     },
     {
-        id: 5,
-        name: "Aziz",
-        front: "Aziz",
-        revert: "Aziz Ters",
-        enFront: "The Hierophant",
-        enRevert: "The Hierophant - revert",
-        image: "falfalFE/public/images/cards/aziz.png"
+        "id": 5,
+        "name": "Aziz",
+        "front": "Aziz",
+        "revert": "Aziz Ters",
+        "enFront": "The Hierophant",
+        "enRevert": "The Hierophant - revert",
+        "image": "falfalFE/public/images/cards/aziz.png"
     },
     {
-        id: 6,
-        name: "AşıK",
-        front: "AşıK",
-        revert: "AşıK Ters",
-        enFront: "The Lovers",
-        enRevert: "The Lovers - revert",
-        image: "falfalFE/public/images/cards/asik.png"
+        "id": 6,
+        "name": "AşıK",
+        "front": "AşıK",
+        "revert": "AşıK Ters",
+        "enFront": "The Lovers",
+        "enRevert": "The Lovers - revert",
+        "image": "falfalFE/public/images/cards/asik.png"
     },
     {
-        id: 7,
-        name: "Araba",
-        front: "Araba",
-        revert: "Araba Ters",
-        enFront: "The Chariot",
-        enRevert: "The Chariot - revert",
-        image: "falfalFE/public/images/cards/araba.png"
+        "id": 7,
+        "name": "Araba",
+        "front": "Araba",
+        "revert": "Araba Ters",
+        "enFront": "The Chariot",
+        "enRevert": "The Chariot - revert",
+        "image": "falfalFE/public/images/cards/araba.png"
     },
     {
-        id: 8,
-        name: "Güç",
-        front: "Güç",
-        revert: "Güç Ters",
-        enFront: "Strength",
-        enRevert: "Strength - revert",
-        image: "falfalFE/public/images/cards/guc.png"
-    },
-  {
-    id: 9,
-    name: "Ermiş",
-    front: "Ermiş",
-    revert: "Ermiş Ters",
-    enFront: "The Hermit",
-    enRevert: "The Hermit - revert",
-    image: "falfalFE/public/images/cards/ermis.png"
-  },
-  {
-    id: 10,
-    name: "Kader Çarkı",
-    front: "Kader Çarkı",
-    revert: "Kader Çarkı Ters",
-    enFront: "Wheel of Fortune",
-    enRevert: "Wheel of Fortune - revert",
-    image: "falfalFE/public/images/cards/kader-carki.png"
-  },
-    {
-      id: 11,
-      name: "Adalet",
-      front: "Adalet",
-      revert: "Adalet Ters",
-      enFront: "Justice",
-      enRevert: "Justice - revert",
-      image: "falfalFE/public/images/cards/adalet.png"
+        "id": 8,
+        "name": "Güç",
+        "front": "Güç",
+        "revert": "Güç Ters",
+        "enFront": "Strength",
+        "enRevert": "Strength - revert",
+        "image": "falfalFE/public/images/cards/guc.png"
     },
   {
-    id: 12,
-    name: "Asılan Adam",
-    front: "Asılan Adam",
-    revert: "Asılan Adam Ters",
-    enFront: "The Hanged Man",
-    enRevert: "The Hanged Man Revert",
-    image: "falfalFE/public/images/cards/asilan-adam.png"
-  },
-    {
-        id: 13,
-        name: "Ölüm",
-        front: "Ölüm",
-        revert: "Ölüm Ters",
-        enFront: "Death",
-        enRevert: "Death - revert",
-        image: "falfalFE/public/images/cards/olum.png"
-    },
-  {
-    id: 14,
-    name: "Denge",
-    front: "Denge",
-    revert: "Denge Ters",
-    enFront: "Temperance",
-    enRevert: "Temperance - revert",
-    image: "falfalFE/public/images/cards/denge.png"
+    "id": 9,
+    "name": "Ermiş",
+    "front": "Ermiş",
+    "revert": "Ermiş Ters",
+    "enFront": "The Hermit",
+    "enRevert": "The Hermit - revert",
+    "image": "falfalFE/public/images/cards/ermis.png"
   },
   {
-    id: 15,
-    name: "Şeytan",
-    front: "Şeytan",
-    revert: "Şeytan Ters",
-    enFront: "The Devil",
-    enRevert: "The Devil - revert",
-    image: "falfalFE/public/images/cards/seytan.png"
+    "id": 10,
+    "name": "Kader Çarkı",
+    "front": "Kader Çarkı",
+    "revert": "Kader Çarkı Ters",
+    "enFront": "Wheel of Fortune",
+    "enRevert": "Wheel of Fortune - revert",
+    "image": "falfalFE/public/images/cards/kader-carki.png"
   },
     {
-        id: 16,
-        name: "Kule",
-        front: "Kule",
-        revert: "Kule Ters",
-        enFront: "The Tower",
-        enRevert: "The Tower - revert",
-        image: "falfalFE/public/images/cards/kule.png"
+      "id": 11,
+      "name": "Adalet",
+      "front": "Adalet",
+      "revert": "Adalet Ters",
+      "enFront": "Justice",
+      "enRevert": "Justice - revert",
+      "image": "falfalFE/public/images/cards/adalet.png"
+    },
+  {
+    "id": 12,
+    "name": "Asılan Adam",
+    "front": "Asılan Adam",
+    "revert": "Asılan Adam Ters",
+    "enFront": "The Hanged Man",
+    "enRevert": "The Hanged Man Revert",
+    "image": "falfalFE/public/images/cards/asilan-adam.png"
+  },
+    {
+        "id": 13,
+        "name": "Ölüm",
+        "front": "Ölüm",
+        "revert": "Ölüm Ters",
+        "enFront": "Death",
+        "enRevert": "Death - revert",
+        "image": "falfalFE/public/images/cards/olum.png"
+    },
+  {
+    "id": 14,
+    "name": "Denge",
+    "front": "Denge",
+    "revert": "Denge Ters",
+    "enFront": "Temperance",
+    "enRevert": "Temperance - revert",
+    "image": "falfalFE/public/images/cards/denge.png"
+  },
+  {
+    "id": 15,
+    "name": "Şeytan",
+    "front": "Şeytan",
+    "revert": "Şeytan Ters",
+    "enFront": "The Devil",
+    "enRevert": "The Devil - revert",
+    "image": "falfalFE/public/images/cards/seytan.png"
+  },
+    {
+        "id": 16,
+        "name": "Kule",
+        "front": "Kule",
+        "revert": "Kule Ters",
+        "enFront": "The Tower",
+        "enRevert": "The Tower - revert",
+        "image": "falfalFE/public/images/cards/kule.png"
     },
     {
-        id: 17,
-        name: "Yıldız",
-        front: "Yıldız",
-        revert: "Yıldız Ters",
-        enFront: "The Star",
-        enRevert: "The Star - revert",
-        image: "falfalFE/public/images/cards/yildiz.png"
+        "id": 17,
+        "name": "Yıldız",
+        "front": "Yıldız",
+        "revert": "Yıldız Ters",
+        "enFront": "The Star",
+        "enRevert": "The Star - revert",
+        "image": "falfalFE/public/images/cards/yildiz.png"
     },
     {
-        id: 18,
-        name: "Ay",
-        front: "Ay",
-        revert: "Ay Ters",
-        enFront: "The Moon",
-        enRevert: "The Moon - revert",
-        image: "falfalFE/public/images/cards/ay.png"
+        "id": 18,
+        "name": "Ay",
+        "front": "Ay",
+        "revert": "Ay Ters",
+        "enFront": "The Moon",
+        "enRevert": "The Moon - revert",
+        "image": "falfalFE/public/images/cards/ay.png"
     },
     {
-        id: 19,
-        name: "Güneş",
-        front: "Güneş",
-        revert: "Güneş Ters",
-        enFront: "The Sun",
-        enRevert: "The Sun - revert",
-        image: "falfalFE/public/images/cards/gunes.png"
+        "id": 19,
+        "name": "Güneş",
+        "front": "Güneş",
+        "revert": "Güneş Ters",
+        "enFront": "The Sun",
+        "enRevert": "The Sun - revert",
+        "image": "falfalFE/public/images/cards/gunes.png"
     },
     {
-      id: 20,
-      name: "Yargı",
-      front: "Yargı",
-      revert: "Yargı Ters",
-      enFront: "Judgement",
-      enRevert: "Judgement - revert",
-      image: "falfalFE/public/images/cards/yargi.png"
+      "id": 20,
+      "name": "Yargı",
+      "front": "Yargı",
+      "revert": "Yargı Ters",
+      "enFront": "Judgement",
+      "enRevert": "Judgement - revert",
+      "image": "falfalFE/public/images/cards/yargi.png"
     },
     {
-      id: 21,
-      name: "Dünya",
-      front: "Dünya",
-      revert: "Dünya Ters",
-      enFront: "The World",
-      enRevert: "The World - revert",
-      image: "falfalFE/public/images/cards/dunya.png"
-    }
+      "id": 21,
+      "name": "Dünya",
+      "front": "Dünya",
+      "revert": "Dünya Ters",
+      "enFront": "The World",
+      "enRevert": "The World - revert",
+      "image": "falfalFE/public/images/cards/dunya.png"
+    },
+  {
+    "id": 22,
+    "name": "Kılıç Ası",
+    "front": "Kılıç Ası",
+    "revert": "Kılıç Ası Ters",
+    "enFront": "Ace of Swords",
+    "enRevert": "Ace of Swords - revert",
+    "image": "falfalFE/public/images/cards/kilic-asi.png"
+  },
+  {
+    "id": 23,
+    "name": "Kılıç İkilisi",
+    "front": "Kılıç İkilisi",
+    "revert": "Kılıç İkilisi Ters",
+    "enFront": "Two of Swords",
+    "enRevert": "Two of Swords - revert",
+    "image": "falfalFE/public/images/cards/kilic-ikilisi.png"
+  },
+  {
+    "id": 24,
+    "name": "Kılıç Üçlüsü",
+    "front": "Kılıç Üçlüsü",
+    "revert": "Kılıç Üçlüsü Ters",
+    "enFront": "Three of Swords",
+    "enRevert": "Three of Swords - revert",
+    "image": "falfalFE/public/images/cards/kilic-uclusu.png"
+  },
+    {
+        "id": 25,
+        "name": "Kılıç Dörtlüsü",
+        "front": "Kılıç Dörtlüsü",
+        "revert": "Kılıç Dörtlüsü Ters",
+        "enFront": "Four of Swords",
+        "enRevert": "Four of Swords - revert",
+        "image": "falfalFE/public/images/cards/kilic-dortlusu.png"
+    },
+    {
+      "id": 26,
+        "name": "Kılıç Beşlisi",
+        "front": "Kılıç Beşlisi",
+        "revert": "Kılıç Beşlisi Ters",
+        "enFront": "Five of Swords",
+        "enRevert": "Five of Swords - revert",
+        "image": "falfalFE/public/images/cards/kilic-beslisi.png"
+    },
+
+
 ]
