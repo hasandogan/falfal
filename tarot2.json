@@ -243,6 +243,86 @@
         "enRevert": "Five of Swords - revert",
         "image": "falfalFE/public/images/cards/kilic-beslisi.png"
     },
-
+    {
+      "id": 27,
+        "name": "Kılıç Altılısı",
+        "front": "Kılıç Altılısı",
+        "revert": "Kılıç Altılısı Ters",
+        "enFront": "Six of Swords",
+        "enRevert": "Six of Swords - revert",
+        "image": "falfalFE/public/images/cards/kilic-altilisi.png"
+    },
+    {
+      "id": 28,
+        "name": "Kılıç Yedilisi",
+        "front": "Kılıç Yedilisi",
+        "revert": "Kılıç Yedilisi Ters",
+        "enFront": "Seven of Swords",
+        "enRevert": "Seven of Swords - revert",
+        "image": "falfalFE/public/images/cards/kilic-yedilisi.png"
+    },
+    {
+      "id": 29,
+        "name": "Kılıç Sekizlisi",
+        "front": "Kılıç Sekizlisi",
+        "revert": "Kılıç Sekizlisi Ters",
+        "enFront": "Eight of Swords",
+        "enRevert": "Eight of Swords - revert",
+        "image": "falfalFE/public/images/cards/kilic-sekizlisi.png"
+    },
+    {
+      "id": 30,
+        "name": "Kılıç Dokuzlusu",
+        "front": "Kılıç Dokuzlusu",
+        "revert": "Kılıç Dokuzlusu Ters",
+        "enFront": "Nine of Swords",
+        "enRevert": "Nine of Swords - revert",
+        "image": "falfalFE/public/images/cards/kilic-dokuzlusu.png"
+    },
+    {
+      "id": 31,
+        "name": "Kılıç Onlusu",
+        "front": "Kılıç Onlusu",
+        "revert": "Kılıç Onlusu Ters",
+        "enFront": "Ten of Swords",
+        "enRevert": "Ten of Swords - revert",
+        "image": "falfalFE/public/images/cards/kilic-onlusu.png"
+    },
+    {
+      "id": 32,
+        "name": "Kılıç Prensi",
+        "front": "Kılıç Prensi",
+        "revert": "Kılıç Prensi Ters",
+        "enFront": "Page of Swords",
+        "enRevert": "Page of Swords - revert",
+        "image": "falfalFE/public/images/cards/kilic-prensi.png"
+    },
+  {
+    "id": 33,
+    "name": "Kılıç Şövalyesi",
+    "front": "Kılıç Şövalyesi",
+    "revert": "Kılıç Şövalyesi Ters",
+    "enFront": "Knight of Swords",
+    "enRevert": "Knight of Swords - revert",
+    "image": "falfalFE/public/images/cards/kilic-sovalyesi.png"
+  },
+  {
+    "id": 34,
+    "name": "Kılıç Kraliçesi",
+    "front": "Kılıç Kraliçesi",
+    "revert": "Kılıç Kraliçesi Ters",
+    "enFront": "Queen of Swords",
+    "enRevert": "Queen of Swords - revert",
+    "image": "falfalFE/public/images/cards/kilic-kralicesi.png"
+  },
+  {
+    "id": 35,
+    "name": "Kılıç Kralı",
+    "front": "Kılıç Kralı",
+    "revert": "Kılıç Kralı Ters",
+    "enFront": "King of Swords",
+    "enRevert": "King of Swords - revert",
+    "image": "falfalFE/public/images/cards/kilic-krali.png"
+  },
 
 ]
