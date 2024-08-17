@@ -64,9 +64,9 @@
   },
   {
     "id": 8,
-    "name": "Araba",
-    "front": "Araba",
-    "revert": "Araba Ters",
+    "name": "Savaş Arabası",
+    "front": "Savaş Arabası",
+    "revert": "Savaş Arabası Ters",
     "enFront": "The Chariot",
     "enRevert": "The Chariot - revert",
     "image": "falfalFE/public/images/cards/araba.png"
@@ -688,6 +688,7 @@
     "name": "Tılsım Kraliçesi",
     "front": "Tılsım Kraliçesi",
     "revert": "Tılsım Kraliçesi Ters",
+
     "enFront": "Queen of Pentacles",
     "enRevert": "Queen of Pentacles - revert",
     "image": "falfalFE/public/images/cards/tilsim-kralicesi.png"
