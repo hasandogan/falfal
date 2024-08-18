@@ -98,7 +98,8 @@ class TarotController extends AbstractController
                 'status' => 400,
                 'success' => 'true',
                 'data' => '',
-                ],400);
+                ],400, ['Content-Type' => 'application/json', 'Access-Control-Allow-Origin' => '*']);
+
         }
 
         $requestData = json_decode($request->getContent(),true);
