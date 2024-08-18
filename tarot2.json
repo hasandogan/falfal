@@ -6,7 +6,7 @@
     "revert": "Joker Ters",
     "enFront": "The fool",
     "enRevert": "The fool - revert",
-    "image": "falfalFE/public/images/cards/joker.png"
+    "image": "/images/cards/joker.png"
   },
   {
     "id": 2,
@@ -15,7 +15,7 @@
     "revert": "Büyücü Ters",
     "enFront": "The magician",
     "enRevert": "The magician - revert",
-    "image": "falfalFE/public/images/cards/buyucu.png"
+    "image": "/images/cards/buyucu.png"
   },
   {
     "id": 3,
@@ -24,7 +24,7 @@
     "revert": "Azice Ters",
     "enFront": "The High Priestess",
     "enRevert": "The High Priestess - revert",
-    "image": "falfalFE/public/images/cards/azize.png"
+    "image": "/images/cards/azize.png"
   },
   {
     "id": 4,
@@ -33,7 +33,7 @@
     "revert": "İmparatoriçe Ters",
     "enFront": "The Empress",
     "enRevert": "The Empress - revert",
-    "image": "falfalFE/public/images/cards/imparatorice.png"
+    "image": "/images/cards/imparatorice.png"
   },
   {
     "id": 5,
@@ -42,7 +42,7 @@
     "revert": "İmparator Ters",
     "enFront": "The Emperor",
     "enRevert": "The Emperor - revert",
-    "image": "falfalFE/public/images/cards/imparator.png"
+    "image": "/images/cards/imparator.png"
   },
   {
     "id": 6,
@@ -51,7 +51,7 @@
     "revert": "Aziz Ters",
     "enFront": "The Hierophant",
     "enRevert": "The Hierophant - revert",
-    "image": "falfalFE/public/images/cards/aziz.png"
+    "image": "/images/cards/aziz.png"
   },
   {
     "id": 7,
@@ -60,7 +60,7 @@
     "revert": "AşıK Ters",
     "enFront": "The Lovers",
     "enRevert": "The Lovers - revert",
-    "image": "falfalFE/public/images/cards/asik.png"
+    "image": "/images/cards/asiklar.png"
   },
   {
     "id": 8,
@@ -69,7 +69,7 @@
     "revert": "Savaş Arabası Ters",
     "enFront": "The Chariot",
     "enRevert": "The Chariot - revert",
-    "image": "falfalFE/public/images/cards/araba.png"
+    "image": "/images/cards/araba.png"
   },
   {
     "id": 9,
@@ -78,7 +78,7 @@
     "revert": "Güç Ters",
     "enFront": "Strength",
     "enRevert": "Strength - revert",
-    "image": "falfalFE/public/images/cards/guc.png"
+    "image": "/images/cards/guc.png"
   },
   {
     "id": 10,
@@ -87,7 +87,7 @@
     "revert": "Ermiş Ters",
     "enFront": "The Hermit",
     "enRevert": "The Hermit - revert",
-    "image": "falfalFE/public/images/cards/ermis.png"
+    "image": "/images/cards/ermis.png"
   },
   {
     "id": 11,
@@ -96,7 +96,7 @@
     "revert": "Kader Çarkı Ters",
     "enFront": "Wheel of Fortune",
     "enRevert": "Wheel of Fortune - revert",
-    "image": "falfalFE/public/images/cards/kader-carki.png"
+    "image": "/images/cards/kader-carki.png"
   },
   {
     "id": 12,
@@ -105,7 +105,7 @@
     "revert": "Adalet Ters",
     "enFront": "Justice",
     "enRevert": "Justice - revert",
-    "image": "falfalFE/public/images/cards/adalet.png"
+    "image": "/images/cards/adalet.png"
   },
   {
     "id": 13,
@@ -114,7 +114,7 @@
     "revert": "Asılan Adam Ters",
     "enFront": "The Hanged Man",
     "enRevert": "The Hanged Man Revert",
-    "image": "falfalFE/public/images/cards/asilan-adam.png"
+    "image": "/images/cards/asilan-adam.png"
   },
   {
     "id": 14,
@@ -123,7 +123,7 @@
     "revert": "Ölüm Ters",
     "enFront": "Death",
     "enRevert": "Death - revert",
-    "image": "falfalFE/public/images/cards/olum.png"
+    "image": "/images/cards/olum.png"
   },
   {
     "id": 15,
@@ -132,7 +132,7 @@
     "revert": "Denge Ters",
     "enFront": "Temperance",
     "enRevert": "Temperance - revert",
-    "image": "falfalFE/public/images/cards/denge.png"
+    "image": "/images/cards/denge.png"
   },
   {
     "id": 16,
@@ -141,7 +141,7 @@
     "revert": "Şeytan Ters",
     "enFront": "The Devil",
     "enRevert": "The Devil - revert",
-    "image": "falfalFE/public/images/cards/seytan.png"
+    "image": "/images/cards/seytan.png"
   },
   {
     "id": 17,
@@ -150,7 +150,7 @@
     "revert": "Kule Ters",
     "enFront": "The Tower",
     "enRevert": "The Tower - revert",
-    "image": "falfalFE/public/images/cards/kule.png"
+    "image": "/images/cards/kule.png"
   },
   {
     "id": 18,
@@ -159,7 +159,7 @@
     "revert": "Yıldız Ters",
     "enFront": "The Star",
     "enRevert": "The Star - revert",
-    "image": "falfalFE/public/images/cards/yildiz.png"
+    "image": "/images/cards/yildiz.png"
   },
   {
     "id": 19,
@@ -168,7 +168,7 @@
     "revert": "Ay Ters",
     "enFront": "The Moon",
     "enRevert": "The Moon - revert",
-    "image": "falfalFE/public/images/cards/ay.png"
+    "image": "/images/cards/ay.png"
   },
   {
     "id": 20,
@@ -177,7 +177,7 @@
     "revert": "Güneş Ters",
     "enFront": "The Sun",
     "enRevert": "The Sun - revert",
-    "image": "falfalFE/public/images/cards/gunes.png"
+    "image": "/images/cards/gunes.png"
   },
   {
     "id": 21,
@@ -186,7 +186,7 @@
     "revert": "Yargı Ters",
     "enFront": "Judgement",
     "enRevert": "Judgement - revert",
-    "image": "falfalFE/public/images/cards/yargi.png"
+    "image": "/images/cards/yargi.png"
   },
   {
     "id": 22,
@@ -195,7 +195,7 @@
     "revert": "Dünya Ters",
     "enFront": "The World",
     "enRevert": "The World - revert",
-    "image": "falfalFE/public/images/cards/dunya.png"
+    "image": "/images/cards/dunya.png"
   },
   {
     "id": 23,
@@ -204,7 +204,7 @@
     "revert": "Kılıç Ası Ters",
     "enFront": "Ace of Swords",
     "enRevert": "Ace of Swords - revert",
-    "image": "falfalFE/public/images/cards/kilic-asi.png"
+    "image": "/images/cards/kilic-asi.png"
   },
   {
     "id": 24,
@@ -213,7 +213,7 @@
     "revert": "Kılıç İkilisi Ters",
     "enFront": "Two of Swords",
     "enRevert": "Two of Swords - revert",
-    "image": "falfalFE/public/images/cards/kilic-ikilisi.png"
+    "image": "/images/cards/kilic-ikilisi.png"
   },
   {
     "id": 25,
@@ -222,7 +222,7 @@
     "revert": "Kılıç Üçlüsü Ters",
     "enFront": "Three of Swords",
     "enRevert": "Three of Swords - revert",
-    "image": "falfalFE/public/images/cards/kilic-uclusu.png"
+    "image": "/images/cards/kilic-uclusu.png"
   },
   {
     "id": 26,
@@ -231,7 +231,7 @@
     "revert": "Kılıç Dörtlüsü Ters",
     "enFront": "Four of Swords",
     "enRevert": "Four of Swords - revert",
-    "image": "falfalFE/public/images/cards/kilic-dortlusu.png"
+    "image": "/images/cards/kilic-dortlusu.png"
   },
   {
     "id": 27,
@@ -240,7 +240,7 @@
     "revert": "Kılıç Beşlisi Ters",
     "enFront": "Five of Swords",
     "enRevert": "Five of Swords - revert",
-    "image": "falfalFE/public/images/cards/kilic-beslisi.png"
+    "image": "/images/cards/kilic-beslisi.png"
   },
   {
     "id": 28,
@@ -249,7 +249,7 @@
     "revert": "Kılıç Altılısı Ters",
     "enFront": "Six of Swords",
     "enRevert": "Six of Swords - revert",
-    "image": "falfalFE/public/images/cards/kilic-altilisi.png"
+    "image": "/images/cards/kilic-altilisi.png"
   },
   {
     "id": 29,
@@ -258,7 +258,7 @@
     "revert": "Kılıç Yedilisi Ters",
     "enFront": "Seven of Swords",
     "enRevert": "Seven of Swords - revert",
-    "image": "falfalFE/public/images/cards/kilic-yedilisi.png"
+    "image": "/images/cards/kilic-yedilisi.png"
   },
   {
     "id": 30,
@@ -267,7 +267,7 @@
     "revert": "Kılıç Sekizlisi Ters",
     "enFront": "Eight of Swords",
     "enRevert": "Eight of Swords - revert",
-    "image": "falfalFE/public/images/cards/kilic-sekizlisi.png"
+    "image": "/images/cards/kilic-sekizlisi.png"
   },
   {
     "id": 31,
@@ -276,7 +276,7 @@
     "revert": "Kılıç Dokuzlusu Ters",
     "enFront": "Nine of Swords",
     "enRevert": "Nine of Swords - revert",
-    "image": "falfalFE/public/images/cards/kilic-dokuzlusu.png"
+    "image": "/images/cards/kilic-dokuzlusu.png"
   },
   {
     "id": 32,
@@ -285,7 +285,7 @@
     "revert": "Kılıç Onlusu Ters",
     "enFront": "Ten of Swords",
     "enRevert": "Ten of Swords - revert",
-    "image": "falfalFE/public/images/cards/kilic-onlusu.png"
+    "image": "/images/cards/kilic-onlusu.png"
   },
   {
     "id": 33,
@@ -294,7 +294,7 @@
     "revert": "Kılıç Prensi Ters",
     "enFront": "Page of Swords",
     "enRevert": "Page of Swords - revert",
-    "image": "falfalFE/public/images/cards/kilic-prensi.png"
+    "image": "/images/cards/kilic-prensi.png"
   },
   {
     "id": 34,
@@ -303,7 +303,7 @@
     "revert": "Kılıç Şövalyesi Ters",
     "enFront": "Knight of Swords",
     "enRevert": "Knight of Swords - revert",
-    "image": "falfalFE/public/images/cards/kilic-sovalyesi.png"
+    "image": "/images/cards/kilic-sovalyesi.png"
   },
   {
     "id": 35,
@@ -312,7 +312,7 @@
     "revert": "Kılıç Kraliçesi Ters",
     "enFront": "Queen of Swords",
     "enRevert": "Queen of Swords - revert",
-    "image": "falfalFE/public/images/cards/kilic-kralicesi.png"
+    "image": "/images/cards/kilic-kralicesi.png"
   },
   {
     "id": 36,
@@ -321,7 +321,7 @@
     "revert": "Kılıç Kralı Ters",
     "enFront": "King of Swords",
     "enRevert": "King of Swords - revert",
-    "image": "falfalFE/public/images/cards/kilic-krali.png"
+    "image": "/images/cards/kilic-krali.png"
   },
   {
     "id": 37,
@@ -330,7 +330,7 @@
     "revert": "Asa Ası Ters",
     "enFront": "Ace of Wands",
     "enRevert": "Ace of Wands - revert",
-    "image": "falfalFE/public/images/cards/asa-asi.png"
+    "image": "/images/cards/asa-asi.png"
   },
   {
     "id": 38,
@@ -339,7 +339,7 @@
     "revert": "Asa İkilisi Ters",
     "enFront": "Two of Wands",
     "enRevert": "Two of Wands - revert",
-    "image": "falfalFE/public/images/cards/asa-ikilisi.png"
+    "image": "/images/cards/asa-ikilisi.png"
   },
   {
     "id": 39,
@@ -348,7 +348,7 @@
     "revert": "Asa Üçlüsü Ters",
     "enFront": "Three of Wands",
     "enRevert": "Three of Wands - revert",
-    "image": "falfalFE/public/images/cards/asa-uclusu.png"
+    "image": "/images/cards/asa-uclusu.png"
   },
   {
     "id": 40,
@@ -357,7 +357,7 @@
     "revert": "Asa Dörtlüsü Ters",
     "enFront": "Four of Wands",
     "enRevert": "Four of Wands - revert",
-    "image": "falfalFE/public/images/cards/asa-dortlusu.png"
+    "image": "/images/cards/asa-dortlusu.png"
   },
   {
     "id": 41,
@@ -366,7 +366,7 @@
     "revert": "Asa Beşlisi Ters",
     "enFront": "Five of Wands",
     "enRevert": "Five of Wands - revert",
-    "image": "falfalFE/public/images/cards/asa-beslisi.png"
+    "image": "/images/cards/asa-beslisi.png"
   },
   {
     "id": 42,
@@ -375,7 +375,7 @@
     "revert": "Asa Altılısı Ters",
     "enFront": "Six of Wands",
     "enRevert": "Six of Wands - revert",
-    "image": "falfalFE/public/images/cards/asa-altilisi.png"
+    "image": "/images/cards/asa-altilisi.png"
   },
   {
     "id": 43,
@@ -384,7 +384,7 @@
     "revert": "Asa Yedilisi Ters",
     "enFront": "Seven of Wands",
     "enRevert": "Seven of Wands - revert",
-    "image": "falfalFE/public/images/cards/asa-yedilisi.png"
+    "image": "/images/cards/asa-yedilisi.png"
   },
   {
     "id": 44,
@@ -393,7 +393,7 @@
     "revert": "Asa Sekizlisi Ters",
     "enFront": "Eight of Wands",
     "enRevert": "Eight of Wands - revert",
-    "image": "falfalFE/public/images/cards/asa-sekizlisi.png"
+    "image": "/images/cards/asa-sekizlisi.png"
   },
   {
     "id": 45,
@@ -402,7 +402,7 @@
     "revert": "Asa Dokuzlusu Ters",
     "enFront": "Nine of Wands",
     "enRevert": "Nine of Wands - revert",
-    "image": "falfalFE/public/images/cards/asa-dokuzlusu.png"
+    "image": "/images/cards/asa-dokuzlusu.png"
   },
   {
     "id": 46,
@@ -411,7 +411,7 @@
     "revert": "Asa Onlusu Ters",
     "enFront": "Ten of Wands",
     "enRevert": "Ten of Wands - revert",
-    "image": "falfalFE/public/images/cards/asa-onlusu.png"
+    "image": "/images/cards/asa-onlusu.png"
   },
   {
     "id": 47,
@@ -420,7 +420,7 @@
     "revert": "Asa Prensi Ters",
     "enFront": "Page of Wands",
     "enRevert": "Page of Wands - revert",
-    "image": "falfalFE/public/images/cards/asa-prensi.png"
+    "image": "/images/cards/asa-prensi.png"
   },
   {
     "id": 48,
@@ -429,7 +429,7 @@
     "revert": "Asa Şövalyesi Ters",
     "enFront": "Knight of Wands",
     "enRevert": "Knight of Wands - revert",
-    "image": "falfalFE/public/images/cards/asa-sovalyesi.png"
+    "image": "/images/cards/asa-sovalyesi.png"
   },
   {
     "id": 49,
@@ -438,7 +438,7 @@
     "revert": "Asa Kraliçesi Ters",
     "enFront": "Queen of Wands",
     "enRevert": "Queen of Wands - revert",
-    "image": "falfalFE/public/images/cards/asa-kralicesi.png"
+    "image": "/images/cards/asa-kralicesi.png"
   },
   {
     "id": 50,
@@ -447,7 +447,7 @@
     "revert": "Asa Kralı Ters",
     "enFront": "King of Wands",
     "enRevert": "King of Wands - revert",
-    "image": "falfalFE/public/images/cards/asa-krali.png"
+    "image": "/images/cards/asa-krali.png"
   },
   {
     "id": 51,
@@ -456,7 +456,7 @@
     "revert": "Kupa Ası Ters",
     "enFront": "Ace of Cups",
     "enRevert": "Ace of Cups - revert",
-    "image": "falfalFE/public/images/cards/kupa-asi.png"
+    "image": "/images/cards/kupa-asi.png"
   },
   {
     "id": 52,
@@ -465,7 +465,7 @@
     "revert": "Kupa İkilisi Ters",
     "enFront": "Two of Cups",
     "enRevert": "Two of Cups - revert",
-    "image": "falfalFE/public/images/cards/kupa-ikilisi.png"
+    "image": "/images/cards/kupa-ikilisi.png"
   },
   {
     "id": 53,
@@ -474,7 +474,7 @@
     "revert": "Kupa Üçlüsü Ters",
     "enFront": "Three of Cups",
     "enRevert": "Three of Cups - revert",
-    "image": "falfalFE/public/images/cards/kupa-uclusu.png"
+    "image": "/images/cards/kupa-uclusu.png"
   },
   {
     "id": 54,
@@ -483,7 +483,7 @@
     "revert": "Kupa Dörtlüsü Ters",
     "enFront": "Four of Cups",
     "enRevert": "Four of Cups - revert",
-    "image": "falfalFE/public/images/cards/kupa-dortlusu.png"
+    "image": "/images/cards/kupa-dortlusu.png"
   },
   {
     "id": 55,
@@ -492,7 +492,7 @@
     "revert": "Kupa Beşlisi Ters",
     "enFront": "Five of Cups",
     "enRevert": "Five of Cups - revert",
-    "image": "falfalFE/public/images/cards/kupa-beslisi.png"
+    "image": "/images/cards/kupa-beslisi.png"
   },
   {
     "id": 56,
@@ -501,7 +501,7 @@
     "revert": "Kupa Altılısı Ters",
     "enFront": "Six of Cups",
     "enRevert": "Six of Cups - revert",
-    "image": "falfalFE/public/images/cards/kupa-altilisi.png"
+    "image": "/images/cards/kupa-altilisi.png"
   },
   {
     "id": 57,
@@ -510,7 +510,7 @@
     "revert": "Kupa Yedilisi Ters",
     "enFront": "Seven of Cups",
     "enRevert": "Seven of Cups - revert",
-    "image": "falfalFE/public/images/cards/kupa-yedilisi.png"
+    "image": "/images/cards/kupa-yedilisi.png"
   },
   {
     "id": 58,
@@ -519,7 +519,7 @@
     "revert": "Kupa Sekizlisi Ters",
     "enFront": "Eight of Cups",
     "enRevert": "Eight of Cups - revert",
-    "image": "falfalFE/public/images/cards/kupa-sekizlisi.png"
+    "image": "/images/cards/kupa-sekizlisi.png"
   },
   {
     "id": 59,
@@ -528,7 +528,7 @@
     "revert": "Kupa Dokuzlusu Ters",
     "enFront": "Nine of Cups",
     "enRevert": "Nine of Cups - revert",
-    "image": "falfalFE/public/images/cards/kupa-dokuzlusu.png"
+    "image": "/images/cards/kupa-dokuzlusu.png"
   },
   {
     "id": 60,
@@ -537,7 +537,7 @@
     "revert": "Kupa Onlusu Ters",
     "enFront": "Ten of Cups",
     "enRevert": "Ten of Cups - revert",
-    "image": "falfalFE/public/images/cards/kupa-onlusu.png"
+    "image": "/images/cards/kupa-onlusu.png"
   },
   {
     "id": 61,
@@ -546,7 +546,7 @@
     "revert": "Kupa Prensi Ters",
     "enFront": "Page of Cups",
     "enRevert": "Page of Cups - revert",
-    "image": "falfalFE/public/images/cards/kupa-prensi.png"
+    "image": "/images/cards/kupa-prensi.png"
   },
   {
     "id": 62,
@@ -555,7 +555,7 @@
     "revert": "Kupa Şövalyesi Ters",
     "enFront": "Knight of Cups",
     "enRevert": "Knight of Cups - revert",
-    "image": "falfalFE/public/images/cards/kupa-sovalyesi.png"
+    "image": "/images/cards/kupa-sovalyesi.png"
   },
   {
     "id": 63,
@@ -564,7 +564,7 @@
     "revert": "Kupa Kraliçesi Ters",
     "enFront": "Queen of Cups",
     "enRevert": "Queen of Cups - revert",
-    "image": "falfalFE/public/images/cards/kupa-kralicesi.png"
+    "image": "/images/cards/kupa-kralicesi.png"
   },
   {
     "id": 64,
@@ -573,7 +573,7 @@
     "revert": "Kupa Kralı Ters",
     "enFront": "King of Cups",
     "enRevert": "King of Cups - revert",
-    "image": "falfalFE/public/images/cards/kupa-krali.png"
+    "image": "/images/cards/kupa-krali.png"
   },
   {
     "id": 65,
@@ -582,7 +582,7 @@
     "revert": "Tılsım Ası Ters",
     "enFront": "Ace of Pentacles",
     "enRevert": "Ace of Pentacles - revert",
-    "image": "falfalFE/public/images/cards/tilsim-asi.png"
+    "image": "/images/cards/tilsim-asi.png"
   },
   {
     "id": 66,
@@ -591,7 +591,7 @@
     "revert": "Tılsım İkilisi Ters",
     "enFront": "Two of Pentacles",
     "enRevert": "Two of Pentacles - revert",
-    "image": "falfalFE/public/images/cards/tilsim-ikilisi.png"
+    "image": "/images/cards/tilsim-ikilisi.png"
   },
   {
     "id": 67,
@@ -600,7 +600,7 @@
     "revert": "Tılsım Üçlüsü Ters",
     "enFront": "Three of Pentacles",
     "enRevert": "Three of Pentacles - revert",
-    "image": "falfalFE/public/images/cards/tilsim-uclusu.png"
+    "image": "/images/cards/tilsim-uclusu.png"
   },
   {
     "id": 68,
@@ -609,7 +609,7 @@
     "revert": "Tılsım Dörtlüsü Ters",
     "enFront": "Four of Pentacles",
     "enRevert": "Four of Pentacles - revert",
-    "image": "falfalFE/public/images/cards/tilsim-dortlusu.png"
+    "image": "/images/cards/tilsim-dortlusu.png"
   },
   {
     "id": 69,
@@ -618,7 +618,7 @@
     "revert": "Tılsım Beşlisi Ters",
     "enFront": "Five of Pentacles",
     "enRevert": "Five of Pentacles - revert",
-    "image": "falfalFE/public/images/cards/tilsim-beslisi.png"
+    "image": "/images/cards/tilsim-beslisi.png"
   },
   {
     "id": 70,
@@ -627,7 +627,7 @@
     "revert": "Tılsım Altılısı Ters",
     "enFront": "Six of Pentacles",
     "enRevert": "Six of Pentacles - revert",
-    "image": "falfalFE/public/images/cards/tilsim-altilisi.png"
+    "image": "/images/cards/tilsim-altilisi.png"
   },
   {
     "id": 71,
@@ -636,7 +636,7 @@
     "revert": "Tılsım Yedilisi Ters",
     "enFront": "Seven of Pentacles",
     "enRevert": "Seven of Pentacles - revert",
-    "image": "falfalFE/public/images/cards/tilsim-yedilisi.png"
+    "image": "/images/cards/tilsim-yedilisi.png"
   },
   {
     "id": 72,
@@ -645,7 +645,7 @@
     "revert": "Tılsım Sekizlisi Ters",
     "enFront": "Eight of Pentacles",
     "enRevert": "Eight of Pentacles - revert",
-    "image": "falfalFE/public/images/cards/tilsim-sekizlisi.png"
+    "image": "/images/cards/tilsim-sekizlisi.png"
   },
   {
     "id": 73,
@@ -654,7 +654,7 @@
     "revert": "Tılsım Dokuzlusu Ters",
     "enFront": "Nine of Pentacles",
     "enRevert": "Nine of Pentacles - revert",
-    "image": "falfalFE/public/images/cards/tilsim-dokuzlusu.png"
+    "image": "/images/cards/tilsim-dokuzlusu.png"
   },
   {
     "id": 74,
@@ -663,7 +663,7 @@
     "revert": "Tılsım Onlusu Ters",
     "enFront": "Ten of Pentacles",
     "enRevert": "Ten of Pentacles - revert",
-    "image": "falfalFE/public/images/cards/tilsim-onlusu.png"
+    "image": "/images/cards/tilsim-onlusu.png"
   },
   {
     "id": 75,
@@ -672,7 +672,7 @@
     "revert": "Tılsım Prensi Ters",
     "enFront": "Page of Pentacles",
     "enRevert": "Page of Pentacles - revert",
-    "image": "falfalFE/public/images/cards/tilsim-prens,png"
+    "image": "/images/cards/tilsim-prens,png"
   },
   {
     "id": 76,
@@ -681,7 +681,7 @@
     "revert": "Tılsım Şovalyesi Ters",
     "enFront": "Knight of Pentacles",
     "enRevert": "Knight of Pentacles - revert",
-    "image": "falfalFE/public/images/cards/tilsim-sovalyesi.png"
+    "image": "/images/cards/tilsim-sovalyesi.png"
   },
   {
     "id": 77,
@@ -691,7 +691,7 @@
 
     "enFront": "Queen of Pentacles",
     "enRevert": "Queen of Pentacles - revert",
-    "image": "falfalFE/public/images/cards/tilsim-kralicesi.png"
+    "image": "/images/cards/tilsim-kralicesi.png"
   },
   {
     "id": 78,
@@ -700,6 +700,6 @@
     "revert": "Tılsım Kralı Ters",
     "enFront": "King of Pentacles",
     "enRevert": "King of Pentacles - revert",
-    "image": "falfalFE/public/images/cards/tilsim-krali.png"
+    "image": "/images/cards/tilsim-krali.png"
   }
 ]

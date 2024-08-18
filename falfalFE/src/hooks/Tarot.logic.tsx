@@ -1,22 +1,20 @@
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
-import TarotCards from '../constants/tarotCards';
+import TarotCardList from '../../../tarot2.json';
 import { SendTarot } from '../services/tarot/send-tarot';
+import { getRandomBoolean } from '../utils/helpers/getRandomBoolean';
 import { getUnselectedTarot } from '../utils/helpers/getUnselectedTarot';
-import { ITarot } from '../utils/interfaces/ITarot';
+import { toRadians } from '../utils/helpers/toRadians';
+import { ITarotCard } from './TarotDetail.logic';
 
 const TarotLogic = () => {
-  const toRadians = (degrees: number): number => {
-    return (degrees * Math.PI) / 180;
-  };
-
   const router = useRouter();
   const maxSelectableCardCount = 7;
   const stackRef = useRef<HTMLDivElement>(null);
   const [isQuestionAsked, setIsQuestionAsked] = useState<boolean>(false);
   const [question, setQuestion] = useState<string>('');
-  const [selectedCards, setSelectedCards] = useState<ITarot[]>([]);
+  const [selectedCards, setSelectedCards] = useState<ITarotCard[]>([]);
   const [buttonLoading, setButtonLoading] = useState<boolean>(false);
 
   const sendQuestion = () => {
@@ -24,8 +22,15 @@ const TarotLogic = () => {
   };
 
   const handleClick = () => {
-    const newCards: ITarot = getUnselectedTarot(TarotCards, selectedCards);
-    setSelectedCards((prev) => [...prev, newCards]);
+    const newCards: ITarotCard = getUnselectedTarot(
+      TarotCardList,
+      selectedCards
+    );
+    const serializedCard = {
+      ...newCards,
+      result: getRandomBoolean(),
+    };
+    setSelectedCards((prev) => [...prev, serializedCard]);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -41,12 +46,19 @@ const TarotLogic = () => {
     setButtonLoading(true);
     const request = {
       question,
-      selectedTarotsCards: selectedCards.map((x) => x.id),
+      selectedTarotsCards: selectedCards.map((card) => {
+        return {
+          key: card.id,
+          value: card.result!,
+        };
+      }),
     };
     try {
       const response = await SendTarot(request);
-      toast.success(response.message || 'Falin gönderildi');
-      router.push('/');
+      toast.success(response?.message || 'Falin gönderildi');
+      setTimeout(() => {
+        router.push('/home');
+      }, 2000);
     } catch (error: any) {
       toast.error(error.message || 'Bir problem oluştu');
     }

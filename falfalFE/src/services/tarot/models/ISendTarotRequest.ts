@@ -1,4 +1,9 @@
 export interface ISendTarotRequest {
-  selectedTarotsCards: number[];
+  selectedTarotsCards: IKeyValue[];
   question: string;
+}
+
+interface IKeyValue {
+  key: number;
+  value: boolean;
 }

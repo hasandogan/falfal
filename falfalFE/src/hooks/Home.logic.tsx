@@ -18,7 +18,6 @@ const HomeLogic = () => {
         setFortunes(response.data?.fortunes);
         setPendingProcess(response.data.pendingProcess);
       }
-      console.log('response', response);
     } catch (error) {
       console.error('API Error:', error);
     } finally {

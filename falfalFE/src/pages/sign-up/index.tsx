@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ReactElement } from 'react';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Card from '../../components/advanced/Card';
 import Button from '../../components/basic/Button';
@@ -14,7 +13,6 @@ const SignUp = () => {
   const { signUpData, handleSubmit, handleChange } = SignUpLogic();
   return (
     <Card type="vertical">
-      <ToastContainer />
       <form onSubmit={handleSubmit}>
         <Styled.SignUpWrapper>
           <h1>Sign up</h1>

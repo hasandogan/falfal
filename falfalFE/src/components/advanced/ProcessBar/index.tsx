@@ -12,15 +12,16 @@ const ProcessBar = ({ pendingProcess }: PendingProcessProps) => {
   const [progress, setProgress] = useState<number>(0);
 
   useEffect(() => {
+    if (createAt === null || endDate === null || serverResponseTime === null) {
+      return;
+    }
     const startTime = new Date(createAt).getTime();
     const finishTime = new Date(endDate).getTime();
     const serverTime = new Date(serverResponseTime).getTime();
 
-    // Toplam süreyi ve geçen süreyi hesapla
     const totalTime = finishTime - startTime;
     const elapsedTime = serverTime - startTime;
 
-    // Başlangıç yüzdesini hesapla
     const initialProgress = (elapsedTime / totalTime) * 100;
     setProgress(initialProgress);
 

@@ -6,7 +6,6 @@ import * as Styled from '../../styles/profile.styled';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { GetServerSideProps } from 'next/types';
-import { ToastContainer } from 'react-toastify';
 import DatePicker from '../../components/basic/Datepicker';
 import Select from '../../components/basic/Select';
 import ProfileLogic from '../../hooks/Profile.logic';
@@ -143,7 +142,6 @@ const Profile = () => {
           <Button type="submit">Kaydet</Button>
         </Styled.ProfileWrapper>
       </form>
-      <ToastContainer />
     </Card>
   );
 };

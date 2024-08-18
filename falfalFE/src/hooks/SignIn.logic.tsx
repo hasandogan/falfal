@@ -32,7 +32,6 @@ const SignInLogic = () => {
     const requestData: ILoginRequest = signInData;
     try {
       const response = await Login(requestData);
-      console.log('response', response);
       if (response?.token) {
         setTokenCookie(response?.token);
       }

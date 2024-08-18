@@ -11,21 +11,17 @@ const Tarot = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  .card-wrapper {
-    padding: 50px;
+    margin-bottom: 80px;
   }
   .selected-cards {
-    margin: 80px auto 20px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
-    min-height: 220px;
+    margin-bottom: 80px;
     .card-showcase {
       min-height: 100px;
       padding: 10px;
       background-repeat: no-repeat;
-      background-image: url('/images/card.png');
       background-size: contain;
     }
   }

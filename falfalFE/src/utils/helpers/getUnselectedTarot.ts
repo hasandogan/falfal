@@ -1,9 +1,9 @@
-import { ITarot } from '../interfaces/ITarot';
+import { ITarotCard } from '../../hooks/TarotDetail.logic';
 
 export const getUnselectedTarot = (
-  selectableIds: ITarot[],
-  selectedIds: ITarot[]
-): ITarot => {
+  selectableIds: ITarotCard[],
+  selectedIds: ITarotCard[]
+): ITarotCard => {
   const selectedIdSet = new Set(selectedIds.map((tarot) => tarot.id));
 
   const unselectedTarots = selectableIds.filter(

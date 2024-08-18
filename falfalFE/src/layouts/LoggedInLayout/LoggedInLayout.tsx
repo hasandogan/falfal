@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import { ToastContainer } from 'react-toastify';
 import Header from '../../components/advanced/Header';
 import StickyBar from '../../components/advanced/StickyBar';
 import * as Styled from './LoggedInLayout.styled';
@@ -18,6 +19,7 @@ const LoggedInLayout: React.FC<LoggedInLayoutProps> = ({
         <Header pageName={pageName!} />
         <div className="content">{children}</div>
         <StickyBar />
+        <ToastContainer />
       </Styled.LoggedInLayout>
     </>
   );
