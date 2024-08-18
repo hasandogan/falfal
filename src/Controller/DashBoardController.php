@@ -45,7 +45,7 @@ class DashBoardController extends AbstractController
             foreach ($tarotFortunes as $fortune){
                 $fortunes[] = [
                     'id' => $fortune->getId(),
-                    'date' => $fortune->getCreatedAt(),
+                    'date' => $fortune->getCreatedAt()->format('Y-m-d H:i:s'),
                     'type' => 'Tarot',
                     'message' => $fortune->getResponse()
                 ];
