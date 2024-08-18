@@ -15,6 +15,7 @@ const SignInLogic = () => {
   };
 
   const [signInData, setSignInData] = useState(initialForm);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -25,10 +26,15 @@ const SignInLogic = () => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+    if (signInData.email === '' || signInData.password === '') {
+      toast.error('Email adresi ve şifre alanı boş bırakılamaz.');
+      return;
+    }
     loginRequest();
   };
 
   const loginRequest = async () => {
+    setIsLoading(true);
     const requestData: ILoginRequest = signInData;
     try {
       const response = await Login(requestData);
@@ -49,12 +55,14 @@ const SignInLogic = () => {
         error.message || 'Kullanıcı kaydı sırasında bir hata oluştu.'
       );
     }
+    setIsLoading(false);
   };
 
   return {
     signInData,
     handleChange,
     handleSubmit,
+    isLoading,
   };
 };
 

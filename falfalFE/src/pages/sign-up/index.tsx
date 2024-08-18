@@ -10,7 +10,7 @@ import SimpleLayout from '../../layouts/SimpleLayout/SimpleLayout';
 import * as Styled from '../../styles/sign-up.styled';
 
 const SignUp = () => {
-  const { signUpData, handleSubmit, handleChange } = SignUpLogic();
+  const { signUpData, handleSubmit, handleChange, isLoading } = SignUpLogic();
   return (
     <Card type="vertical">
       <form onSubmit={handleSubmit}>
@@ -61,7 +61,9 @@ const SignUp = () => {
             value={signUpData.confirmPassword}
             onChange={handleChange}
           />
-          <Button type="submit">Sign up</Button>
+          <Button type="submit" loading={isLoading}>
+            Sign up
+          </Button>
           <div className="seperator">
             <div className="seperator-text">or sign in using</div>
           </div>

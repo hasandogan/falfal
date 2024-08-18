@@ -56,9 +56,7 @@ const TarotLogic = () => {
     try {
       const response = await SendTarot(request);
       toast.success(response?.message || 'Falin gönderildi');
-      setTimeout(() => {
-        router.push('/home');
-      }, 2000);
+      router.push('/home');
     } catch (error: any) {
       toast.error(error.message || 'Bir problem oluştu');
     }

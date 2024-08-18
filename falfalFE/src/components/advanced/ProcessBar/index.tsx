@@ -9,6 +9,7 @@ const ProcessBar = ({ pendingProcess }: PendingProcessProps) => {
 
   const [remainingTime, setRemainingTime] = useState<number>(0);
   const [progressPercentage, setProgressPercentage] = useState<number>(0);
+  const [isExpired, setIsExpired] = useState<boolean>(false);
 
   useEffect(() => {
     if (!createAt || !endDate || !serverResponseTime) return;
@@ -16,6 +17,11 @@ const ProcessBar = ({ pendingProcess }: PendingProcessProps) => {
     const startTime = new Date(createAt).getTime();
     const finishTime = new Date(endDate).getTime();
     const serverTime = new Date(serverResponseTime).getTime();
+
+    if (serverTime >= finishTime || serverTime < startTime) {
+      setIsExpired(true);
+      return;
+    }
 
     const totalTime = finishTime - startTime;
     const elapsedTime = serverTime - startTime;
@@ -41,6 +47,8 @@ const ProcessBar = ({ pendingProcess }: PendingProcessProps) => {
 
     return () => clearInterval(intervalId);
   }, [createAt, endDate, serverResponseTime]);
+
+  if (isExpired) return <></>; // Eğer süresi dolmuşsa bileşeni render etme
 
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);

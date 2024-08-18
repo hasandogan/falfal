@@ -5,7 +5,7 @@ import * as Styled from './logo.styled';
 const Logo = () => {
   return (
     <Styled.Logo>
-      <Link href={'/'}>
+      <Link href={'/home'}>
         <Image
           src={'/images/logo.png'}
           alt={process.env.NEXT_PUBLIC_PROJECT_NAME ?? ''}

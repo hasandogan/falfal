@@ -16,6 +16,7 @@ const SignUpLogic = () => {
     confirmPassword: '',
   };
   const [signUpData, setSignUpData] = useState(initialForm);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -26,14 +27,22 @@ const SignUpLogic = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-
-    if (initialForm.password !== initialForm.confirmPassword) {
+    if (
+      signUpData.email === '' ||
+      signUpData.name === '' ||
+      signUpData.lastName === '' ||
+      signUpData.password === '' ||
+      signUpData.confirmPassword === ''
+    ) {
+      toast.error('Tüm form alanlarını doldurmalısınız!');
+      return;
+    }
+    if (signUpData.password !== signUpData.confirmPassword) {
       toast.error('Şifreler uyuşmuyor!');
       return;
     }
-
+    setIsLoading(true);
     const requestData: IRegisterRequest = signUpData;
-
     try {
       const response = await Register(requestData);
 
@@ -47,8 +56,9 @@ const SignUpLogic = () => {
         error.message || 'Kullanıcı kaydı sırasında bir hata oluştu.'
       );
     }
+    setIsLoading(false);
   };
-  return { signUpData, handleSubmit, handleChange };
+  return { signUpData, handleSubmit, handleChange, isLoading };
 };
 
 export default SignUpLogic;

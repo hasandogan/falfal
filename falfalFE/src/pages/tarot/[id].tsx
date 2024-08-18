@@ -19,7 +19,7 @@ const TarotDetail = () => {
         <LoadingContainer />
       ) : (
         <>
-          <Link href={'/'} className="back">{`< Back`}</Link>
+          <Link href={'/home'} className="back">{`< Back`}</Link>
           <Card className="card-wrapper">
             <h2>{`Fortune Name`}</h2>
             <div className="tarot-detail-container" ref={tarotRef}>
