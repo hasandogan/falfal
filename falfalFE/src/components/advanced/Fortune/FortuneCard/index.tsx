@@ -5,15 +5,14 @@ import FortuneCardProps from './FortuneCard.type';
 const FortuneCard = ({ fortune }: FortuneCardProps) => {
   return (
     <Styled.FortuneCard>
-        <Link className="read-more" href={`/tarot/${fortune.id}`}>
-            <div className="header">
-                <div className="title">{fortune.type}</div>
-                <div className="date">{fortune.date}</div>
-            </div>
-            <div className="title">Sorunuz: {fortune.question}</div>
-            <div><br></br></div>
-            <div className="message">{fortune.message}</div>
-        </Link>
+      <Link className="read-more" href={`/tarot/${fortune.id}`}>
+        <div className="header">
+          <div className="title">{fortune.type}</div>
+          <div className="date">{fortune.date}</div>
+        </div>
+        <div className="title">Sorunuz: {fortune.question}</div>
+        <div className="message">{fortune.message}</div>
+      </Link>
     </Styled.FortuneCard>
   );
 };

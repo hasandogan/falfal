@@ -25,5 +25,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: '/:path*', // Tüm yolları eşleştirir
+  matcher: '/:path*',
 };
