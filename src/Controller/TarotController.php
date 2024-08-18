@@ -96,7 +96,7 @@ class TarotController extends AbstractController
             return new JsonResponse([
                 'message' => 'Zaten bir falınız var , Lütfen bitmesini bekleyin.',
                 'status' => 400,
-                'success' => 'true',
+                'success' => 'false',
                 'data' => '',
                 ],400, ['Content-Type' => 'application/json', 'Access-Control-Allow-Origin' => '*']);
 
