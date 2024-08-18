@@ -53,11 +53,14 @@ const TarotLogic = () => {
       }),
     };
     try {
+      console.log('request', request);
       const response = await SendTarot(request);
+      console.log('response', response);
       toast.success(response?.message || 'Falin gönderildi');
       router.push('/home');
     } catch (error: any) {
-      toast.error(error.message || 'Bir problem oluştu');
+      console.log('error', error);
+      toast.error(error?.response?.data?.message || 'Bir problem oluştu');
     }
     setButtonLoading(false);
   };

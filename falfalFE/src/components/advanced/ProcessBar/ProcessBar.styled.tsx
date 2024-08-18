@@ -10,18 +10,34 @@ const gradientAnimation = keyframes`
   100% { background-position: 0% 50%; }
 `;
 
+const ProcessBarWrapper = styled.div`
+  .info {
+    font-size: 12px;
+  }
+  .ad-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-betweeen;
+    margin: 20px 0;
+    gap: 20px;
+    button {
+      font-size: 12px;
+      padding: 4px 12px;
+    }
+  }
+`;
+
 const ProcessBar = styled.div`
   width: 100%;
-  border-radius: 5px;
   overflow: hidden;
   background: #4e47a6;
-  margin-bottom: 20px;
-  border: 1px solid var(--white);
+  border-top: 1px solid var(--white);
+  border-bottom: 1px solid var(--white);
   position: relative;
 `;
 
 const ProcessBarInner = styled.div<ProcessBarInnerProps>`
-  width: ${({ $progress }) => $progress}%;
+  width: calc(100% - ${({ $progress }) => $progress}%);
   background: linear-gradient(270deg, #1a1c40, #3a3b6c, #1a1c40);
   background-size: 400% 400%;
   height: 30px;
@@ -40,4 +56,4 @@ const ProcessBarInner = styled.div<ProcessBarInnerProps>`
   }
 `;
 
-export { ProcessBar, ProcessBarInner };
+export { ProcessBar, ProcessBarInner, ProcessBarWrapper };
