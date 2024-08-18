@@ -4,4 +4,5 @@ export interface IGetTarotResponse {
   id: number;
   selectedCards: IKeyValue[];
   message: string;
+  question: string;
 }

@@ -4,7 +4,7 @@ import { GetTarot } from '../services/tarot/get-tarot';
 
 export interface ITarotDetail {
   id: number;
-  question?: string;
+  question: string;
   message: string;
   selectedCards: ITarotCard[];
 }
