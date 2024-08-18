@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
-import TarotCardList from '../../../tarot2.json';
+import { default as CardListJson } from '../../../tarot2.json';
 import { SendTarot } from '../services/tarot/send-tarot';
 import { getRandomBoolean } from '../utils/helpers/getRandomBoolean';
 import { getUnselectedTarot } from '../utils/helpers/getUnselectedTarot';
@@ -17,15 +17,14 @@ const TarotLogic = () => {
   const [selectedCards, setSelectedCards] = useState<ITarotCard[]>([]);
   const [buttonLoading, setButtonLoading] = useState<boolean>(false);
 
+  const CardList: ITarotCard[] = CardListJson as ITarotCard[];
+
   const sendQuestion = () => {
     setIsQuestionAsked(true);
   };
 
   const handleClick = () => {
-    const newCards: ITarotCard = getUnselectedTarot(
-      TarotCardList,
-      selectedCards
-    );
+    const newCards: ITarotCard = getUnselectedTarot(CardList, selectedCards);
     const serializedCard = {
       ...newCards,
       result: getRandomBoolean(),
@@ -96,6 +95,7 @@ const TarotLogic = () => {
     maxSelectableCardCount,
     submitTarotCards,
     buttonLoading,
+    CardList,
   };
 };
 export default TarotLogic;

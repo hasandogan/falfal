@@ -24,7 +24,10 @@ const TarotDetail = () => {
             <h2>{`Fortune Name`}</h2>
             <div className="tarot-detail-container" ref={tarotRef}>
               {tarotResult?.selectedCards?.map((card, index) => (
-                <div key={index} className={'result-card'}>
+                <div
+                  key={index}
+                  className={`result-card ${card.result ? '' : 'revert'}`}
+                >
                   <img
                     src={card.image}
                     alt={card.name}

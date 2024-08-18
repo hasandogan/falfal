@@ -90,10 +90,10 @@ body {
   background: url('/images/bg.png');
   background-repeat: no-repeat;
   background-size: cover;
-  font-family: 'Aladin', system-ui;
+  font-family: 'Caveat', cursive;
   min-height: 100dvh;
   * {
-    font-family: 'Aladin', system-ui;
+    font-family: 'Caveat', cursive;
   }
 }
 

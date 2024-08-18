@@ -11,25 +11,24 @@ const Fortunes = () => {
   return (
     <Styled.Fortunes>
       {fortuneList?.map((fortune, index) => (
-        <Card className={'card'} key={`${fortune.name}-${index}`}>
-          <div className="card-top">
-            <div className="card-top-left">
-              <Image
-                src={fortune.imageUrl}
-                alt={fortune.name}
-                width={60}
-                height={60}
-              />
+        <Link href={fortune.url} key={`${fortune.name}-${index}`}>
+          <Card className={'card'}>
+            <div className="card-top">
+              <div className="card-top-left">
+                <Image
+                  src={fortune.imageUrl}
+                  alt={fortune.name}
+                  width={60}
+                  height={60}
+                />
+              </div>
+              <div className="card-top-right">
+                <div className="name">{fortune.name}</div>
+                <div className="description">{fortune.description}</div>
+              </div>
             </div>
-            <div className="card-top-right">
-              <div className="name">{fortune.name}</div>
-              <div className="description">{fortune.description}</div>
-            </div>
-          </div>
-          <div className="card-bottom">
-            <Link href={fortune.url}>Take a look</Link>
-          </div>
-        </Card>
+          </Card>
+        </Link>
       ))}
     </Styled.Fortunes>
   );

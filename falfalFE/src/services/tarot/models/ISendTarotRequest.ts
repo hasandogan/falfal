@@ -3,7 +3,7 @@ export interface ISendTarotRequest {
   question: string;
 }
 
-interface IKeyValue {
+export interface IKeyValue {
   key: number;
   value: boolean;
 }

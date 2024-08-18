@@ -61,7 +61,7 @@ const SignUp = () => {
             value={signUpData.confirmPassword}
             onChange={handleChange}
           />
-          <Button type="submit" loading={isLoading}>
+          <Button type="submit" loading={isLoading} disabled={isLoading}>
             Sign up
           </Button>
           <div className="seperator">

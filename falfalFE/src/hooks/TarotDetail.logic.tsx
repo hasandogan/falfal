@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import CardList from '../../../tarot2.json';
+import CardListJson from '../../../tarot2.json';
 import { GetTarot } from '../services/tarot/get-tarot';
 
 export interface ITarotDetail {
@@ -16,8 +16,10 @@ export interface ITarotCard {
   enFront: string;
   enRevert: string;
   image: string;
-  result?: boolean;
+  result: boolean; // result'ı zorunlu hale getirdik
 }
+
+const CardList: ITarotCard[] = CardListJson as ITarotCard[];
 
 const TarotDetailLogic = (id: string | string[] | undefined) => {
   const [tarotResult, setTarotResult] = useState<ITarotDetail | null>(null);
@@ -30,9 +32,19 @@ const TarotDetailLogic = (id: string | string[] | undefined) => {
     try {
       const response = await GetTarot({ id: tarotId });
       if (response?.data) {
-        const newList = CardList.filter((x) =>
-          response.data?.selectedCards.includes(x.id)
-        );
+        const newList: ITarotCard[] = response.data.selectedCards
+          .map(({ key, value }) => {
+            const card = CardList.find((card) => card.id === key);
+            if (card) {
+              return {
+                ...card,
+                result: value ?? false,
+              };
+            }
+            return null;
+          })
+          .filter((card): card is ITarotCard => card !== null);
+
         const serializedForState: ITarotDetail = {
           id: response.data.id,
           message: response.data.message,

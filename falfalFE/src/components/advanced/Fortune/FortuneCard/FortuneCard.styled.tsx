@@ -18,6 +18,11 @@ const FortuneCard = styled(Card)`
   .message {
     margin-bottom: 20px;
     font-size: 16px;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .read-more {
     font-size: 16px;

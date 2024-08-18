@@ -40,17 +40,19 @@ const Tarot = () => {
           </Styled.QuestionForm>
         ) : (
           <>
-            <div className={'selected-cards'}>
+            <div className={'tarot-detail-container'}>
               {selectedCards.map((card, index) => (
                 <div
                   key={`card-${index}`}
-                  className="card-showcase"
-                  style={{
-                    backgroundImage: card.result
-                      ? `url(${card.image})`
-                      : `url('/images/card.png')`,
-                  }}
-                ></div>
+                  className={`card-showcase ${card.result ? '' : 'revert'}`}
+                >
+                  <img
+                    src={card.image}
+                    alt={card.name}
+                    width={74}
+                    height={115}
+                  />
+                </div>
               ))}
             </div>
             <div className="tarot-container" ref={stackRef}>
@@ -65,6 +67,7 @@ const Tarot = () => {
 
             {selectedCards.length === maxSelectableCardCount && (
               <Button
+                className={'submit-button'}
                 onClick={submitTarotCards}
                 disabled={buttonLoading}
                 loading={buttonLoading}

@@ -33,7 +33,7 @@ const SignIn = () => {
             value={signInData.password}
             onChange={handleChange}
           />
-          <Button type="submit" loading={isLoading}>
+          <Button type="submit" loading={isLoading} disabled={isLoading}>
             Sign in
           </Button>
           <div className="seperator">

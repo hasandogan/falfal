@@ -13,7 +13,7 @@ const Button: React.FC<ButtonProps> = ({
     <Styled.Button
       type={type}
       {...rest}
-      className={`${loading ? 'loading-active' : ''}`}
+      className={`${rest.className} ${loading ? 'loading-active' : ''}`}
     >
       {loading && (
         <div className="spin-container">

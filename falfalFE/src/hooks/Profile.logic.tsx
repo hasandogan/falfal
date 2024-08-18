@@ -64,21 +64,21 @@ const ProfileLogic = () => {
   ];
 
   const [profileData, setProfileData] = useState<IProfile>(initialForm);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isPageLoading, setIsPageLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    const fetchProfileData = async () => {
-      try {
-        const response = await getProfile();
-        if (response.data) {
-          setProfileData(response.data);
-        }
-      } catch (error) {
-        console.error('API Error:', error);
+  const fetchProfileData = async () => {
+    setIsPageLoading(true);
+    try {
+      const response = await getProfile();
+      if (response.data) {
+        setProfileData(response.data);
       }
-    };
-
-    fetchProfileData();
-  }, []);
+    } catch (error) {
+      console.error('API Error:', error);
+    }
+    setIsPageLoading(false);
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -89,6 +89,7 @@ const ProfileLogic = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    setIsLoading(true);
     try {
       const response = await setProfile(profileData);
       toast.success(
@@ -99,7 +100,12 @@ const ProfileLogic = () => {
         'Bir şeyler yanlış gitti, bizden kaynaklı bir hata olabilir. Lütfen tekrar dene. 🙏'
       );
     }
+    setIsLoading(false);
   };
+
+  useEffect(() => {
+    fetchProfileData();
+  }, []);
 
   return {
     handleChange,
@@ -110,6 +116,8 @@ const ProfileLogic = () => {
     jobStatusOptions,
     hasChildrenOptions,
     educationLevelOptions,
+    isLoading,
+    isPageLoading,
   };
 };
 

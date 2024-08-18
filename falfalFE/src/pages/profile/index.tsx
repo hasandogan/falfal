@@ -6,6 +6,7 @@ import * as Styled from '../../styles/profile.styled';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { GetServerSideProps } from 'next/types';
+import LoadingContainer from '../../components/advanced/LoadingContainer';
 import DatePicker from '../../components/basic/Datepicker';
 import Select from '../../components/basic/Select';
 import ProfileLogic from '../../hooks/Profile.logic';
@@ -22,31 +23,38 @@ const Profile = () => {
     jobStatusOptions,
     hasChildrenOptions,
     educationLevelOptions,
+    isLoading,
+    isPageLoading,
   } = ProfileLogic();
   return (
     <Card type="vertical">
-      <form onSubmit={handleSubmit}>
-        <Styled.ProfileWrapper>
-          <h1>Profile</h1>
-          <Input
-            type="text"
-            id="name"
-            name="name"
-            placeholder="name"
-            label="Adınız"
-            value={profileData.name}
-            onChange={handleChange}
-          />
-          <Input
-            type="text"
-            id="email"
-            name="email"
-            placeholder="email"
-            label="Email adresi"
-            value={profileData.email}
-            onChange={handleChange}
-          />
-          <Input
+      {isPageLoading ? (
+        <>
+          <LoadingContainer />
+        </>
+      ) : (
+        <form onSubmit={handleSubmit}>
+          <Styled.ProfileWrapper>
+            <h1>Profile</h1>
+            <Input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="name"
+              label="Adınız"
+              value={profileData.name}
+              onChange={handleChange}
+            />
+            <Input
+              type="text"
+              id="email"
+              name="email"
+              placeholder="email"
+              label="Email adresi"
+              value={profileData.email}
+              onChange={handleChange}
+            />
+            {/* <Input
             type="password"
             id="password"
             name="password"
@@ -54,94 +62,97 @@ const Profile = () => {
             label="Şifre"
             value={profileData.password}
             onChange={handleChange}
-          />
-          <Select
-            id="relationShip"
-            name="relationShip"
-            label="İlişki Durumu"
-            value={profileData.relationShip}
-            onChange={handleChange}
-            options={relationShipOptions}
-          />
-          <Select
-            id="gender"
-            name="gender"
-            label="Cinsiyet"
-            value={profileData.gender}
-            onChange={handleChange}
-            options={genderOptions}
-          />
-          <Select
-            id="hasChildren"
-            name="hasChildren"
-            label="Çocuk Durumu"
-            onChange={handleChange}
-            value={profileData.hasChildren}
-            options={hasChildrenOptions}
-          />
-          <DatePicker
-            id="birthDate"
-            name="birthDate"
-            placeholder="Doğum tarihiniz giriniz"
-            label="Doğum Tarihi"
-            value={profileData.birthDate}
-            onChange={handleChange}
-          />
-          <Input
-            type="text"
-            id="birthTime"
-            name="birthTime"
-            placeholder="Doğum saatinizi giriniz"
-            label="Doğum Saati"
-            value={profileData.birthTime}
-            onChange={handleChange}
-          />
-          <Select
-            id="jobStatus"
-            name="jobStatus"
-            label="İş Durumu"
-            value={profileData.jobStatus}
-            options={jobStatusOptions}
-            onChange={handleChange}
-          />
-          <Select
-            id="educationLevel"
-            name="educationLevel"
-            label="Eğitim Durumu"
-            value={profileData.educationLevel}
-            options={educationLevelOptions}
-            onChange={handleChange}
-          />
-          <Input
-            type="text"
-            id="occupation"
-            name="occupation"
-            placeholder="Mesleğinizi giriniz"
-            label="Meslek"
-            value={profileData.occupation}
-            onChange={handleChange}
-          />
-          <Input
-            type="text"
-            id="town"
-            name="town"
-            placeholder="Şehir bilginizi giriniz"
-            label="Şehir"
-            value={profileData.town}
-            onChange={handleChange}
-          />
-          <Input
-            type="text"
-            id="country"
-            name="country"
-            placeholder="Ülke bilginizi girini"
-            label="Ülke"
-            value={profileData.country}
-            onChange={handleChange}
-          />
-          <Button type="submit">Kaydet</Button>
-        </Styled.ProfileWrapper>
-      </form>
+          /> */}
+            <Select
+              id="relationShip"
+              name="relationShip"
+              label="İlişki Durumu"
+              value={profileData.relationShip}
+              onChange={handleChange}
+              options={relationShipOptions}
+            />
+            <Select
+              id="gender"
+              name="gender"
+              label="Cinsiyet"
+              value={profileData.gender}
+              onChange={handleChange}
+              options={genderOptions}
+            />
+            <Select
+              id="hasChildren"
+              name="hasChildren"
+              label="Çocuk Durumu"
+              onChange={handleChange}
+              value={profileData.hasChildren}
+              options={hasChildrenOptions}
+            />
+            <DatePicker
+              id="birthDate"
+              name="birthDate"
+              placeholder="Doğum tarihiniz giriniz"
+              label="Doğum Tarihi"
+              value={profileData.birthDate}
+              onChange={handleChange}
+            />
+            <Input
+              type="text"
+              id="birthTime"
+              name="birthTime"
+              placeholder="Doğum saatinizi giriniz"
+              label="Doğum Saati"
+              value={profileData.birthTime}
+              onChange={handleChange}
+            />
+            <Select
+              id="jobStatus"
+              name="jobStatus"
+              label="İş Durumu"
+              value={profileData.jobStatus}
+              options={jobStatusOptions}
+              onChange={handleChange}
+            />
+            <Select
+              id="educationLevel"
+              name="educationLevel"
+              label="Eğitim Durumu"
+              value={profileData.educationLevel}
+              options={educationLevelOptions}
+              onChange={handleChange}
+            />
+            <Input
+              type="text"
+              id="occupation"
+              name="occupation"
+              placeholder="Mesleğinizi giriniz"
+              label="Meslek"
+              value={profileData.occupation}
+              onChange={handleChange}
+            />
+            <Input
+              type="text"
+              id="town"
+              name="town"
+              placeholder="Şehir bilginizi giriniz"
+              label="Şehir"
+              value={profileData.town}
+              onChange={handleChange}
+            />
+            <Input
+              type="text"
+              id="country"
+              name="country"
+              placeholder="Ülke bilginizi girini"
+              label="Ülke"
+              value={profileData.country}
+              onChange={handleChange}
+            />
+            <Button type="submit" loading={isLoading} disabled={isLoading}>
+              Kaydet
+            </Button>
+          </Styled.ProfileWrapper>
+        </form>
+      )}
     </Card>
   );
 };
