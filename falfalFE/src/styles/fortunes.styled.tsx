@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 const Fortunes = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   .card {
     padding: 20px;
     .card-top {
