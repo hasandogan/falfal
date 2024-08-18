@@ -94,8 +94,7 @@ class TarotController extends AbstractController
         if ($readyForTarot) {
             return new JsonResponse([
                 'message' => 'Zaten bir falınız var. Lütfen önceki falınızın sonuçlanmasını bekleyin.',
-                'status' => 400
-            ]);
+            ],400);
         }
 
         $requestData = json_decode($request->getContent(),true);
