@@ -17,6 +17,7 @@ const TarotLogic = () => {
   const [isQuestionAsked, setIsQuestionAsked] = useState<boolean>(false);
   const [question, setQuestion] = useState<string>('');
   const [selectedCards, setSelectedCards] = useState<ITarot[]>([]);
+  const [buttonLoading, setButtonLoading] = useState<boolean>(false);
 
   const sendQuestion = () => {
     setIsQuestionAsked(true);
@@ -37,6 +38,7 @@ const TarotLogic = () => {
   );
 
   const submitTarotCards = async () => {
+    setButtonLoading(true);
     const request = {
       question,
       selectedTarotsCards: selectedCards.map((x) => x.id),
@@ -48,6 +50,7 @@ const TarotLogic = () => {
     } catch (error: any) {
       toast.error(error.message || 'Bir problem oluştu');
     }
+    setButtonLoading(false);
   };
 
   const drawCardCircle = () => {
@@ -82,6 +85,7 @@ const TarotLogic = () => {
     selectedCards,
     maxSelectableCardCount,
     submitTarotCards,
+    buttonLoading,
   };
 };
 export default TarotLogic;

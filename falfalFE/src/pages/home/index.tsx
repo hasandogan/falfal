@@ -1,4 +1,5 @@
 import { ReactElement } from 'react';
+import { RotatingLines } from 'react-loader-spinner';
 import FortuneList from '../../components/advanced/Fortune/FortuneList';
 import FortuneNotFound from '../../components/advanced/Fortune/FortuneNotFound';
 import ProcessBar from '../../components/advanced/ProcessBar';
@@ -9,20 +10,29 @@ import * as Styled from '../../styles/home.styled';
 const Home = () => {
   const { isLoading, fortunes, pendingProcess } = HomeLogic();
 
-  const dede = {
+  const examplePendingProcess = {
     status: true,
     createAt: '2024-08-10 18:56:48',
-    endDate: '2024-08-10 19:26:48',
-    serverResponseTime: '2024-08-10 19:12:47',
+    endDate: '2024-08-10 18:57:48',
+    serverResponseTime: '2024-08-10 18:57:20',
   };
 
   return (
     <Styled.Home>
       {isLoading ? (
-        <>spin</>
+        <div className={'loading-container'}>
+          <RotatingLines
+            visible={true}
+            strokeColor={'#ffffff'}
+            strokeWidth="5"
+            animationDuration="2"
+          />
+        </div>
       ) : (
         <>
-          {pendingProcess && <ProcessBar pendingProcess={dede} />}
+          {pendingProcess && (
+            <ProcessBar pendingProcess={examplePendingProcess} />
+          )}
           {fortunes?.length === 0 ? (
             <FortuneNotFound />
           ) : (

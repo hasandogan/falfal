@@ -20,6 +20,7 @@ const Tarot = () => {
     selectedCards,
     maxSelectableCardCount,
     submitTarotCards,
+    buttonLoading,
   } = TarotLogic();
 
   return (
@@ -54,7 +55,13 @@ const Tarot = () => {
               ))}
             </div>
             {selectedCards.length === maxSelectableCardCount && (
-              <Button onClick={submitTarotCards}>Gönder</Button>
+              <Button
+                onClick={submitTarotCards}
+                disabled={buttonLoading}
+                loading={buttonLoading}
+              >
+                Gönder
+              </Button>
             )}
           </>
         )}

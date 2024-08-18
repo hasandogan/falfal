@@ -20,11 +20,12 @@ const Tarot = styled.div`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
+    min-height: 220px;
     .card-showcase {
       min-height: 100px;
       padding: 10px;
       background-repeat: no-repeat;
-      background-image: url('/images/cards/1.jpg');
+      background-image: url('/images/card.png');
       background-size: contain;
     }
   }

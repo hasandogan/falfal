@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import * as Styled from './ProcessBar.styled';
 import PendingProcessProps from './ProcessBar.type';
 
 const ProcessBar = ({ pendingProcess }: PendingProcessProps) => {
@@ -5,26 +7,45 @@ const ProcessBar = ({ pendingProcess }: PendingProcessProps) => {
     return <></>;
   }
 
-  const progress = 20;
+  const { createAt, endDate, serverResponseTime } = pendingProcess;
 
+  const [progress, setProgress] = useState<number>(0);
+
+  useEffect(() => {
+    const startTime = new Date(createAt).getTime();
+    const finishTime = new Date(endDate).getTime();
+    const serverTime = new Date(serverResponseTime).getTime();
+
+    // Toplam süreyi ve geçen süreyi hesapla
+    const totalTime = finishTime - startTime;
+    const elapsedTime = serverTime - startTime;
+
+    // Başlangıç yüzdesini hesapla
+    const initialProgress = (elapsedTime / totalTime) * 100;
+    setProgress(initialProgress);
+
+    const intervalId = setInterval(() => {
+      setProgress((prevProgress) => {
+        const newProgress = prevProgress + (100 / totalTime) * 1000;
+
+        if (newProgress >= 100) {
+          clearInterval(intervalId);
+          console.log('Progress reached 100%');
+          return 100;
+        }
+
+        return Math.min(newProgress, 100);
+      });
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [createAt, endDate, serverResponseTime]);
   return (
-    <div
-      style={{
-        width: '100%',
-        backgroundColor: '#f3f3f3',
-        borderRadius: '5px',
-        overflow: 'hidden',
-      }}
-    >
-      <div
-        style={{
-          width: `${progress}%`,
-          backgroundColor: '#4caf50',
-          height: '30px',
-          transition: 'width 0.5s ease',
-        }}
-      />
-    </div>
+    <Styled.ProcessBar>
+      <Styled.ProcessBarInner $progress={progress}>
+        <div className={'progress-percentage'}>{progress.toFixed(2)}</div>
+      </Styled.ProcessBarInner>
+    </Styled.ProcessBar>
   );
 };
 

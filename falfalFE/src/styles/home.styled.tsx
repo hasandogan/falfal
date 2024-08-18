@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 
-export const Home = styled.div``;
+export const Home = styled.div`
+  .loading-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+`;
 
 export const Card = styled.div`
   background: rgba(0, 0, 0, 0.7);
