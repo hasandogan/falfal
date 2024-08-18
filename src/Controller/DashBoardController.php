@@ -48,7 +48,7 @@ class DashBoardController extends AbstractController
                     'date' => $fortune->getCreatedAt()->format('Y-m-d H:i:s'),
                     'type' => 'Tarot',
                     'question' => $fortune->getQuestion(),
-                    'message' => substr($fortune->getResponse(), 0, 240) . '...',
+                    'message' => mb_substr($fortune->getResponse(), 0, 240, 'UTF-8') . '...',
                 ];
             }
         }else{
