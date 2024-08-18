@@ -6,6 +6,7 @@ import LoadingContainer from '../../components/advanced/LoadingContainer';
 import TarotDetailLogic from '../../hooks/TarotDetail.logic';
 import LoggedInLayout from '../../layouts/LoggedInLayout/LoggedInLayout';
 import * as Styled from '../../styles/TarotDetail.styled';
+import tarot from "@/pages/tarot/index";
 
 const TarotDetail = () => {
   const router = useRouter();
@@ -19,9 +20,10 @@ const TarotDetail = () => {
         <LoadingContainer />
       ) : (
         <>
-          <Link href={'/home'} className="back">{`< Back`}</Link>
+          <Link href={'/home'} className="back">{`< Geri`}</Link>
           <Card className="card-wrapper">
             <h2>{'Tarot Falınız'}</h2>
+            <h3>sorunuz: {tarotResult?.question}</h3>
             <div className="tarot-detail-container" ref={tarotRef}>
               {tarotResult?.selectedCards?.map((card, index) => (
                 <div

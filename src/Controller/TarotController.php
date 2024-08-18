@@ -70,6 +70,7 @@ class TarotController extends AbstractController
             'message' => 'Tarot Falınız',
             'data' => [
                 'id' => $tarot->getId(),
+                'question' => $tarot->getQuestion(),
                 'message' => $tarot->getResponse(),
                 'selectedCards' => $tarot->getSelectedCards()
             ],

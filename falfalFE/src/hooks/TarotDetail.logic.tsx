@@ -4,6 +4,7 @@ import { GetTarot } from '../services/tarot/get-tarot';
 
 export interface ITarotDetail {
   id: number;
+  question?: string;
   message: string;
   selectedCards: ITarotCard[];
 }
@@ -49,6 +50,7 @@ const TarotDetailLogic = (id: string | string[] | undefined) => {
           id: response.data.id,
           message: response.data.message,
           selectedCards: newList,
+          question: response.data.question,
         };
         setTarotResult(serializedForState);
       }

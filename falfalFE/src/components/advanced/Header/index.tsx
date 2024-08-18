@@ -15,16 +15,6 @@ const Header = ({ pageName }: HeaderProps) => {
       <div className="header-buttons">
         <div className="header-buttons-left">
         </div>
-        <div className="header-buttons-right">
-          <div className={'profile'} onClick={onProfileClick}>
-            <Image
-              src={'/images/profile.svg'}
-              alt={'Profile'}
-              width={24}
-              height={24}
-            />
-          </div>
-        </div>
       </div>
     </Styled.Header>
   );

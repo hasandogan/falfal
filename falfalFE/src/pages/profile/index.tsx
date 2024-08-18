@@ -158,7 +158,7 @@ const Profile = () => {
 };
 
 Profile.getLayout = (page: ReactElement) => (
-  <LoggedInLayout pageName={'HOME'}>{page}</LoggedInLayout>
+  <LoggedInLayout pageName={'Profil'}>{page}</LoggedInLayout>
 );
 
 export default Profile;

@@ -2,12 +2,13 @@ import IconFavourites from '../../icons/IconFavourites';
 import IconGlobe from '../../icons/IconGlobe';
 import IconMore from '../../icons/IconMore';
 import { MenuItemType } from './MenuItem/menu-item.type';
+import IconProfile from "@/components/icons/IconProfile";
 
 const useStickyBarLogic = () => {
   const menuItems: MenuItemType[] = [
     {
       icon: IconGlobe,
-      title: 'Home',
+      title: 'Anasayfa',
       url: '/home',
       subMenu: [],
       type: 0,
@@ -26,6 +27,13 @@ const useStickyBarLogic = () => {
           type: 0,
         },
       ],
+    },
+    {
+      icon: IconProfile,
+      title: 'Profil',
+      url: '/profile',
+      subMenu: [],
+      type: 0,
     },
   ];
   return { menuItems };
