@@ -21,7 +21,7 @@ const TarotDetail = () => {
         <>
           <Link href={'/home'} className="back">{`< Back`}</Link>
           <Card className="card-wrapper">
-            <h2>{`Fortune Name`}</h2>
+            <h2>{'Tarot Falınız'}</h2>
             <div className="tarot-detail-container" ref={tarotRef}>
               {tarotResult?.selectedCards?.map((card, index) => (
                 <div

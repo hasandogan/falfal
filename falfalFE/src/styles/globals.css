@@ -90,10 +90,10 @@ body {
   background: url('/images/bg.png');
   background-repeat: no-repeat;
   background-size: cover;
-  font-family: 'Caveat', cursive;
+  font-family: 'inter', cursive;
   min-height: 100dvh;
   * {
-    font-family: 'Caveat', cursive;
+    font-family: 'inter', cursive;
   }
 }
 

@@ -109,6 +109,18 @@ class TarotCreatorCommand extends Command
      */
     private function createOpenAIData(TarotProcess $tarotProcess)
     {
+        $carts = [];
+        $jsonFile = 'tarot2.json';
+        $tarotData = json_decode(file_get_contents($jsonFile), true);
+        foreach ($tarotProcess->getSelectedCards() as $cart) {
+            if ($cart['value'] === true) {
+                $carts[] = $tarotData[$cart['key']-1]['front'];
+            }else{
+                $carts[] = $tarotData[$cart['key']-1]['revert'];
+
+            }
+        }
+
         $user = $tarotProcess->getUser();
         return [
             'question' => $tarotProcess->getQuestion(),
@@ -122,7 +134,7 @@ class TarotCreatorCommand extends Command
                 'town' => $user->getCountry(),
                 'jobStatus' => $user->getJobStatus()
             ],
-            'cart_info' => $tarotProcess->getSelectedCards()
+            'cart_info' => $carts
         ];
     }
 }

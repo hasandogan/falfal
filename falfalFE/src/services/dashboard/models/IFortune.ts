@@ -5,4 +5,5 @@ export interface IFortune {
   date: string;
   type: FortuneTypeEnum;
   message: string;
+  question: string;
 }

@@ -672,7 +672,7 @@
     "revert": "Tılsım Prensi Ters",
     "enFront": "Page of Pentacles",
     "enRevert": "Page of Pentacles - revert",
-    "image": "/images/cards/tilsim-prens.png"
+    "image": "/images/cards/tilsim-prensi.png"
   },
   {
     "id": 76,
@@ -688,7 +688,6 @@
     "name": "Tılsım Kraliçesi",
     "front": "Tılsım Kraliçesi",
     "revert": "Tılsım Kraliçesi Ters",
-
     "enFront": "Queen of Pentacles",
     "enRevert": "Queen of Pentacles - revert",
     "image": "/images/cards/tilsim-kralicesi.png"

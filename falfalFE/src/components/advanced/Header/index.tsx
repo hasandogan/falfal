@@ -14,15 +14,6 @@ const Header = ({ pageName }: HeaderProps) => {
       <div className={'page-name'}>{pageName}</div>
       <div className="header-buttons">
         <div className="header-buttons-left">
-          <div className={'button'}>
-            <Image
-              src={'/images/coin-count.svg'}
-              alt={'Coin Count'}
-              width={22}
-              height={22}
-            />
-            <span>{'coinCount'}</span>
-          </div>
         </div>
         <div className="header-buttons-right">
           <div className={'profile'} onClick={onProfileClick}>
