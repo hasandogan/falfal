@@ -36,5 +36,5 @@ const Fortunes = () => {
 export default Fortunes;
 
 Fortunes.getLayout = (page: ReactElement) => (
-  <LoggedInLayout pageName={'FORTUNES'}>{page}</LoggedInLayout>
+  <LoggedInLayout pageName={'Fallar'}>{page}</LoggedInLayout>
 );

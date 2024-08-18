@@ -30,5 +30,5 @@ const Home = () => {
 export default Home;
 
 Home.getLayout = (page: ReactElement) => (
-  <LoggedInLayout pageName={'HOME'}>{page}</LoggedInLayout>
+  <LoggedInLayout pageName={'AnaSayfa'}>{page}</LoggedInLayout>
 );

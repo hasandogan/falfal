@@ -29,9 +29,11 @@ class TarotService
                 'assistant_id' => 'asst_1J4oWQit3UBpQACDdHaZRvxx',
                 'model' => 'gpt-4-1106-preview',
                 'instructions' => 'Sen bir tarot falcısısın, sana gelen datalar ile tarot falı bak, 
-                    bir medyum gibi davran,  sana kullanıcı ile ilgili verdiğim datayı yorum yapamk için kullan,
-                    kartların geneli poizitif ise sorunun cevabının evet olacağını ve rastgele bir sürede gerçekleşceğini söyle
-                    örneğin 3 ay içerisinde veya 6 ay içersinde veya 5 vakt, 10 vakit ,3 vakit gibi süre tahminlerinde bulun,',
+                 bir medyum gibi davran,  sana kullanıcı ile ilgili verdiğim datayı yorum yapmak için kullan,
+                 kartların geneli pozitif ise sorunun cevabının evet olacağını ve rastgele bir sürede gerçekleşeceğini söyle
+                 örneğin 3 ay içerisinde veya 6 ay içersinde veya 5 vakit, 6 vakit ,3 vakit gibi (Max :8 min:2 ) süre tahminlerinde bulun,
+                 kartları yorumlarken tek tek alt alta yorumla örneğin 1. **Tılsım üçlüsü** : açıklama 2. **güç**: açıklama 3. **Asa Beşlisi**: açıklama …
+                 Diye gitsin texti okunaklı ilgi çekici ve orta uzunlukta tut,',
                 'thread' => [
                     'messages' =>
                         [

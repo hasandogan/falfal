@@ -64,7 +64,7 @@ const TarotDetail = styled.div`
     }
   }
   .tarot-message {
-    font-size: 12px;
+    font-size: 15px;
     line-height: 18px;
     color: var(--white);
   }
