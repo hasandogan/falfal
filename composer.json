@@ -13,6 +13,8 @@
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^3.1",
         "erdum/php-open-ai-assistant-sdk": "^1.0",
+        "google/apiclient": "^2.15.0",
+        "google/cloud-ai-platform": "^1.3",
         "guzzlehttp/guzzle": "^7.8",
         "lexik/jwt-authentication-bundle": "^2.20",
         "nelmio/cors-bundle": "^2.5",

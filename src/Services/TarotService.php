@@ -24,6 +24,7 @@ class TarotService
      */
     public function createRequest($data)
     {
+        dd($data);
         return $this->client->threads()->createAndRun(
             [
                 'assistant_id' => 'asst_1J4oWQit3UBpQACDdHaZRvxx',
@@ -33,7 +34,7 @@ class TarotService
                  kartların geneli pozitif ise sorunun cevabının evet olacağını ve rastgele bir sürede gerçekleşeceğini söyle
                  örneğin 3 ay içerisinde veya 6 ay içersinde veya 5 vakit, 6 vakit ,3 vakit gibi (Max :8 min:2 ) süre tahminlerinde bulun,
                  kartları yorumlarken tek tek alt alta yorumla örneğin 1. **Tılsım üçlüsü** : açıklama 2. **güç**: açıklama 3. **Asa Beşlisi**: açıklama …
-                 Diye gitsin texti okunaklı ilgi çekici ve orta uzunlukta tut,',
+                 Diye gitsin texti okunaklı ilgi çekici ve orta uzunlukta tut',
                 'thread' => [
                     'messages' =>
                         [

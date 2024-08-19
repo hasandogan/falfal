@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Entity\TarotProcess;
 use App\Enums\TarotProcessEnum;
+use App\Services\GoogleVertexAiService;
 use App\Services\TarotService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -23,12 +24,14 @@ class TarotCreatorCommand extends Command
     private EntityManagerInterface $entityManager;
     private KernelInterface $kernel;
     private TarotService $tarotService;
+    private GoogleVertexAiService $googleVertexAiService;
     private LoggerInterface $logger;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         KernelInterface        $kernel,
         TarotService           $tarotService,
+        GoogleVertexAiService  $googleVertexAiService,
         LoggerInterface        $logger
     )
     {
@@ -36,6 +39,7 @@ class TarotCreatorCommand extends Command
         $this->entityManager = $entityManager;
         $this->kernel = $kernel;
         $this->tarotService = $tarotService;
+        $this->googleVertexAiService = $googleVertexAiService;
         $this->logger = $logger;
     }
 
@@ -48,7 +52,8 @@ class TarotCreatorCommand extends Command
         try {
             foreach ($tarotProcesses as $tarotProcess) {
                 $tarotOpenAIData = $this->createOpenAIData($tarotProcess);
-                $tarotProcess = $this->callOpenAI($tarotProcess, $tarotOpenAIData);
+                $tarot = $this->googleVertexAiService->createTarot($tarotOpenAIData);
+              //  $tarotProcess = $this->callOpenAI($tarotProcess, $tarotOpenAIData);
                 $this->entityManager->persist($tarotProcess);
                 $this->entityManager->flush();
             }
