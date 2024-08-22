@@ -51,9 +51,9 @@ class TarotCreatorCommand extends Command
         $tarotProcesses = $this->entityManager->getRepository(TarotProcess::class)->findBy(['status' => TarotProcessEnum::STARTED]);
         try {
             foreach ($tarotProcesses as $tarotProcess) {
-                $tarotOpenAIData = $this->createOpenAIData($tarotProcess);
-                $tarot = $this->googleVertexAiService->createTarot($tarotOpenAIData);
-              //  $tarotProcess = $this->callOpenAI($tarotProcess, $tarotOpenAIData);
+                $tarotOpenAIData = $this->createAIData($tarotProcess);
+
+               // $tarotProcess = $this->callOpenAI($tarotProcess, $tarotAIData);
                 $this->entityManager->persist($tarotProcess);
                 $this->entityManager->flush();
             }
@@ -74,7 +74,8 @@ class TarotCreatorCommand extends Command
     {
         $response = null;
         try {
-            $response = $this->tarotService->createRequest($tarotOpenAIData);
+            $tarot = $this->googleVertexAiService->createTarot($tarotOpenAIData);
+            dd($tarot);
         } catch (\Exception $exception) {
             $this->logger->log($exception->getCode(), $exception->getMessage(), ['trace' => $exception->getTrace()]);
         }
@@ -90,13 +91,6 @@ class TarotCreatorCommand extends Command
         $this->entityManager->persist($tarotProcess);
         $this->entityManager->flush();
 
-        try {
-            $response = $this->tarotService->checkAndGetResponse($response->threadId,$response->id);
-        }catch (\Exception $exception){
-            $this->logger->log($exception->getCode(), $exception->getMessage(), ['trace' => $exception->getTrace()]);
-            $tarotProcess->setStatus(TarotProcessEnum::IN_PROGRESS->value);
-            $tarotProcess->setStatusMessage("Falınıza bakacak uygun bir falcı bulamadık. Aramaya devam ediyoruz. Mutlaka bulacağız.");
-        }
         if ($response->status === 'completed') {
             $messages = $this->tarotService->getResponseContent($response);
             $tarotProcess->setStatus(TarotProcessEnum::WAITING->value);
@@ -112,7 +106,7 @@ class TarotCreatorCommand extends Command
      * @param TarotProcess $tarotProcess
      * @return array
      */
-    private function createOpenAIData(TarotProcess $tarotProcess)
+    private function createAIData(TarotProcess $tarotProcess)
     {
         $carts = [];
         $jsonFile = 'tarot2.json';
