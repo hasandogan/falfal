@@ -52,7 +52,7 @@ class TarotCreatorCommand extends Command
         try {
             foreach ($tarotProcesses as $tarotProcess) {
                 $tarotOpenAIData = $this->createAIData($tarotProcess);
-
+                $this->callOpenAI($tarotProcess, $tarotOpenAIData);
                // $tarotProcess = $this->callOpenAI($tarotProcess, $tarotAIData);
                 $this->entityManager->persist($tarotProcess);
                 $this->entityManager->flush();
