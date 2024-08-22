@@ -52,7 +52,7 @@ class TarotCreatorCommand extends Command
         try {
             foreach ($tarotProcesses as $tarotProcess) {
                 $tarotOpenAIData = $this->createAIData($tarotProcess);
-                $this->callOpenAI($tarotProcess, $tarotOpenAIData);
+                $this->callVertexAi($tarotProcess, $tarotOpenAIData);
                // $tarotProcess = $this->callOpenAI($tarotProcess, $tarotAIData);
                 $this->entityManager->persist($tarotProcess);
                 $this->entityManager->flush();
@@ -70,15 +70,15 @@ class TarotCreatorCommand extends Command
      * @param $tarotOpenAIData
      * @return TarotProcess
      */
-    private function callOpenAI(TarotProcess $tarotProcess, $tarotOpenAIData)
+    private function callVertexAi(TarotProcess $tarotProcess, $tarotOpenAIData)
     {
         $response = null;
         try {
-            $tarot = $this->googleVertexAiService->createTarot($tarotOpenAIData);
-            dd($tarot);
+            $response = $this->googleVertexAiService->createTarot($tarotOpenAIData);
         } catch (\Exception $exception) {
             $this->logger->log($exception->getCode(), $exception->getMessage(), ['trace' => $exception->getTrace()]);
         }
+
         if ($response === null) {
             $tarotProcess->setStatus(TarotProcessEnum::FAILED->value);
             $tarotProcess->setStatusMessage("Falınıza bakacak uygun bir falcı bulamadık. Çok ilginç bir kaderiniz olmalı.");
@@ -86,19 +86,12 @@ class TarotCreatorCommand extends Command
             $this->entityManager->flush();
             return $tarotProcess;
         }
-        $tarotProcess->setOpenAIThreadId($response->threadId);
-        $tarotProcess->setOpenAIResponseId($response->id);
+
+        $tarotProcess->setResponse($response);
+        $tarotProcess->setStatus(TarotProcessEnum::WAITING->value);
         $this->entityManager->persist($tarotProcess);
         $this->entityManager->flush();
 
-        if ($response->status === 'completed') {
-            $messages = $this->tarotService->getResponseContent($response);
-            $tarotProcess->setStatus(TarotProcessEnum::WAITING->value);
-            $tarotProcess->setResponse($messages['data'][0]['content'][0]['text']["value"]);
-        } else {
-            $tarotProcess->setStatus(TarotProcessEnum::FAILED->value);
-            $tarotProcess->setStatusMessage("Failed buraya bir şeyler bulalım");
-        }
         return $tarotProcess;
     }
 

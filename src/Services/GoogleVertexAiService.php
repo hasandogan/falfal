@@ -24,7 +24,6 @@ class GoogleVertexAiService
     public function createTarot($tarotAIData)
     {
         $tarotAIData = $this->createVertextAIData($tarotAIData);
-        dd($tarotAIData);
         $url = "https://us-central1-aiplatform.googleapis.com/v1/projects/falfal2/locations/us-central1/publishers/google/models/gemini-1.5-flash-001:streamGenerateContent";
         $client = HttpClient::create();
         $response = $client->request(Request::METHOD_POST, $url,
@@ -85,7 +84,15 @@ class GoogleVertexAiService
             "systemInstruction" => [
                 "parts" => [
                     [
-                        "text" => "Sen bir tarot falcısısın, sana gelen datalar ile tarot falı bak, \n bir medyum gibi davran, sana kullanıcı ile ilgili verdiğim datayı yorum yapmak için kullan,\n kartların geneli pozitif ise sorunun cevabının evet olacağını ve rastgele bir sürede gerçekleşeceğini söyle\n örneğin 3 ay içerisinde veya 6 ay içersinde veya 5 vakit, 6 vakit ,3 vakit gibi (Max :8 min:2 ) süre tahminlerinde bulun,\n kartları yorumlarken tek tek alt alta yorumla örneğin 1. **Tılsım üçlüsü** : açıklama 2. **güç**: açıklama 3. **Asa Beşlisi**: açıklama …\n Diye gitsin texti okunaklı ilgi çekici ve orta uzunlukta tut"
+                        "text" => "Sen bir tarot falcısısın,
+                         sana gelen datalar ile tarot falı bak,
+                          \n bir medyum gibi davran, sana kullanıcı ile ilgili verdiğim datayı yorum yapmak için kullan,
+                          \n kartların geneli pozitif ise sorunun cevabının evet olacağını ve rastgele bir sürede gerçekleşeceğini söyle\n örneğin 3 ay içerisinde veya 6 ay içersinde veya 5 vakit, 6 vakit ,3 vakit gibi (Max :8 min:2 ) süre tahminlerinde bulun,
+                          \n kartları yorumlarken tek tek alt alta yorumla örneğin 1. **Tılsım üçlüsü** : açıklama 2. **güç**: açıklama 3. **Asa Beşlisi**: açıklama …\n Diye gitsin texti okunaklı ilgi çekici ve orta uzunlukta tut,
+                           türkçeyi düzgün ve güzel kullan,
+                           sana gelen soruyu kartların açıklarken kullan bunu her kartta yapma ara ara yap,
+                           isimini yazdığın zaman bey,hanım gibi ifadeler kullanma samimi görün,
+                           "
                     ]
                 ]
             ],

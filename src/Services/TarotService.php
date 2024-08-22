@@ -24,7 +24,6 @@ class TarotService
      */
     public function createRequest($data)
     {
-        dd($data);
         return $this->client->threads()->createAndRun(
             [
                 'assistant_id' => 'asst_1J4oWQit3UBpQACDdHaZRvxx',
@@ -48,27 +47,6 @@ class TarotService
         );
     }
 
-    /**
-     * @param $threadId
-     * @param $responseId
-     * @return ThreadRunResponse
-     */
-    public function checkAndGetResponse($threadId, $responseId)
-    {
-        $response = $this->client->threads()->runs()->retrieve($threadId, $responseId);
-        while (in_array($response->status, ['queued', 'in_progress', 'cancelling'])) {
-            sleep(1); // Wait for 1 second
-            $response = $this->client->threads()->runs()->retrieve($threadId, $responseId);
-        }
-        return $response;
-    }
 
-    /**
-     * @param ThreadRunResponse $response
-     * @return OpenAI\Responses\Threads\Messages\ThreadMessageListResponse
-     */
-    public function getResponseContent(ThreadRunResponse $response)
-    {
-        return $this->client->threads()->messages()->list($response->threadId);
-    }
+
 }

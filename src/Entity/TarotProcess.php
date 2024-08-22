@@ -40,12 +40,6 @@ class TarotProcess
     #[ORM\Column(name: "response", type: "text", nullable: true)]
     private string $response;
 
-    #[ORM\Column(name: "open_aithread_id", type: "text", nullable: true)]
-    private string $openAIThreadId;
-
-    #[ORM\Column(name: "open_airesponse_id", type: "text", nullable: true)]
-    private string $openAIResponseId;
-
     #[ORM\Column(name: "created_at", type: Types::DATETIME_MUTABLE, nullable: true)]
     private \DateTime $createdAt;
 
@@ -102,26 +96,6 @@ class TarotProcess
     public function setUser(User $user): void
     {
         $this->user = $user;
-    }
-
-    public function getOpenAIThreadId(): string
-    {
-        return $this->openAIThreadId;
-    }
-
-    public function setOpenAIThreadId(string $openAIThreadId): void
-    {
-        $this->openAIThreadId = $openAIThreadId;
-    }
-
-    public function getOpenAIResponseId(): string
-    {
-        return $this->openAIResponseId;
-    }
-
-    public function setOpenAIResponseId(string $openAIResponseId): void
-    {
-        $this->openAIResponseId = $openAIResponseId;
     }
 
     public function getSelectedCards(): array
