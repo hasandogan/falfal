@@ -51,6 +51,12 @@ const SignInLogic = () => {
       if (response?.token) {
         setTokenCookie(response?.token);
       }
+
+      if (response?.status === 401){
+        toast.error(response.message);
+        return;
+      }
+
       toast.success(
         response.message ||
           'Harika! her şey doğru görnüyor şimdi falına bakabilmek için seni içeri alıyorum.',

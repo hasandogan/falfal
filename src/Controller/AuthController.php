@@ -50,7 +50,6 @@ class AuthController extends AbstractController
             return new JsonResponse(['message' => $e->getMessage(), 'status' => 400]);
 
         }
-        return new JsonResponse(['message' => "Hata oluştu", 'status' => 400]);
     }
 
     #[Route(
