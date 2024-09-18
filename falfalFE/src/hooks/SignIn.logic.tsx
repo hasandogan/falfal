@@ -41,7 +41,7 @@ const SignInLogic = () => {
       if (response?.token) {
         setTokenCookie(response?.token);
       }
-      
+
       if (response?.status === 401){
         toast.error(response.message);
         return;
