@@ -46,6 +46,9 @@ const SignUpLogic = () => {
     try {
       const response = await Register(requestData);
 
+      if (response?.status === 400){
+        toast.error(response.message);
+      }
       toast.success(response.message || 'Kullanıcı başarıyla kaydedildi.', {
         onClose: () => router.push('/home'),
         autoClose: 5000,

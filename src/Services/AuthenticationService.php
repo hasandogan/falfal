@@ -56,7 +56,7 @@ class AuthenticationService
     {
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
        if ($user != null) {
-            return throw new \Exception('Bu Email Adresi Kullanılmaktadır. Kayıt yaptığınızı hatırlıyor musunuz?, hemen giriş yapın.');
+            return throw new \Exception('Bu Email Adresi Kullanılmaktadır. Kayıt yaptığınızı hatırlıyor musunuz?, hemen giriş yapın.', 400);
         }
 
     }
