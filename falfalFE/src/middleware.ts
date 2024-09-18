@@ -10,7 +10,8 @@ export function middleware(req: NextRequest) {
     req.nextUrl.pathname.startsWith('/api/') ||
     req.nextUrl.pathname.startsWith('/images/') ||
     req.nextUrl.pathname === '/sign-in' ||
-    req.nextUrl.pathname === '/sign-up'
+    req.nextUrl.pathname === '/sign-up' ||
+      req.nextUrl.pathname === '/connect/google/check'
   ) {
     return NextResponse.next();
   }

@@ -25,6 +25,16 @@ security:
             stateless: true
             security: false
 
+        google_login:
+            pattern: ^/api/connect/google
+            stateless: true
+            security: false
+
+        google_check:
+            pattern: ^/api/connect/google/check
+            stateless: true
+            security: false
+
         api:
             provider: app_user_provider
             pattern:   /api
@@ -32,6 +42,8 @@ security:
             jwt: ~
 
     access_control:
+        - { path: ^/api/connect/google, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/connect/google/check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /api,       roles: IS_AUTHENTICATED_FULLY }

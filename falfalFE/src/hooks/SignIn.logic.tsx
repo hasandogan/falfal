@@ -6,6 +6,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Login } from '../services/login/login';
 import { ILoginRequest } from '../services/login/models/login/ILoginRequest';
 import { setTokenCookie } from '../utils/helpers/setTokenCookie';
+import {createClient} from "@/services/api/api";
+import {IApiResponse} from "@/services/api/models/IApiResponse";
+import {ILoginGoogleRequest} from "@/services/login/models/google/ILoginGoogleRequest";
 
 const SignInLogic = () => {
   const router = useRouter();
@@ -17,6 +20,13 @@ const SignInLogic = () => {
   const [signInData, setSignInData] = useState(initialForm);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const googleRegister = async ()  => {
+    const client =  createClient()
+    const response = await client.get<IApiResponse<ILoginGoogleRequest>>(
+        `/connect/google`
+    );
+    window.location.href = response.data.redirect
+  };
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -62,6 +72,7 @@ const SignInLogic = () => {
     signInData,
     handleChange,
     handleSubmit,
+    googleRegister,
     isLoading,
   };
 };

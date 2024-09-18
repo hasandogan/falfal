@@ -1,7 +1,7 @@
 'use client';
 import { IRegisterRequest } from '@/services/register/models/register/IRegisterRequest';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { Register } from '@/services/register/register';
@@ -58,7 +58,12 @@ const SignUpLogic = () => {
     }
     setIsLoading(false);
   };
-  return { signUpData, handleSubmit, handleChange, isLoading };
+  const googleRegister = () => {
+        console.log("aasdaf");
+  };
+  return { signUpData, handleSubmit, handleChange, googleRegister, isLoading };
+
+
 };
 
 export default SignUpLogic;

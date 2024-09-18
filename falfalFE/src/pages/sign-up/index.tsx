@@ -10,7 +10,7 @@ import SimpleLayout from '../../layouts/SimpleLayout/SimpleLayout';
 import * as Styled from '../../styles/sign-up.styled';
 
 const SignUp = () => {
-  const { signUpData, handleSubmit, handleChange, isLoading } = SignUpLogic();
+  const { signUpData, handleSubmit, handleChange, googleRegister ,isLoading } = SignUpLogic();
   return (
     <Card type="vertical">
       <form onSubmit={handleSubmit}>
@@ -67,7 +67,7 @@ const SignUp = () => {
           <div className="seperator">
             <div className="seperator-text">or sign in using</div>
           </div>
-          <Styled.GoogleLogin>
+          <Styled.GoogleLogin onClick={googleRegister}>
             <Image src={'/images/google.svg'} alt={''} width={24} height={24} />
             <span>Sign In with Google</span>
           </Styled.GoogleLogin>

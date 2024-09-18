@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Services\AuthenticationService;
 
 use Doctrine\ORM\EntityManagerInterface;
+use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,4 +52,47 @@ class AuthController extends AbstractController
         }
         return new JsonResponse(['message' => "Hata oluştu", 'status' => 400]);
     }
+
+    #[Route(
+        path: 'api/connect/google',
+        name: 'connect_google',
+        methods: ['GET']
+    )]
+    public function connectGoogle(ClientRegistry $clientRegistry)
+    {
+        $redirectResponse = $clientRegistry
+            ->getClient('google')
+            ->redirect(['email','profile'], []);
+        $redirectUrl = str_replace("localhost%2F","localhost:3000%2F",$redirectResponse->headers->get('location'));
+        return new JsonResponse(['redirect' => $redirectUrl]);
+    }
+
+    #[Route(
+        path: 'api/connect/google/check',
+        name: 'connect_google_check',
+        methods: ['POST']
+    )]
+    public function connectGoogleCheck(Request $request,ClientRegistry $clientRegistry)
+    {
+        // burasını elle oluştur
+        // https://github.com/thephpleague/oauth2-google
+        $requestBody = json_decode($request->getContent(), false);
+        $response = $clientRegistry
+            ->getClient('google')
+            ->getOAuth2Provider();
+        dd($response);
+            //->getAccessToken('authorization_code',['code'=>$requestBody->code]);
+        return new JsonResponse(['redirect' => $response->getValues()]);
+    }
+
+    #[Route(
+        path: 'connect/google/check',
+        name: 'connect_google_check_2',
+        methods: ['GET']
+    )]
+    public function connectGoogleCheck2()
+    {
+        dd('sss');
+    }
+
 }

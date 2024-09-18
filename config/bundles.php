@@ -18,4 +18,5 @@ return [
     OpenAI\Symfony\OpenAIBundle::class => ['all' => true],
     Snc\RedisBundle\SncRedisBundle::class => ['all' => true],
     Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle::class => ['all' => true],
+    KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle::class => ['all' => true],
 ];
