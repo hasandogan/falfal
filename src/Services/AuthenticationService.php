@@ -43,6 +43,20 @@ class AuthenticationService
         return $entity;
     }
 
+    public function createUserForGoogle($data)
+    {
+        $this->findUsageUser($data['email']);
+        $entity = new User();
+        $entity->setEmail($data['email']);
+        $entity->setName($data['name']);
+        $entity->setLastName($data['lastName']);
+        $entity->setPassword($this->userPasswordHasher->hashPassword($entity, time().random_int(1,1000)));
+        $this->entityManager->persist($entity);
+        $this->entityManager->flush();
+        // $this->createUserLimit($entity);
+        return $entity;
+    }
+
     public function createUserLimit($user)
     {
         $entity = new UserLimit();

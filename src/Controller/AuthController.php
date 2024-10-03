@@ -6,7 +6,9 @@ use App\Entity\User;
 use App\Services\AuthenticationService;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Google_Client;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -59,10 +61,20 @@ class AuthController extends AbstractController
     )]
     public function connectGoogle(ClientRegistry $clientRegistry)
     {
+        // Google'a yönlendirme yapılırken doğru redirect_uri'yi belirtiyoruz
         $redirectResponse = $clientRegistry
             ->getClient('google')
-            ->redirect(['email','profile'], []);
-        $redirectUrl = str_replace("localhost%2F","localhost:3000%2F",$redirectResponse->headers->get('location'));
+            ->redirect(
+                ['email', 'profile'],
+                [
+                    'redirect_uri' => 'http://localhost:3000/connect/google/check' // Redirect URI'yi buraya ekliyoruz
+                ]
+            );
+
+        // Geri dönen URL'deki localhost'u değiştirme
+        $redirectUrl = str_replace("localhost%2F","localhost:3000%2F", $redirectResponse->headers->get('location'));
+
+        // Kullanıcıya JSON response ile yönlendirme URL'si dönüyoruz
         return new JsonResponse(['redirect' => $redirectUrl]);
     }
 
@@ -71,17 +83,57 @@ class AuthController extends AbstractController
         name: 'connect_google_check',
         methods: ['POST']
     )]
-    public function connectGoogleCheck(Request $request,ClientRegistry $clientRegistry)
+    public function connectGoogleCheck(Request $request, ClientRegistry $clientRegistry,AuthenticationService $authenticationService)
     {
-        // burasını elle oluştur
-        // https://github.com/thephpleague/oauth2-google
+        try {
+
+
         $requestBody = json_decode($request->getContent(), false);
-        $response = $clientRegistry
+
+        // Initialize Google client
+        $googleClient = $clientRegistry
             ->getClient('google')
             ->getOAuth2Provider();
-        dd($response);
-            //->getAccessToken('authorization_code',['code'=>$requestBody->code]);
-        return new JsonResponse(['redirect' => $response->getValues()]);
+
+            $accessToken = $googleClient->getAccessToken('authorization_code', [
+                'code' => $requestBody->code,
+                'redirect_uri' => 'http://localhost:3000/connect/google/check'
+            ]);
+
+            $idToken = $accessToken->getValues()['id_token']; // id_token burada yer alır
+
+            $client = new Google_Client();
+            $payload = $client->verifyIdToken($idToken);
+
+            if ($payload) {
+                // Payload contains user information
+                $userId = $payload['sub']; // User's Google ID
+                $email = $payload['email'];
+                $name = $payload['name'];
+                $nameParts = explode(' ', $name);
+                $firstName = $nameParts[0]; // İlk kısım: 'Hasan'
+                $lastName = isset($nameParts[1]) ? $nameParts[1] : ''; // İkinci kısım: 'Doğan'
+
+                $data = [
+                    'name' => $firstName ,
+                    'lastName' => $lastName ,
+                    'email' => $email
+                ];
+
+               $user =  $authenticationService->createUserForGoogle($data);
+               $token = $this->jwtManager->create($user);
+                return new JsonResponse([
+                    'status' => 200,
+                    'token' => $token,
+                ]);
+
+            } else {
+                // Invalid JWT
+                return new JsonResponse(['error' => 'Invalid token'], 401);
+            }
+        }catch (\Exception $exception){
+            return new JsonResponse(['message' => $exception->getMessage(), 'status' => 400]);
+        }
     }
 
     #[Route(

@@ -62,7 +62,6 @@ const SignUpLogic = () => {
     setIsLoading(false);
   };
   const googleRegister = () => {
-        console.log("aasdaf");
   };
   return { signUpData, handleSubmit, handleChange, googleRegister, isLoading };
 
