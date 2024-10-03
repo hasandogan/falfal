@@ -83,17 +83,14 @@ class AuthController extends AbstractController
         name: 'connect_google_check',
         methods: ['POST']
     )]
-    public function connectGoogleCheck(Request $request, ClientRegistry $clientRegistry,AuthenticationService $authenticationService)
+    public function connectGoogleCheck(Request $request, ClientRegistry $clientRegistry, AuthenticationService $authenticationService)
     {
         try {
+            $requestBody = json_decode($request->getContent(), false);
 
-
-        $requestBody = json_decode($request->getContent(), false);
-
-        // Initialize Google client
-        $googleClient = $clientRegistry
-            ->getClient('google')
-            ->getOAuth2Provider();
+            $googleClient = $clientRegistry
+                ->getClient('google')
+                ->getOAuth2Provider();
 
             $accessToken = $googleClient->getAccessToken('authorization_code', [
                 'code' => $requestBody->code,
@@ -106,44 +103,35 @@ class AuthController extends AbstractController
             $payload = $client->verifyIdToken($idToken);
 
             if ($payload) {
-                // Payload contains user information
-                $userId = $payload['sub']; // User's Google ID
                 $email = $payload['email'];
                 $name = $payload['name'];
                 $nameParts = explode(' ', $name);
-                $firstName = $nameParts[0]; // İlk kısım: 'Hasan'
-                $lastName = isset($nameParts[1]) ? $nameParts[1] : ''; // İkinci kısım: 'Doğan'
+                $firstName = $nameParts[0];
+                $lastName = isset($nameParts[1]) ? $nameParts[1] : '';
 
                 $data = [
-                    'name' => $firstName ,
-                    'lastName' => $lastName ,
+                    'name' => $firstName,
+                    'lastName' => $lastName,
                     'email' => $email
                 ];
+                $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
 
-               $user =  $authenticationService->createUserForGoogle($data);
-               $token = $this->jwtManager->create($user);
+                if ($user) {
+                    $token = $this->jwtManager->create($user);
+                } else {
+                    $user = $authenticationService->createUserForGoogle($data);
+                    $token = $this->jwtManager->create($user);
+                }
                 return new JsonResponse([
                     'status' => 200,
                     'token' => $token,
                 ]);
-
             } else {
-                // Invalid JWT
                 return new JsonResponse(['error' => 'Invalid token'], 401);
             }
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             return new JsonResponse(['message' => $exception->getMessage(), 'status' => 400]);
         }
-    }
-
-    #[Route(
-        path: 'connect/google/check',
-        name: 'connect_google_check_2',
-        methods: ['GET']
-    )]
-    public function connectGoogleCheck2()
-    {
-        dd('sss');
     }
 
 }
