@@ -54,6 +54,13 @@ class CoffeeController extends AbstractController
                 'status' => [CoffeeProcessEnum::STARTED, CoffeeProcessEnum::IN_PROGRESS]
             ]);
 
+        if (!$readyForTarot){
+            $readyForTarot = $this->entityManager->getRepository(TarotProcess::class)
+                ->findBy([
+                    'user' => $this->getUser()->getId(),
+                    'status' => [CoffeeProcessEnum::STARTED, CoffeeProcessEnum::IN_PROGRESS]
+                ]);
+        }
         if ($readyForTarot) {
             return new JsonResponse([
                 'message' => 'Zaten bir falınız var , Lütfen bitmesini bekleyin.',

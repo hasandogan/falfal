@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\CoffeeProcess;
 use App\Entity\TarotProcess;
 use App\Enums\TarotProcessEnum;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -52,6 +53,14 @@ class TarotController extends AbstractController
                 'user' => $this->getUser()->getId(),
                 'status' => [TarotProcessEnum::STARTED, TarotProcessEnum::IN_PROGRESS]
             ]);
+
+        if (!$readyForTarot){
+            $readyForTarot = $this->entityManager->getRepository(CoffeeProcess::class)
+                ->findBy([
+                    'user' => $this->getUser()->getId(),
+                    'status' => [TarotProcessEnum::STARTED, TarotProcessEnum::IN_PROGRESS]
+                ]);
+        }
 
         if ($readyForTarot) {
             return new JsonResponse([
