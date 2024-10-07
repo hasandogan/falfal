@@ -3,52 +3,45 @@ import { useRouter } from 'next/router';
 import { ReactElement } from 'react';
 import Card from '../../components/advanced/Card';
 import LoadingContainer from '../../components/advanced/LoadingContainer';
-import TarotDetailLogic from '../../hooks/TarotDetail.logic';
+import CoffeeDetailLogic from '../../hooks/CoffeeDetail.logic';
 import LoggedInLayout from '../../layouts/LoggedInLayout/LoggedInLayout';
-import * as Styled from '../../styles/TarotDetail.styled';
-import tarot from "@/pages/tarot/index";
+import * as Styled from '../../styles/CoffeeDetail.styled';
 
-const TarotDetail = () => {
+const CoffeeDetail = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const { tarotResult, isLoading, tarotRef } = TarotDetailLogic(id);
+  const { coffeeResult, isLoading, coffeeRef } = CoffeeDetailLogic(id);
 
   return (
-    <Styled.TarotDetail>
-      {isLoading ? (
-        <LoadingContainer />
-      ) : (
-        <>
-          <Link href={'/home'} className="back">{`< Geri`}</Link>
-          <Card className="card-wrapper">
-            <h2>{'Tarot Falınız'}</h2>
-            <h3>Sorunuz: {tarotResult?.question}</h3>
-            <div className="tarot-detail-container" ref={tarotRef}>
-              {tarotResult?.selectedCards?.map((card, index) => (
-                <div
-                  key={index}
-                  className={`result-card ${card.result ? '' : 'revert'}`}
-                >
-                  <img
-                    src={card.image}
-                    alt={card.name}
-                    width={74}
-                    height={115}
-                  />
+      <Styled.CoffeeDetail>
+        {isLoading ? (
+            <LoadingContainer />
+        ) : (
+            <>
+              <Link href={'/home'} className="back">{`< Geri`}</Link>
+              <Card className="card-wrapper">
+                <h2>{'Kahve Falınız'}</h2>
+                <div className="coffee-detail-container" ref={coffeeRef}>
+                  {coffeeResult?.images.map((image, index) => (
+                      <img
+                          key={index}
+                          src={image}
+                          alt={`Coffee Image ${index}`}
+                          className="coffee-image"
+                      />
+                  ))}
                 </div>
-              ))}
-            </div>
-            <div className="tarot-message">{tarotResult?.message}</div>
-          </Card>
-        </>
-      )}
-    </Styled.TarotDetail>
+                <div className="coffee-message">{coffeeResult?.message}</div>
+              </Card>
+            </>
+        )}
+      </Styled.CoffeeDetail>
   );
 };
 
-export default TarotDetail;
+export default CoffeeDetail;
 
-TarotDetail.getLayout = (page: ReactElement) => (
-  <LoggedInLayout pageName={'Tarot Detail'}>{page}</LoggedInLayout>
+CoffeeDetail.getLayout = (page: ReactElement) => (
+    <LoggedInLayout pageName={'Kahve Falı'}>{page}</LoggedInLayout>
 );

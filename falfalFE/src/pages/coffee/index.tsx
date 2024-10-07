@@ -1,51 +1,42 @@
-import { ReactElement, useState } from 'react';
-import 'react-toastify/dist/ReactToastify.css';
+import { ReactElement } from 'react';
 import Card from '../../components/advanced/Card';
 import Button from '../../components/basic/Button';
 import LoggedInLayout from '../../layouts/LoggedInLayout/LoggedInLayout';
 import * as Styled from '../../styles/coffee.styled';
-import {Coffee} from "../../styles/coffee.styled"; // 'coffee.styled' dosyasını doğru ithal ediyoruz
+import CoffeeLogic from '../../hooks/Coffee.logic'; // Mantık dosyasını ithal ediyoruz
 
-const Coffe = () => {
-  const [selectedImages, setSelectedImages] = useState<File[]>([]);
-  const [buttonLoading, setButtonLoading] = useState(false);
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const newImages = Array.from(e.target.files);
-      setSelectedImages((prevImages) => [...prevImages, ...newImages]);
-    }
-  };
-
-  const removeImage = (indexToRemove: number) => {
-    setSelectedImages((prevImages) =>
-        prevImages.filter((_, index) => index !== indexToRemove)
-    );
-  };
-
-  const submitImages = () => {
-    setButtonLoading(true);
-    // Görselleri gönderme işlemi burada yapılacak
-    console.log('Gönderilen Görseller:', selectedImages);
-    setButtonLoading(false);
-  };
+const CoffeeUpload = () => {
+  const {
+    fileInputRef,
+    handleImageChange,
+    removeImage,
+    submitCoffee,
+    buttonLoading,
+    images,
+    handleButtonClick,
+  } = CoffeeLogic(); // Mantık fonksiyonunu kullanıyoruz
 
   return (
-      <Styled.Coffee> {/* Styled.Tarot bileşeni doğru kullanıldı */}
+      <Styled.Coffee>
         <Card className="card-wrapper">
           <Styled.QuestionForm>
-            <p>Kahve falına bakabilmemiz için fincanının en net 6 görüntüsünü yükle, sana özel yorumları al.
-              {' '}
-              Minimum 4 fotoğraf yükelemelisiniz.
-            </p>
+            <p>Kahve falına bakabilmemiz için fincanının en net 6 görüntüsünü yükle</p>
+
+            {/* Gizli input ve stilize edilmiş buton */}
             <input
                 type="file"
                 accept="image/*"
                 multiple
+                ref={fileInputRef}
                 onChange={handleImageChange}
+                style={{ display: 'none' }} // input'u gizliyoruz
             />
+            <Button type="button" onClick={handleButtonClick}>
+              Dosyaları Seç
+            </Button>
+
             <div className="image-preview">
-              {selectedImages.map((image, index) => (
+              {images.map((image, index) => (
                   <div key={`image-${index}`} className="image-container">
                     <img
                         src={URL.createObjectURL(image)}
@@ -61,10 +52,12 @@ const Coffe = () => {
                   </div>
               ))}
             </div>
-            {selectedImages.length >= 4 && (
+
+            {/* 4 ve üstü resim yüklendiğinde buton aktif olacak */}
+            {images.length >= 4 && (
                 <Button
                     className="submit-button"
-                    onClick={submitImages}
+                    onClick={submitCoffee}
                     disabled={buttonLoading}
                     loading={buttonLoading}
                 >
@@ -77,8 +70,8 @@ const Coffe = () => {
   );
 };
 
-Coffe.getLayout = (page: ReactElement) => (
-    <LoggedInLayout pageName={'COFFE'}>{page}</LoggedInLayout>
+CoffeeUpload.getLayout = (page: ReactElement) => (
+    <LoggedInLayout pageName={'COFFEE'}>{page}</LoggedInLayout>
 );
 
-export default Coffe;
+export default CoffeeUpload;

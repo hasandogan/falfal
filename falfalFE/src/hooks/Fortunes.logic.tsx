@@ -9,8 +9,8 @@ const FortunesLogic = () => {
     },
     {
       name: 'Kahve Falı',
-      description: 'Çok Yakında...',
-      url: '/fortunes',
+      description: 'Kahve falı, kahve telvesi üzerindeki sembollerin yorumlanmasıyla geleceğe dair ipuçları veren bir fal çeşididir.',
+      url: '/coffee',
       imageUrl: '/images/tarot.png',
     },
     {

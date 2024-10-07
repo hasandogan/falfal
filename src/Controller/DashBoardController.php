@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\CoffeeProcess;
 use App\Entity\TarotProcess;
 use App\Enums\TarotProcessEnum;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
@@ -25,6 +26,15 @@ class DashBoardController extends AbstractController
                 'user' => $this->getUser()->getId(),
                 'status' => [TarotProcessEnum::STARTED, TarotProcessEnum::IN_PROGRESS, TarotProcessEnum::WAITING]
             ]);
+
+        if (!$preparedFortune){
+            $preparedFortune = $this->entityManager
+                ->getRepository(CoffeeProcess::class)
+                ->findOneBy([
+                    'user' => $this->getUser()->getId(),
+                    'status' => [TarotProcessEnum::STARTED, TarotProcessEnum::IN_PROGRESS, TarotProcessEnum::WAITING]
+                ]);
+        }
         if ($preparedFortune) {
             $processTime = $preparedFortune->getProcessFinishTime()->format('Y-m-d H:i:s');
             $createdAt = $preparedFortune->getCreatedAt()->format('Y-m-d H:i:s');
@@ -32,6 +42,8 @@ class DashBoardController extends AbstractController
             $processTime = null;
             $createdAt = null;
         }
+
+        $fortunes = [];
         $tarotFortunes = $this->entityManager
             ->getRepository(TarotProcess::class)
             ->findBy(
@@ -41,22 +53,45 @@ class DashBoardController extends AbstractController
                 ], ['id' => 'DESC'], 5
             );
         if ($tarotFortunes){
-            $fortunes = [];
             foreach ($tarotFortunes as $fortune){
                 $fortunes[] = [
                     'id' => $fortune->getId(),
                     'date' => $fortune->getCreatedAt()->format('Y-m-d H:i:s'),
                     'type' => 'Tarot',
+                    'page' => 'tarot',
                     'question' => $fortune->getQuestion(),
                     'message' => mb_substr($fortune->getResponse(), 0, 240, 'UTF-8') . '...',
                 ];
             }
-        }else{
-            $fortunes = [];
         }
 
-        return new JsonResponse([
+        $coffeeFortunes = $this->entityManager
+            ->getRepository(CoffeeProcess::class)
+            ->findBy(
+                [
+                    'user' => $this->getUser()->getId(),
+                    'status' => TarotProcessEnum::COMPLETED
+                ], ['id' => 'DESC'], 5
+            );
 
+        if ($coffeeFortunes){
+            foreach ($coffeeFortunes as $fortune){
+                $fortunes[] = [
+                    'id' => $fortune->getId(),
+                    'date' => $fortune->getCreatedAt()->format('Y-m-d H:i:s'),
+                    'type' => 'Kahve Falı',
+                    'page' => 'coffee',
+                    'message' => mb_substr($fortune->getResponse(), 0, 240, 'UTF-8') . '...',
+                ];
+            }
+        }
+
+        usort($fortunes, function ($a, $b) {
+            return strtotime($b['date']) <=> strtotime($a['date']);
+        });
+
+
+        return new JsonResponse([
             'success' => true,
             'status' => 200,
             'message' => 'Tarot Falınız',

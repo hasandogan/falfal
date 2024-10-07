@@ -2,7 +2,9 @@
 
 namespace App\Command;
 
+use App\Entity\CoffeeProcess;
 use App\Entity\TarotProcess;
+use App\Enums\CoffeeProcessEnum;
 use App\Enums\TarotProcessEnum;
 use App\Services\GoogleVertexAiService;
 use App\Services\TarotService;
@@ -16,10 +18,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 #[AsCommand(
-    name: 'tarot:create',
-    description: 'Tarot processleri işler',
+    name: 'coffee:create',
+    description: 'kahve processleri işler',
 )]
-class TarotCreatorCommand extends Command
+class CoffeeCreatorCommand extends Command
 {
     private EntityManagerInterface $entityManager;
     private KernelInterface $kernel;
@@ -43,11 +45,11 @@ class TarotCreatorCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $io->success('Tarot Creator Command Started');
-        /** @var TarotProcess[] $tarotProcesses */
-        $tarotProcesses = $this->entityManager->getRepository(TarotProcess::class)->findBy(['status' => TarotProcessEnum::STARTED]);
+        $io->success('Coffe Creator Command Started');
+        /** @var CoffeeProcess[] $coffeProcess */
+        $coffeProcess = $this->entityManager->getRepository(CoffeeProcess::class)->findBy(['status' => CoffeeProcessEnum::STARTED]);
         try {
-            foreach ($tarotProcesses as $tarotProcess) {
+            foreach ($coffeProcess as $tarotProcess) {
                 $tarotOpenAIData = $this->createAIData($tarotProcess);
                 $this->callVertexAi($tarotProcess, $tarotOpenAIData);
                // $tarotProcess = $this->callOpenAI($tarotProcess, $tarotAIData);
@@ -63,56 +65,44 @@ class TarotCreatorCommand extends Command
     }
 
     /**
-     * @param TarotProcess $tarotProcess
+     * @param CoffeeProcess $coffeProcess
      * @param $tarotOpenAIData
-     * @return TarotProcess
+     * @return CoffeeProcess
      */
-    private function callVertexAi(TarotProcess $tarotProcess, $tarotOpenAIData)
+    private function callVertexAi(CoffeeProcess $coffeProcess, $tarotOpenAIData)
     {
         $response = null;
         try {
-            $response = $this->googleVertexAiService->createTarot($tarotOpenAIData);
+            $response = $this->googleVertexAiService->createCoffee($tarotOpenAIData);
         } catch (\Exception $exception) {
             $this->logger->log($exception->getCode(), $exception->getMessage(), ['trace' => $exception->getTrace()]);
         }
 
         if ($response === null) {
-            $tarotProcess->setStatus(TarotProcessEnum::FAILED->value);
-            $tarotProcess->setStatusMessage("Falınıza bakacak uygun bir falcı bulamadık. Çok ilginç bir kaderiniz olmalı.");
-            $this->entityManager->persist($tarotProcess);
+            $coffeProcess->setStatus(CoffeeProcessEnum::FAILED->value);
+            $coffeProcess->setStatusMessage("Falınıza bakacak uygun bir falcı bulamadık. Çok ilginç bir kaderiniz olmalı.");
+            $this->entityManager->persist($coffeProcess);
             $this->entityManager->flush();
-            return $tarotProcess;
+            return $coffeProcess;
         }
 
-        $tarotProcess->setResponse($response);
-        $tarotProcess->setStatus(TarotProcessEnum::WAITING->value);
-        $this->entityManager->persist($tarotProcess);
+        $coffeProcess->setResponse($response);
+        $coffeProcess->setStatus(TarotProcessEnum::WAITING->value);
+        $this->entityManager->persist($coffeProcess);
         $this->entityManager->flush();
 
-        return $tarotProcess;
+        return $coffeProcess;
     }
 
     /**
-     * @param TarotProcess $tarotProcess
+     * @param CoffeeProcess $coffeeProcess
      * @return array
      */
-    private function createAIData(TarotProcess $tarotProcess)
+    private function createAIData(CoffeeProcess $coffeeProcess)
     {
-        $carts = [];
-        $jsonFile = 'tarot2.json';
-        $tarotData = json_decode(file_get_contents($jsonFile), true);
-        foreach ($tarotProcess->getSelectedCards() as $cart) {
-            if ($cart['value'] === true) {
-                $carts[] = $tarotData[$cart['key']-1]['front'];
-            }else{
-                $carts[] = $tarotData[$cart['key']-1]['revert'];
 
-            }
-        }
-
-        $user = $tarotProcess->getUser();
+        $user = $coffeeProcess->getUser();
         return [
-            'question' => $tarotProcess->getQuestion(),
             'user_info' => [
                 'name' => $user->getName(),
                 'lastName' => $user->getLastName(),
@@ -123,7 +113,6 @@ class TarotCreatorCommand extends Command
                 'town' => $user->getCountry(),
                 'jobStatus' => $user->getJobStatus()
             ],
-            'cart_info' => $carts
         ];
     }
 }

@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\CoffeeProcess;
 use App\Entity\TarotProcess;
-use App\Enums\TarotProcessEnum;
+use App\Enums\CoffeeProcessEnum;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\AsController;
@@ -11,46 +12,46 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
 #[AsController]
-class TarotController extends AbstractController
+class CoffeeController extends AbstractController
 {
 
 
+
+
     #[Route(
-        path: 'api/tarots/{id}',
-        name: 'tarot.id',
+        path: 'api/coffee/{id}',
+        name: 'coffee.id',
         methods: ['GET'],
     )]
-    public function getTarotForId($id)
+    public function getCoffeeForId($id)
     {
-        /** @var TarotProcess $tarot */
-        $tarot = $this->entityManager->getRepository(TarotProcess::class)
+        /** @var CoffeeProcess $tarot */
+        $coffee = $this->entityManager->getRepository(CoffeeProcess::class)
             ->findOneBy(['user' => $this->getUser()->getId(), 'id' => $id]);
         $fortunes = [
             'success' => true,
             'status' => 200,
-            'message' => 'Tarot Falınız',
+            'message' => 'Kahve Falınız',
             'data' => [
-                'id' => $tarot->getId(),
-                'question' => $tarot->getQuestion(),
-                'message' => $tarot->getResponse(),
-                'selectedCards' => $tarot->getSelectedCards()
+                'id' => $coffee->getId(),
+                'message' => $coffee->getResponse(),
+                'images' => $coffee->getCoffeImages()
             ],
         ];
-
         return new JsonResponse($fortunes);
     }
 
     #[Route(
-        path: 'api/tarot/process/start',
-        name: 'tarot.process.start',
+        path: 'api/coffee/process/start',
+        name: 'coffee.process.start',
         methods: ['POST'],
     )]
     public function startTarotProcess(Request $request)
     {
-        $readyForTarot = $this->entityManager->getRepository(TarotProcess::class)
+        $readyForTarot = $this->entityManager->getRepository(CoffeeProcess::class)
             ->findBy([
                 'user' => $this->getUser()->getId(),
-                'status' => [TarotProcessEnum::STARTED, TarotProcessEnum::IN_PROGRESS]
+                'status' => [CoffeeProcessEnum::STARTED, CoffeeProcessEnum::IN_PROGRESS]
             ]);
 
         if ($readyForTarot) {
@@ -64,11 +65,10 @@ class TarotController extends AbstractController
         }
 
         $requestData = json_decode($request->getContent(),true);
-        $tarotProcess = new TarotProcess();
+        $tarotProcess = new CoffeeProcess();
         $tarotProcess->setUser($this->getUser());
-        $tarotProcess->setStatus(TarotProcessEnum::STARTED->value);
-        $tarotProcess->setQuestion($requestData["question"]);
-        $tarotProcess->setSelectedCards($requestData["selectedTarotsCards"]);
+        $tarotProcess->setStatus(CoffeeProcessEnum::STARTED->value);
+        $tarotProcess->setCoffeImages($requestData);
         $tarotProcess->setProcessFinishTime((new \DateTime("+30 minutes")));
         $this->entityManager->persist($tarotProcess);
         $this->entityManager->flush();
