@@ -5,6 +5,9 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { Register } from '@/services/register/register';
+import {createClient} from "@/services/api/api";
+import {IApiResponse} from "@/services/api/models/IApiResponse";
+import {ILoginGoogleRequest} from "@/services/login/models/google/ILoginGoogleRequest";
 
 const SignUpLogic = () => {
   const router = useRouter();
@@ -61,8 +64,15 @@ const SignUpLogic = () => {
     }
     setIsLoading(false);
   };
-  const googleRegister = () => {
+
+  const googleRegister = async ()  => {
+    const client =  createClient()
+    const response = await client.get<IApiResponse<ILoginGoogleRequest>>(
+        `/connect/google`
+    );
+    window.location.href = response.data.redirect
   };
+
   return { signUpData, handleSubmit, handleChange, googleRegister, isLoading };
 
 

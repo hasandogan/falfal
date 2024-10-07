@@ -61,7 +61,6 @@ class AuthController extends AbstractController
     )]
     public function connectGoogle(ClientRegistry $clientRegistry)
     {
-        // Google'a yönlendirme yapılırken doğru redirect_uri'yi belirtiyoruz
         $redirectResponse = $clientRegistry
             ->getClient('google')
             ->redirect(
@@ -71,10 +70,7 @@ class AuthController extends AbstractController
                 ]
             );
 
-        // Geri dönen URL'deki localhost'u değiştirme
         $redirectUrl = str_replace("localhost%2F","localhost:3000%2F", $redirectResponse->headers->get('location'));
-
-        // Kullanıcıya JSON response ile yönlendirme URL'si dönüyoruz
         return new JsonResponse(['redirect' => $redirectUrl]);
     }
 
@@ -87,7 +83,6 @@ class AuthController extends AbstractController
     {
         try {
             $requestBody = json_decode($request->getContent(), false);
-
             $googleClient = $clientRegistry
                 ->getClient('google')
                 ->getOAuth2Provider();
@@ -97,7 +92,7 @@ class AuthController extends AbstractController
                 'redirect_uri' => 'http://localhost:3000/connect/google/check'
             ]);
 
-            $idToken = $accessToken->getValues()['id_token']; // id_token burada yer alır
+            $idToken = $accessToken->getValues()['id_token'];
 
             $client = new Google_Client();
             $payload = $client->verifyIdToken($idToken);

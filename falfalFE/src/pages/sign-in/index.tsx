@@ -14,7 +14,7 @@ const SignIn = () => {
     <Card type="vertical">
       <form onSubmit={handleSubmit}>
         <Styled.SignInWrapper>
-          <h1>Sign in</h1>
+          <h1>Giriş</h1>
           <Input
             type="text"
             id="email"
@@ -34,24 +34,21 @@ const SignIn = () => {
             onChange={handleChange}
           />
           <Button type="submit" loading={isLoading} disabled={isLoading}>
-            Sign in
+            Giriş Yap
           </Button>
           <div className="seperator">
-            <div className="seperator-text">or sign in using</div>
+            <div className="seperator-text">Veya</div>
           </div>
           <Styled.GoogleLogin onClick={googleRegister}>
             <Image src={'/images/google.svg'} alt={''} width={24} height={24} />
-            <span>Sign In with Google</span>
+            <span>Google İle Giriş Yap</span>
           </Styled.GoogleLogin>
-          <Styled.AppleLogin>
-            <Image src={'/images/apple.svg'} alt={''} width={24} height={24} />
-            <span>Sign In with Apple</span>
-          </Styled.AppleLogin>
+
         </Styled.SignInWrapper>
       </form>
       <Styled.ActionLink>
-        Don’t have an account?
-        <Link href={'/sign-up'}>Sign Up</Link>
+        Henüz hesabınız yok mu?{' '}
+        <Link href={'/sign-up'}><b>Kayıt Ol</b></Link>
       </Styled.ActionLink>
     </Card>
   );

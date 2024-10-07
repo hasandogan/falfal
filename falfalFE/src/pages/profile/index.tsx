@@ -35,7 +35,7 @@ const Profile = () => {
       ) : (
         <form onSubmit={handleSubmit}>
           <Styled.ProfileWrapper>
-            <h1>Profile</h1>
+            <h1>Profil</h1>
             <Input
               type="text"
               id="name"
@@ -44,6 +44,15 @@ const Profile = () => {
               label="Adınız"
               value={profileData.name}
               onChange={handleChange}
+            />
+            <Input
+                type="text"
+                id="lastName"
+                name="lastName"
+                placeholder="lastName"
+                label="Adınız"
+                value={profileData.lastName}
+                onChange={handleChange}
             />
             <Input
               type="text"
