@@ -6,3 +6,4 @@ export const setTokenCookie = (token: string) => {
     sameSite: 'strict',
   });
 };
+
