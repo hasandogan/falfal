@@ -39,11 +39,6 @@ const SignIn = () => {
           <div className="seperator">
             <div className="seperator-text">Veya</div>
           </div>
-          <Styled.GoogleLogin onClick={googleRegister}>
-            <Image src={'/images/google.svg'} alt={''} width={24} height={24} />
-            <span>Google İle Giriş Yap</span>
-          </Styled.GoogleLogin>
-
         </Styled.SignInWrapper>
       </form>
       <Styled.ActionLink>

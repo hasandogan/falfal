@@ -59,7 +59,7 @@ const SignInLogic = () => {
 
       toast.success(
         response.message ||
-          'Harika! her şey doğru görnüyor şimdi falına bakabilmek için seni içeri alıyorum.',
+          'Harika! her şey doğru görünüyor şimdi falına bakabilmek için seni içeri alıyorum.',
         {
           onClose: () => router.push('/home'),
           autoClose: 5000,
