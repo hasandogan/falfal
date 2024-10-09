@@ -23,7 +23,7 @@ services:
       ports:
         - "80:80"
       volumes:
-        - ../:/var/www/html/symfony
+        - ../:/var/www/falfal
       links:
         - falfal_database
       networks:

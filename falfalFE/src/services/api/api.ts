@@ -33,7 +33,7 @@ function getCookie(name: string) {
 
 // Axios örneğini oluşturun
 const apiClient = axios.create({
-  baseURL: process.env.API_BASE_URL || 'http://localhost:3000', // Base URL'i projenize göre ayarlayın
+  baseURL: process.env.API_BASE_URL || 'http://35.206.151.183:3000', // Base URL'i projenize göre ayarlayın
   headers: {
     'Content-Type': 'application/json',
   },
