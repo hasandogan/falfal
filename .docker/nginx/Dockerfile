@@ -10,6 +10,7 @@ RUN apt-get install nginx -y
 RUN apt-get install apt-utils -y
 RUN apt-get install git -y
 RUN apt-get install curl -y
+RUN apt-get install cron -y
 RUN apt-get install nano -y
 RUN apt-get install openssl -y
 RUN apt-get install libpq-dev -y
@@ -33,6 +34,10 @@ RUN apt install -y php8.2\
 # Install php-fpm
 RUN apt install -y php8.2-fpm php8.2-cli
 
+COPY ./cronjob /etc/cron.d/mycron
+RUN chmod 0644 /etc/cron.d/mycron && \
+    crontab /etc/cron.d/mycron
+CMD ["cron", "-f"]
 
 
 

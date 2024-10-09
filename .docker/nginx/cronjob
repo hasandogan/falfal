@@ -1,0 +1,5 @@
+*/5 * * * * /usr/bin/php /var/www/html/symfony/bin/console tarot:create >> /var/www/html/symfony/var/log/cron.log 2>&1
+*/5 * * * * /usr/bin/php /var/www/html/symfony/bin/console tarot:finish:status >> /var/www/html/symfony/var/log/cron.log 2>&1
+*/5 * * * * /usr/bin/php /var/www/html/symfony/bin/console coffee:create >> /var/www/html/symfony/var/log/cron.log 2>&1
+*/5 * * * * /usr/bin/php /var/www/html/symfony/bin/console coffee:finish:status >> /var/www/html/symfony/var/log/cron.log 2>&1
+* * * * * date >> /var/www/html/symfony/var/log/cron_test.log 2>&1
