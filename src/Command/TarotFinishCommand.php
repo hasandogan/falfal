@@ -34,7 +34,7 @@ class TarotFinishCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $io->success('Tarot Creator Command Started');
+        $io->success('Tarot finish Command Started');
         /** @var TarotProcess[] $tarots */
         $tarots = $this->entityManager->getRepository(TarotProcess::class)->findBy(
             [

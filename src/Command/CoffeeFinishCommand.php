@@ -34,7 +34,7 @@ class CoffeeFinishCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $io->success('Coffee Creator Command Started');
+        $io->success('Coffee finish Command Started');
         /** @var CoffeeProcess[] $coffees */
         $coffees = $this->entityManager->getRepository(CoffeeProcess::class)->findBy(
             [
