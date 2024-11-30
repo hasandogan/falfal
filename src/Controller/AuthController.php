@@ -83,16 +83,7 @@ class AuthController extends AbstractController
     {
         try {
             $requestBody = json_decode($request->getContent(), false);
-            $googleClient = $clientRegistry
-                ->getClient('google')
-                ->getOAuth2Provider();
-
-            $accessToken = $googleClient->getAccessToken('authorization_code', [
-                'code' => $requestBody->code,
-                'redirect_uri' => 'http://localhost:3000/connect/google/check'
-            ]);
-
-            $idToken = $accessToken->getValues()['id_token'];
+            $idToken = $requestBody->idToken;
 
             $client = new Google_Client();
             $payload = $client->verifyIdToken($idToken);
