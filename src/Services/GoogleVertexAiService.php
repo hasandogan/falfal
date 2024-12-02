@@ -65,7 +65,7 @@ class GoogleVertexAiService
         if ($cacheItem->isHit()) {
             return $cacheItem->get();
         }
-        $configFilePath = $this->kernel->getProjectDir() . '/config/falfal2.json';
+        $configFilePath = $this->kernel->getProjectDir() . '/config/keys/falfal2.json';
         $client = new Client(); // Burasını bir parameters yaml a set edip getParameterBagden çağırmamız gerekiyor
         $client->useApplicationDefaultCredentials();
         $client->addScope('https://www.googleapis.com/auth/cloud-platform');
