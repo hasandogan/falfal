@@ -47,17 +47,11 @@ when@prod:
                 channels: [ "tarot" ]
                 max_files: 10
             main:
-                type: fingers_crossed
-                action_level: error
-                handler: nested
-                excluded_404s:
-                    - ^/
-                channels: ["!event"]
+                type: group
+                members: [ nested ]
+                excluded_404s: false
             nested:
-                type: rotating_file
-                path: "%kernel.logs_dir%/%kernel.environment%.log"
-                level: debug
-                max_files: 10
+                type: stream
             console:
                 type: console
                 process_psr_3_messages: false
