@@ -73,6 +73,7 @@ class TarotCreatorCommand extends Command
         try {
             $response = $this->googleVertexAiService->createTarot($tarotOpenAIData);
         } catch (\Exception $exception) {
+            dd($exception);
             $this->logger->log($exception->getCode(), $exception->getMessage(), ['trace' => $exception->getTrace()]);
         }
 
