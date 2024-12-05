@@ -42,7 +42,7 @@ class TarotFinishCommand extends Command
             ]
         );
         foreach ($tarots as $tarot) {
-            $finishedDate = $tarot->getCreatedAt()->add(new \DateInterval("PT15M"));
+            $finishedDate = $tarot->getProcessFinishTime();
             if ($finishedDate < (new \DateTime())){
                 $tarot->setStatus(TarotProcessEnum::COMPLETED->value);
                 $this->entityManager->persist($tarot);
