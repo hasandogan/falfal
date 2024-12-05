@@ -37,6 +37,9 @@ class TarotProcess
     #[ORM\Column(name: "process_finish_time", type: Types::DATETIME_MUTABLE, nullable: true)]
     private $processFinishTime;
 
+    #[ORM\Column(name: "process_short",  nullable: true)]
+    private $processShort;
+
     #[ORM\Column(name: "response", type: "text", nullable: true)]
     private string $response;
 
@@ -70,6 +73,22 @@ class TarotProcess
     public function setStatusMessage($statusMessage): void
     {
         $this->statusMessage = $statusMessage;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProcessShort()
+    {
+        return $this->processShort;
+    }
+
+    /**
+     * @param mixed $processShort
+     */
+    public function setProcessShort($processShort): void
+    {
+        $this->processShort = $processShort;
     }
 
     /**
@@ -182,5 +201,10 @@ class TarotProcess
     public function setProcessFinishTime($processFinishTime): void
     {
         $this->processFinishTime = $processFinishTime;
+    }
+
+    public function incrementAdShortCount(): void
+    {
+        $this->processShort++;
     }
 }

@@ -76,7 +76,7 @@ class CoffeeController extends AbstractController
         $tarotProcess->setUser($this->getUser());
         $tarotProcess->setStatus(CoffeeProcessEnum::STARTED->value);
         $tarotProcess->setCoffeImages($requestData);
-        $tarotProcess->setProcessFinishTime((new \DateTime("+30 minutes")));
+        $tarotProcess->setProcessFinishTime((new \DateTime("+15 minutes")));
         $this->entityManager->persist($tarotProcess);
         $this->entityManager->flush();
 

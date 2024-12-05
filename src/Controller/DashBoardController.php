@@ -38,6 +38,9 @@ class DashBoardController extends AbstractController
         if ($preparedFortune) {
             $processTime = $preparedFortune->getProcessFinishTime()->format('Y-m-d H:i:s');
             $createdAt = $preparedFortune->getCreatedAt()->format('Y-m-d H:i:s');
+            $type = $preparedFortune instanceof TarotProcess ? 'Tarot' : 'Coffee';
+            $id = $preparedFortune->getId();
+            $shortLimit = $preparedFortune->getProcessShort();
         } else {
             $processTime = null;
             $createdAt = null;
@@ -94,13 +97,17 @@ class DashBoardController extends AbstractController
         return new JsonResponse([
             'success' => true,
             'status' => 200,
-            'message' => 'Tarot Falınız',
+            'message' => 'Fallarınız',
             'data' => [
                 'pendingProcess' => [
                     'status' => $processTime !== null ? true : false,
                     'createAt' => $createdAt ?? null,
                     'endDate' => $processTime?? null,
-                    'serverResponseTime' => date('Y-m-d H:i:s') ?? null
+                    'processShort' => $preparedFortune->getProcessShort() ?? null,
+                    'serverResponseTime' => date('Y-m-d H:i:s') ?? null,
+                    'type' => $type ?? null,
+                    'id' => $id ?? null,
+                    'shortLimit' => (int)$shortLimit ?? null,
                 ],
                 'fortunes' => $fortunes
             ],

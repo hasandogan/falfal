@@ -73,7 +73,6 @@ class TarotCreatorCommand extends Command
         try {
             $response = $this->googleVertexAiService->createTarot($tarotOpenAIData);
         } catch (\Exception $exception) {
-            dd($exception);
             $this->logger->log($exception->getCode(), $exception->getMessage(), ['trace' => $exception->getTrace()]);
         }
 
@@ -100,7 +99,7 @@ class TarotCreatorCommand extends Command
     private function createAIData(TarotProcess $tarotProcess)
     {
         $carts = [];
-        $jsonFile = 'tarot2.json';
+        $jsonFile = '/var/www/html/falfal/tarot2.json';
         $tarotData = json_decode(file_get_contents($jsonFile), true);
         foreach ($tarotProcess->getSelectedCards() as $cart) {
             if ($cart['value'] === true) {

@@ -90,6 +90,8 @@ class ProfileController extends AbstractController
             $userRequest = json_decode($request->getContent());
             $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $userRequest->email]);
             if (isset($user)) {
+                $user->setName($userRequest->name ?? $user->getName());
+                $user->setLastName($userRequest->lastName ?? $user->getLastName());
                 $user->setBirthTime($userRequest->birthTime ?? $user->getBirthTime());
                 $user->setPrivacyApproved(1);
                 $user->setCountry($userRequest->country ?? $user->getCountry());
