@@ -40,7 +40,7 @@ class DashBoardController extends AbstractController
             $createdAt = $preparedFortune->getCreatedAt()->format('Y-m-d H:i:s');
             $type = $preparedFortune instanceof TarotProcess ? 'Tarot' : 'Coffee';
             $id = $preparedFortune->getId();
-            $shortLimit = $preparedFortune->getProcessShort();
+            $shortLimit = (int)$preparedFortune->getProcessShort();
         } else {
             $processTime = null;
             $createdAt = null;
@@ -106,7 +106,7 @@ class DashBoardController extends AbstractController
                     'serverResponseTime' => date('Y-m-d H:i:s') ?? null,
                     'type' => $type ?? null,
                     'id' => $id ?? null,
-                    'shortLimit' => (int)$shortLimit ?? null,
+                    'shortLimit' => $shortLimit ?? null,
                 ],
                 'fortunes' => $fortunes
             ],
