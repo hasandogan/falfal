@@ -103,7 +103,6 @@ class DashBoardController extends AbstractController
                     'status' => $processTime !== null ? true : false,
                     'createAt' => $createdAt ?? null,
                     'endDate' => $processTime?? null,
-                    'processShort' => $preparedFortune->getProcessShort() ?? null,
                     'serverResponseTime' => date('Y-m-d H:i:s') ?? null,
                     'type' => $type ?? null,
                     'id' => $id ?? null,
