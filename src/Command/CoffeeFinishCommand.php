@@ -42,7 +42,7 @@ class CoffeeFinishCommand extends Command
             ]
         );
         foreach ($coffees as $coffee) {
-            $finishedDate = $coffee->getCreatedAt()->add(new \DateInterval("PT30M"));
+            $finishedDate = $coffee->getCreatedAt()->add(new \DateInterval("PT15M"));
             if ($finishedDate < (new \DateTime())){
                 $coffee->setStatus(CoffeeProcessEnum::COMPLETED->value);
                 $this->entityManager->persist($coffee);
