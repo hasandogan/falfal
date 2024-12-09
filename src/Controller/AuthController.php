@@ -126,7 +126,7 @@ class AuthController extends AbstractController
         name: 'connect_apple',
         methods: ['POST']
     )]
-    public function connectToapple(Request $request, EntityManagerInterface $em)
+    public function connectToapple(Request $request, EntityManagerInterface $em,AuthenticationService $authenticationService)
     {
         try {
             $data = json_decode($request->getContent(), true);
@@ -139,20 +139,12 @@ class AuthController extends AbstractController
             // User repository'den apple_id ile kullanıcıyı ara
             $user = $em->getRepository(User::class)->findOneBy(['appleId' => $data['apple_id']]);
 
-            if (!$user) {
-                // Yeni kullanıcı oluştur
-                $user = new User();
-                $user->setAppleId($data['apple_id']);
-                $user->setEmail($data['email'] ?? 'user_' . $data['apple_id'] . '@apple.signin');
-                $user->setName($data['name'] ?? 'User');
-                $user->setLastName($data['surname'] ?? substr($data['apple_id'], 0, 5));
-
-                $em->persist($user);
-                $em->flush();
+            if ($user) {
+                $token = $this->jwtManager->create($user);
+            } else {
+                $user = $authenticationService->createUserForApple($data);
+                $token = $this->jwtManager->create($user);
             }
-
-            // JWT token oluştur
-            $token = $this->jwtManager->create($user);
 
             return new JsonResponse([
                 'success' => true,

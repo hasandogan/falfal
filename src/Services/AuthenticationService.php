@@ -57,6 +57,21 @@ class AuthenticationService
         return $entity;
     }
 
+        public function createUserForApple($data)
+        {
+            $this->findUsageUser($data['email']);
+            $user = new User();
+            $user->setAppleId($data['apple_id']);
+            $user->setEmail($data['email'] ?? 'user_' . $data['apple_id'] . '@apple.signin');
+            $user->setName($data['name'] ?? 'User');
+            $user->setLastName($data['surname'] ?? substr($data['apple_id'], 0, 5));
+
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+            return $user;
+        }
+
+
     public function createUserLimit($user)
     {
         $entity = new UserLimit();
