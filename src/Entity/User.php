@@ -65,6 +65,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private string|null $occupation = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private string|null $appleId = null;
+
     #[ORM\Column(type: 'json')]
     private $roles = ['ROLE_USER'];
 
@@ -298,6 +301,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    public function getAppleId(): ?string
+    {
+        return $this->appleId;
+    }
+
+    public function setAppleId(?string $appleId): void
+    {
+        $this->appleId = $appleId;
     }
 
 }

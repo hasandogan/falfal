@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -117,6 +118,67 @@ class AuthController extends AbstractController
             }
         } catch (\Exception $exception) {
             return new JsonResponse(['message' => $exception->getMessage(), 'status' => 400]);
+        }
+    }
+
+    #[Route(
+        path: 'api/connect/apple',
+        name: 'connect_apple',
+        methods: ['POST']
+    )]
+    public function connectToapple(Request $request, EntityManagerInterface $em)
+    {
+        try {
+            $data = json_decode($request->getContent(), true);
+
+            // Gelen verileri kontrol et
+            if (!isset($data['apple_id'])) {
+                throw new AuthenticationException('Apple ID bulunamadı');
+            }
+
+            // User repository'den apple_id ile kullanıcıyı ara
+            $user = $em->getRepository(User::class)->findOneBy(['appleId' => $data['apple_id']]);
+
+            if (!$user) {
+                // Yeni kullanıcı oluştur
+                $user = new User();
+                $user->setAppleId($data['apple_id']);
+                $user->setEmail($data['email'] ?? 'user_' . $data['apple_id'] . '@apple.signin');
+                $user->setName($data['name'] ?? 'User');
+                $user->setLastName($data['surname'] ?? substr($data['apple_id'], 0, 5));
+
+                $em->persist($user);
+                $em->flush();
+            }
+
+            // JWT token oluştur
+            $token = $this->jwtManager->create($user);
+
+            return new JsonResponse([
+                'success' => true,
+                'message' => 'Login successful',
+                'data' => [
+                    'token' => $token,
+                    'user' => [
+                        'id' => $user->getId(),
+                        'email' => $user->getEmail(),
+                        'name' => $user->getName(),
+                        'surname' => $user->getLastName(),
+                        'apple_id' => $user->getAppleId()
+                    ]
+                ]
+            ]);
+
+        } catch (AuthenticationException $e) {
+            return new JsonResponse([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 401);
+        } catch (\Exception $e) {
+            return new JsonResponse([
+                'success' => false,
+                'message' => 'Bir hata oluştu: ' . $e->getMessage()
+            ], 500);
         }
     }
 
