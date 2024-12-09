@@ -65,6 +65,7 @@ class AuthenticationService
             $user->setEmail($data['email'] ?? 'user_' . $data['apple_id'] . '@apple.signin');
             $user->setName($data['name'] ?? 'User');
             $user->setLastName($data['surname'] ?? substr($data['apple_id'], 0, 5));
+            $user->setPassword($this->userPasswordHasher->hashPassword($user, time().random_int(1,1000)));
 
             $this->entityManager->persist($user);
             $this->entityManager->flush();
