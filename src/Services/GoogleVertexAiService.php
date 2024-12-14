@@ -35,6 +35,20 @@ class GoogleVertexAiService
         return $this->parseTarotText($response->toArray(false));
     }
 
+    public function createForDream($dreamAIData)
+    {
+        $dreamAIData = $this->createVertextAIDataForDream($dreamAIData);
+        $url = "https://us-central1-aiplatform.googleapis.com/v1/projects/falfal2/locations/us-central1/publishers/google/models/gemini-1.5-flash-001:streamGenerateContent";
+        $client = HttpClient::create();
+        $response = $client->request(Request::METHOD_POST, $url,
+            [
+                'auth_bearer' => $this->getAccessToken()['access_token'],
+                'json' => $dreamAIData
+            ]
+        );
+        return $this->parseTarotText($response->toArray(false));
+    }
+
     public function createCoffee($coffeeAIData)
     {
 
@@ -141,6 +155,60 @@ class GoogleVertexAiService
         ];
     }
 
+    private function createVertextAIDataForDream($dreams)
+    {
+        return [
+            "contents" => [
+                [
+                    "role" => "user",
+                    "parts" => [
+                        [
+                            "text" => json_encode($dreams)
+                        ],
+                    ]
+                ]
+            ],
+            "systemInstruction" => [
+                "parts" => [
+                    [
+                        "text" => "Sen bir Rüya Yorumcususun,
+                         sana gelen datalar ile rüya yorumu yap,
+                          \n bir medyum gibi davran, sana kullanıcı ile ilgili verdiğim datayı yorum yapmak için kullan,
+                          \n türkçeyi düzgün ve güzel kullan,
+                          \n isimini yazdığın zaman bey,hanım gibi ifadeler kullanma samimi görün,
+                          \n Rüyanın verdikten sonra genel bir yorum yap ve kullanıcıya bir şeyler anlat, hayatında bir değişiklik olacak, iş hayatında bir değişiklik olacak gibi şeyler söyle ama her seferinde farklı şeyler söyle ve benzersiz olmaya çalış, sürekli olarak aynı şeyleri söyleme, 
+                          \n kullanıcıya sosyal mesajlar verme kaderini sen yönetirsin gibi bitiş cümleni daha samimi bir hale getir,
+                          \n sana gelen datalardan yola çıkarak bir şeyler anlat örneğin şehiri ile igli, ilişki durumu, eğitimi, olabildiğince okuma süresini uzatacak şeyler yaz.
+                          \n minimum 1500 karakter olsun
+                           "
+                    ]
+                ]
+            ],
+            "generationConfig" => [
+                "maxOutputTokens" => 8192,
+                "temperature" => 1.5,
+                "topP" => 0.95,
+            ],
+            "safetySettings" => [
+                [
+                    "category" => "HARM_CATEGORY_HATE_SPEECH",
+                    "threshold" => "BLOCK_MEDIUM_AND_ABOVE"
+                ],
+                [
+                    "category" => "HARM_CATEGORY_DANGEROUS_CONTENT",
+                    "threshold" => "BLOCK_MEDIUM_AND_ABOVE"
+                ],
+                [
+                    "category" => "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                    "threshold" => "BLOCK_MEDIUM_AND_ABOVE"
+                ],
+                [
+                    "category" => "HARM_CATEGORY_HARASSMENT",
+                    "threshold" => "BLOCK_MEDIUM_AND_ABOVE"
+                ]
+            ]
+        ];
+    }
 
     private function createVertextAIDataForCoffee($tarotAIData)
     {
