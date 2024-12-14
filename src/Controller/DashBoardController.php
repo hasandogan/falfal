@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\CoffeeProcess;
+use App\Entity\DreamProcess;
 use App\Entity\TarotProcess;
 use App\Enums\TarotProcessEnum;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
@@ -35,10 +36,23 @@ class DashBoardController extends AbstractController
                     'status' => [TarotProcessEnum::STARTED, TarotProcessEnum::IN_PROGRESS, TarotProcessEnum::WAITING]
                 ]);
         }
+        if (!$preparedFortune){
+            $preparedFortune = $this->entityManager
+                ->getRepository(DreamProcess::class)
+                ->findOneBy([
+                    'user' => $this->getUser()->getId(),
+                    'status' => [TarotProcessEnum::STARTED, TarotProcessEnum::IN_PROGRESS, TarotProcessEnum::WAITING]
+                ]);
+        }
         if ($preparedFortune) {
             $processTime = $preparedFortune->getProcessFinishTime()->format('Y-m-d H:i:s');
             $createdAt = $preparedFortune->getCreatedAt()->format('Y-m-d H:i:s');
-            $type = $preparedFortune instanceof TarotProcess ? 'Tarot' : 'Coffee';
+            $type = match(true) {
+                $preparedFortune instanceof TarotProcess => 'Tarot',
+                $preparedFortune instanceof CoffeeProcess => 'Coffee',
+                $preparedFortune instanceof DreamProcess => 'Dream',
+                default => 'Unknown', // Default case if none match
+            };
             $id = $preparedFortune->getId();
             $shortLimit = (int)$preparedFortune->getProcessShort();
         } else {
@@ -85,6 +99,27 @@ class DashBoardController extends AbstractController
                     'type' => 'Kahve Falı',
                     'page' => 'coffee',
                     'message' => mb_substr($fortune->getResponse(), 0, 240, 'UTF-8') . '...',
+                ];
+            }
+        }
+
+        $dreams = $this->entityManager
+            ->getRepository(DreamProcess::class)
+            ->findBy(
+                [
+                    'user' => $this->getUser()->getId(),
+                    'status' => TarotProcessEnum::COMPLETED
+                ], ['id' => 'DESC'], 5
+            );
+
+        if ($dreams){
+            foreach ($dreams as $dream){
+                $fortunes[] = [
+                    'id' => $dream->getId(),
+                    'date' => $dream->getCreatedAt()->format('Y-m-d H:i:s'),
+                    'type' => 'Rüya Yorumu',
+                    'page' => 'dream',
+                    'message' => mb_substr($dream->getResponse(), 0, 240, 'UTF-8') . '...',
                 ];
             }
         }
