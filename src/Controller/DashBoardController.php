@@ -120,6 +120,7 @@ class DashBoardController extends AbstractController
                     'type' => 'Rüya Yorumu',
                     'page' => 'dream',
                     'message' => mb_substr($dream->getResponse(), 0, 240, 'UTF-8') . '...',
+                    'dreams' => mb_substr($dream->getDreams(), 0, 240, 'UTF-8') . '...',
                 ];
             }
         }
