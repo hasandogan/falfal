@@ -34,7 +34,7 @@ class DreamController extends AbstractController
             'message' => 'Rüya Yorumunuz',
             'data' => [
                 'id' => $dream->getId(),
-                'question' => $dream->getDreams(),
+                'dreams' => $dream->getDreams(),
                 'message' => $dream->getResponse(),
             ],
         ];
