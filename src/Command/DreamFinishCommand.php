@@ -2,7 +2,8 @@
 
 namespace App\Command;
 
-use App\Entity\TarotProcess;
+use App\Entity\DreamProcess;
+use App\Enums\DreamProcessEnum;
 use App\Enums\TarotProcessEnum;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -34,18 +35,18 @@ class DreamFinishCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $io->success('Tarot Creator Command Started');
-        /** @var TarotProcess[] $tarots */
-        $tarots = $this->entityManager->getRepository(TarotProcess::class)->findBy(
+        $io->success('Dream finish Command Started');
+        /** @var DreamProcess[] $tarots */
+        $dreams = $this->entityManager->getRepository(DreamProcess::class)->findBy(
             [
-                "status" => TarotProcessEnum::WAITING->value
+                "status" => DreamProcessEnum::WAITING->value
             ]
         );
-        foreach ($tarots as $tarot) {
-            $finishedDate = $tarot->getProcessFinishTime();
+        foreach ($dreams as $dream) {
+            $finishedDate = $dream->getProcessFinishTime();
             if ($finishedDate < (new \DateTime())){
-                $tarot->setStatus(TarotProcessEnum::COMPLETED->value);
-                $this->entityManager->persist($tarot);
+                $dream->setStatus(DreamProcessEnum::COMPLETED->value);
+                $this->entityManager->persist($dream);
                 $this->entityManager->flush();
             }
         }
