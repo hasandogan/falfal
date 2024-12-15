@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\CoffeeProcess;
+use App\Entity\DreamProcess;
 use App\Entity\TarotProcess;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -30,6 +31,7 @@ class AdController extends AbstractController
         $repository = match ($type) {
             'Tarot' => $this->entityManager->getRepository(TarotProcess::class),
             'Coffee' => $this->entityManager->getRepository(CoffeeProcess::class),
+            'Dream' => $this->entityManager->getRepository(DreamProcess::class),
             default => null,
         };
 
