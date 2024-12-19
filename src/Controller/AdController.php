@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\CloudProcess;
 use App\Entity\CoffeeProcess;
 use App\Entity\DreamProcess;
 use App\Entity\TarotProcess;
@@ -32,6 +33,7 @@ class AdController extends AbstractController
             'Tarot' => $this->entityManager->getRepository(TarotProcess::class),
             'Coffee' => $this->entityManager->getRepository(CoffeeProcess::class),
             'Dream' => $this->entityManager->getRepository(DreamProcess::class),
+            'Cloud' => $this->entityManager->getRepository(CloudProcess::class),
             default => null,
         };
 
