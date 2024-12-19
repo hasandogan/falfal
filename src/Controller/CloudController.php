@@ -33,7 +33,7 @@ class CloudController extends AbstractController
             'data' => [
                 'id' => $coffee->getId(),
                 'message' => $coffee->getResponse(),
-                'images' => $coffee->getCoffeImages()
+                'images' => $coffee->getCloudImages()
             ],
         ];
         return new JsonResponse($fortunes);
