@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\CloudProcess;
 use App\Entity\CoffeeProcess;
 use App\Entity\DreamProcess;
 use App\Entity\TarotProcess;
@@ -21,134 +22,104 @@ class DashBoardController extends AbstractController
     )]
     public function allTarot(Request $request)
     {
-        $preparedFortune = $this->entityManager
-            ->getRepository(TarotProcess::class)
-            ->findOneBy([
-                'user' => $this->getUser()->getId(),
-                'status' => [TarotProcessEnum::STARTED, TarotProcessEnum::IN_PROGRESS, TarotProcessEnum::WAITING]
-            ]);
+        $preparedFortune = $this->findPendingProcess();
 
-        if (!$preparedFortune){
-            $preparedFortune = $this->entityManager
-                ->getRepository(CoffeeProcess::class)
-                ->findOneBy([
-                    'user' => $this->getUser()->getId(),
-                    'status' => [TarotProcessEnum::STARTED, TarotProcessEnum::IN_PROGRESS, TarotProcessEnum::WAITING]
-                ]);
-        }
-        if (!$preparedFortune){
-            $preparedFortune = $this->entityManager
-                ->getRepository(DreamProcess::class)
-                ->findOneBy([
-                    'user' => $this->getUser()->getId(),
-                    'status' => [TarotProcessEnum::STARTED, TarotProcessEnum::IN_PROGRESS, TarotProcessEnum::WAITING]
-                ]);
-        }
-        if ($preparedFortune) {
-            $processTime = $preparedFortune->getProcessFinishTime()->format('Y-m-d H:i:s');
-            $createdAt = $preparedFortune->getCreatedAt()->format('Y-m-d H:i:s');
-            $type = match(true) {
-                $preparedFortune instanceof TarotProcess => 'Tarot',
-                $preparedFortune instanceof CoffeeProcess => 'Coffee',
-                $preparedFortune instanceof DreamProcess => 'Dream',
-                default => 'Unknown', // Default case if none match
-            };
-            $id = $preparedFortune->getId();
-            $shortLimit = (int)$preparedFortune->getProcessShort();
-        } else {
-            $processTime = null;
-            $createdAt = null;
-        }
+        $pendingProcess = $preparedFortune ? [
+            'status' => true,
+            'createAt' => $preparedFortune->getCreatedAt()->format('Y-m-d H:i:s'),
+            'endDate' => $preparedFortune->getProcessFinishTime()->format('Y-m-d H:i:s'),
+            'serverResponseTime' => date('Y-m-d H:i:s'),
+            'type' => $this->getProcessType($preparedFortune),
+            'id' => $preparedFortune->getId(),
+            'shortLimit' => (int) $preparedFortune->getProcessShort(),
+        ] : [
+            'status' => false,
+            'createAt' => null,
+            'endDate' => null,
+            'serverResponseTime' => date('Y-m-d H:i:s'),
+            'type' => null,
+            'id' => null,
+            'shortLimit' => null,
+        ];
 
-        $fortunes = [];
-        $tarotFortunes = $this->entityManager
-            ->getRepository(TarotProcess::class)
-            ->findBy(
-                [
-                    'user' => $this->getUser()->getId(),
-                    'status' => TarotProcessEnum::COMPLETED
-                ], ['id' => 'DESC'], 5
-            );
-        if ($tarotFortunes){
-            foreach ($tarotFortunes as $fortune){
-                $fortunes[] = [
-                    'id' => $fortune->getId(),
-                    'date' => $fortune->getCreatedAt()->format('Y-m-d H:i:s'),
-                    'type' => 'Tarot',
-                    'page' => 'tarot',
-                    'question' => $fortune->getQuestion(),
-                    'message' => mb_substr($fortune->getResponse(), 0, 240, 'UTF-8') . '...',
-                ];
-            }
-        }
+        $fortunes = array_merge(
+            $this->getFortuneDetails(TarotProcess::class, 'Tarot', 'tarot'),
+            $this->getFortuneDetails(CoffeeProcess::class, 'Kahve Falı', 'coffee'),
+            $this->getFortuneDetails(DreamProcess::class, 'Rüya Yorumu', 'dream'),
+            $this->getFortuneDetails(CloudProcess::class, 'Bulut Yorumu', 'cloud')
+        );
 
-        $coffeeFortunes = $this->entityManager
-            ->getRepository(CoffeeProcess::class)
-            ->findBy(
-                [
-                    'user' => $this->getUser()->getId(),
-                    'status' => TarotProcessEnum::COMPLETED
-                ], ['id' => 'DESC'], 5
-            );
-
-        if ($coffeeFortunes){
-            foreach ($coffeeFortunes as $fortune){
-                $fortunes[] = [
-                    'id' => $fortune->getId(),
-                    'date' => $fortune->getCreatedAt()->format('Y-m-d H:i:s'),
-                    'type' => 'Kahve Falı',
-                    'page' => 'coffee',
-                    'message' => mb_substr($fortune->getResponse(), 0, 240, 'UTF-8') . '...',
-                ];
-            }
-        }
-
-        $dreams = $this->entityManager
-            ->getRepository(DreamProcess::class)
-            ->findBy(
-                [
-                    'user' => $this->getUser()->getId(),
-                    'status' => TarotProcessEnum::COMPLETED
-                ], ['id' => 'DESC'], 5
-            );
-
-        if ($dreams){
-            foreach ($dreams as $dream){
-                $fortunes[] = [
-                    'id' => $dream->getId(),
-                    'date' => $dream->getCreatedAt()->format('Y-m-d H:i:s'),
-                    'type' => 'Rüya Yorumu',
-                    'page' => 'dream',
-                    'message' => mb_substr($dream->getResponse(), 0, 240, 'UTF-8') . '...',
-                    'dreams' => mb_substr($dream->getDreams(), 0, 240, 'UTF-8') . '...',
-                ];
-            }
-        }
-
-        usort($fortunes, function ($a, $b) {
-            return strtotime($b['date']) <=> strtotime($a['date']);
-        });
-
+        usort($fortunes, fn($a, $b) => strtotime($b['date']) <=> strtotime($a['date']));
 
         return new JsonResponse([
             'success' => true,
             'status' => 200,
             'message' => 'Fallarınız',
             'data' => [
-                'pendingProcess' => [
-                    'status' => $processTime !== null ? true : false,
-                    'createAt' => $createdAt ?? null,
-                    'endDate' => $processTime?? null,
-                    'serverResponseTime' => date('Y-m-d H:i:s') ?? null,
-                    'type' => $type ?? null,
-                    'id' => $id ?? null,
-                    'shortLimit' => $shortLimit ?? null,
-                ],
-                'fortunes' => $fortunes
+                'pendingProcess' => $pendingProcess,
+                'fortunes' => $fortunes,
             ],
         ]);
-
-
     }
+
+    private function findPendingProcess()
+    {
+        $processRepositories = [TarotProcess::class, CoffeeProcess::class, DreamProcess::class, CloudProcess::class];
+
+        foreach ($processRepositories as $repository) {
+            $process = $this->entityManager
+                ->getRepository($repository)
+                ->findOneBy([
+                    'user' => $this->getUser()->getId(),
+                    'status' => [
+                        TarotProcessEnum::STARTED,
+                        TarotProcessEnum::IN_PROGRESS,
+                        TarotProcessEnum::WAITING
+                    ]
+                ]);
+
+            if ($process) {
+                return $process;
+            }
+        }
+
+        return null;
+    }
+
+    private function getProcessType($process): string
+    {
+        return match (true) {
+            $process instanceof TarotProcess => 'Tarot',
+            $process instanceof CoffeeProcess => 'Coffee',
+            $process instanceof DreamProcess => 'Dream',
+            $process instanceof CloudProcess => 'Cloud',
+            default => 'Unknown',
+        };
+    }
+
+    private function getFortuneDetails(string $class, string $type, string $page): array
+    {
+        $fortunes = $this->entityManager
+            ->getRepository($class)
+            ->findBy([
+                'user' => $this->getUser()->getId(),
+                'status' => TarotProcessEnum::COMPLETED
+            ], ['id' => 'DESC'], 5);
+
+        $details = [];
+
+        foreach ($fortunes as $fortune) {
+            $details[] = [
+                'id' => $fortune->getId(),
+                'date' => $fortune->getCreatedAt()->format('Y-m-d H:i:s'),
+                'type' => $type,
+                'page' => $page,
+                'message' => mb_substr($fortune->getResponse(), 0, 240, 'UTF-8') . '...',
+            ];
+        }
+
+        return $details;
+    }
+
 
 }

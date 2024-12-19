@@ -64,6 +64,21 @@ class GoogleVertexAiService
         return $this->parseTarotText($response->toArray(false));
     }
 
+    public function createCloud($coffeeAIData)
+    {
+
+        $coffeeAIData = $this->createVertextAIDataForCloud($coffeeAIData);
+        $url = "https://us-central1-aiplatform.googleapis.com/v1/projects/falfal2/locations/us-central1/publishers/google/models/gemini-1.5-flash-001:streamGenerateContent";
+        $client = HttpClient::create();
+        $response = $client->request(Request::METHOD_POST, $url,
+            [
+                'auth_bearer' => $this->getAccessToken()['access_token'],
+                'json' => $coffeeAIData
+            ]
+        );
+        return $this->parseTarotText($response->toArray(false));
+    }
+
     private function parseTarotText($responseContent)
     {
         $text = "";
@@ -241,6 +256,66 @@ class GoogleVertexAiService
                  \n bütün ifadeler türkçe olsun ve düzgün bir türkçe kullan
                  \n fincanı arapça yazma türkçe yaz.
                  \n minimum 1500 karakter olsun
+               "
+                    ]
+                ]
+            ],
+            "generationConfig" => [
+                "maxOutputTokens" => 8192,
+                "temperature" => 1.9,
+                "topP" => 0.55,
+            ],
+            "safetySettings" => [
+                [
+                    "category" => "HARM_CATEGORY_HATE_SPEECH",
+                    "threshold" => "BLOCK_MEDIUM_AND_ABOVE"
+                ],
+                [
+                    "category" => "HARM_CATEGORY_DANGEROUS_CONTENT",
+                    "threshold" => "BLOCK_MEDIUM_AND_ABOVE"
+                ],
+                [
+                    "category" => "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                    "threshold" => "BLOCK_MEDIUM_AND_ABOVE"
+                ],
+                [
+                    "category" => "HARM_CATEGORY_HARASSMENT",
+                    "threshold" => "BLOCK_MEDIUM_AND_ABOVE"
+                ]
+            ]
+        ];
+    }
+
+
+    private function createVertextAIDataForCloud($tarotAIData)
+    {
+        return [
+            "contents" => [
+                [
+                    "role" => "user",
+                    "parts" => [
+                        [
+                            "text" => json_encode($tarotAIData)
+                        ],
+                    ]
+                ]
+            ],
+            "systemInstruction" => [
+                "parts" => [
+                    [
+                        "text" => "
+                \n Sen bir Bulut falcısısın,
+                \n sana gelen datalar ile Bulut falı bak
+                \n biraz uzun ve detaylı bir şekilde fal bak
+                \n örneğin bardağın sağ tarafında şu var ve şu anlama geliyor sağında bu var aşağıda bu yukarıda bu var gibi şeyler yaz
+                \n kulannıcıyı etkile ve ona gerçek bir insanın bakıyormuş gibi hissettir
+                \n kullanıcıya ufak tefek öyküler anlat örneğin yurt dışı görünüyor bu nedenle, yakında bir düğün var, iş hayatında bir değişiklik olacak gibi şeyler söyle bunlar örnekler hep aynı şeyleri söyleme bu farklı şeyler bulup yaz.
+                \n yorumlama yaparken benzersiz ve uzun cümleler kullan daha önce gelen hiç bir Bulut falı aynı değil senin yazdıklarında olmasın
+                \n falda çıkan sembollerin anlamlarını kullanıcıya açıkla
+                \n kullanıcıya sosyal mesajlar verme kaderini sen yönetirsin gibi. bitiş cümleni daha samimi bir hale getir
+                \n sana gelen datalardan yola çıkarak bir şeyler anlat örneğin şehiri ile ilgili, ilişki durumu, eğitimi, olabildiğince okuma süresini uzatacak şeyler yaz.
+                \n bütün ifadeler türkçe olsun ve düzgün bir türkçe kullan
+                \n minimum 1500 karakter olsun
                "
                     ]
                 ]
