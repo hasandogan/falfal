@@ -29,7 +29,7 @@ class CloudController extends AbstractController
         $fortunes = [
             'success' => true,
             'status' => 200,
-            'message' => 'Kahve Falınız',
+            'message' => 'Bulut Yorumunuz',
             'data' => [
                 'id' => $coffee->getId(),
                 'message' => $coffee->getResponse(),
