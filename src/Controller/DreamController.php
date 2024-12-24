@@ -84,6 +84,7 @@ class DreamController extends AbstractController
         $dreamProcess->setUser($this->getUser());
         $dreamProcess->setStatus(DreamProcessEnum::STARTED->value);
         $dreamProcess->setDreams($requestData["dreams"]);
+        $dreamProcess->setPsychologist($requestData["psychologist"]);
         $dreamProcess->setProcessFinishTime((new \DateTime("+15 minutes")));
         $this->entityManager->persist($dreamProcess);
         $this->entityManager->flush();

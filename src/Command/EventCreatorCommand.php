@@ -2,9 +2,8 @@
 
 namespace App\Command;
 
-use App\Entity\DreamProcess;
-use App\Enums\DreamProcessEnum;
-use App\Enums\TarotProcessEnum;
+use App\Entity\EventProcess;
+use App\Enums\EventProcessEnum;
 use App\Services\GoogleVertexAiService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -16,10 +15,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 #[AsCommand(
-    name: 'dream:create',
-    description: 'Dream processleri işler',
+    name: 'event:create',
+    description: 'Event processleri işler',
 )]
-class DreamCreatorCommand extends Command
+class EventCreatorCommand extends Command
 {
     private EntityManagerInterface $entityManager;
     private KernelInterface $kernel;
@@ -43,75 +42,75 @@ class DreamCreatorCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $io->success('Dream Creator Command Started');
-        /** @var DreamProcess[] $dreamProcess */
-        $dreamProcess = $this->entityManager->getRepository(DreamProcess::class)->findBy(['status' => DreamProcessEnum::STARTED]);
+        $io->success('Evet Creator Command Started');
+        /** @var EventProcess[] $eventProcess */
+        $eventProcess = $this->entityManager->getRepository(EventProcess::class)->findBy(['status' => EventProcessEnum::STARTED]);
         try {
-            foreach ($dreamProcess as $dreamProces) {
-                $tarotOpenAIData = $this->createAIData($dreamProces);
-                $this->callVertexAi($dreamProces, $tarotOpenAIData);
+            foreach ($eventProcess as $process) {
+                $eventAIData = $this->createAIData($process);
+                $this->callVertexAi($process, $eventAIData);
                // $tarotProcess = $this->callOpenAI($tarotProcess, $tarotAIData);
-                $this->entityManager->persist($dreamProces);
+                $this->entityManager->persist($process);
                 $this->entityManager->flush();
             }
         } catch (\Exception $exception) {
             $this->logger->log($exception->getCode(), $exception->getMessage(), ['trace' => $exception->getTrace()]);
-            $dreamProces->setStatus(TarotProcessEnum::FAILED);
-            $dreamProces->setStatusMessage("Bu fala bakacak yetenekte bir falcı bulamadık. Kendimizi geliştiricez söz veriyoruz.");
+            $process->setStatus(EventProcessEnum::FAILED);
+            $process->setStatusMessage("Bu fala bakacak yetenekte bir falcı bulamadık. Kendimizi geliştiricez söz veriyoruz.");
         }
         return Command::SUCCESS;
     }
 
     /**
-     * @param DreamProcess $dreamProcess
-     * @param $dreamOpenAIData
-     * @return DreamProcess
+     * @param EventProcess $eventProcess
+     * @param $eventOpenAIData
+     * @return EventProcess
      */
-    private function callVertexAi(DreamProcess $dreamProcess, $dreamOpenAIData)
+    private function callVertexAi(EventProcess $eventProcess, $eventOpenAIData)
     {
         $response = null;
         try {
-            $response = $this->googleVertexAiService->createForDream($dreamOpenAIData);
+            $response = $this->googleVertexAiService->createForEvent($eventOpenAIData);
         } catch (\Exception $exception) {
             $this->logger->log($exception->getCode(), $exception->getMessage(), ['trace' => $exception->getTrace()]);
         }
 
         if ($response === null) {
-            $dreamProcess->setStatus(TarotProcessEnum::FAILED->value);
-            $dreamProcess->setStatusMessage("Falınıza bakacak uygun bir falcı bulamadık. Çok ilginç bir kaderiniz olmalı.");
-            $this->entityManager->persist($dreamProcess);
+            $eventProcess->setStatus(EventProcessEnum::FAILED->value);
+            $eventProcess->setStatusMessage("Falınıza bakacak uygun bir falcı bulamadık. Çok ilginç bir kaderiniz olmalı.");
+            $this->entityManager->persist($eventProcess);
             $this->entityManager->flush();
-            return $dreamProcess;
+            return $eventProcess;
         }
 
-        $dreamProcess->setResponse($response);
-        $dreamProcess->setStatus(DreamProcessEnum::WAITING->value);
-        $this->entityManager->persist($dreamProcess);
+        $eventProcess->setResponse($response);
+        $eventProcess->setStatus(EventProcessEnum::WAITING->value);
+        $this->entityManager->persist($eventProcess);
         $this->entityManager->flush();
 
-        return $dreamProcess;
+        return $eventProcess;
     }
 
     /**
-     * @param DreamProcess $dreamsProcess
+     * @param EventProcess $eventProcess
      * @return array
      */
-    private function createAIData(DreamProcess $dreamsProcess)
+    private function createAIData(EventProcess $eventProcess)
     {
 
-        $user = $dreamsProcess->getUser();
+        $user = $eventProcess->getUser();
         return [
             'user_info' => [
                 'name' => $user->getName(),
                 'lastName' => $user->getLastName(),
                 'gender' => $user->getGender(),
-                'dream' => $dreamsProcess->getDreams(),
+                'event' => $eventProcess->getEvents(),
                 'relationShip' => $user->getRelationShip(),
                 'birthDay' => $user->getBirthTime(),
                 'country' => $user->getCountry(),
                 'town' => $user->getCountry(),
                 'jobStatus' => $user->getJobStatus(),
-                'psychologist' => $dreamsProcess->getPsychologist()
+                'psychologist' => $eventProcess->getPsychologist()
             ],
         ];
     }

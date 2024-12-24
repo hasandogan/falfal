@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
 
 #[ORM\Entity]
 #[HasLifecycleCallbacks]
-class DreamProcess
+class EventProcess
 {
 
     #[ORM\Id]
@@ -28,8 +28,8 @@ class DreamProcess
     #[ORM\Column(name: "status_message", type: "text",nullable: true)]
     private $statusMessage;
 
-    #[ORM\Column(name: "dreams", type: "text")]
-    private $dreams;
+    #[ORM\Column(name: "events", type: "text")]
+    private $events;
 
     #[ORM\Column(name: "process_finish_time", type: Types::DATETIME_MUTABLE, nullable: true)]
     private $processFinishTime;
@@ -37,11 +37,11 @@ class DreamProcess
     #[ORM\Column(name: "process_short",  nullable: true)]
     private $processShort;
 
-    #[ORM\Column(name: "response", type: "text", nullable: true)]
-    private string $response;
-
     #[ORM\Column(name: "psychologist", type: "text", nullable: true)]
     private string $psychologist;
+
+    #[ORM\Column(name: "response", type: "text", nullable: true)]
+    private string $response;
 
     #[ORM\Column(name: "created_at", type: Types::DATETIME_MUTABLE, nullable: true)]
     private \DateTime $createdAt;
@@ -94,19 +94,18 @@ class DreamProcess
     /**
      * @return mixed
      */
-    public function getDreams()
+    public function getEvents()
     {
-        return $this->dreams;
+        return $this->events;
     }
 
     /**
-     * @param mixed $dreams
+     * @param mixed $events
      */
-    public function setDreams($dreams): void
+    public function setEvents($events): void
     {
-        $this->dreams = $dreams;
+        $this->events = $events;
     }
-
 
     public function getUser(): User
     {
@@ -142,17 +141,6 @@ class DreamProcess
         $this->setUpdatedAtValue();
     }
 
-    public function getPsychologist(): string
-    {
-        return $this->psychologist;
-    }
-
-    public function setPsychologist(string $psychologist): void
-    {
-        $this->psychologist = $psychologist;
-    }
-
-
     #[ORM\PreUpdate]
     public function setUpdatedAtValue(): void
     {
@@ -180,6 +168,16 @@ class DreamProcess
     public function setResponse(string $response): void
     {
         $this->response = $response;
+    }
+
+    public function getPsychologist(): string
+    {
+        return $this->psychologist;
+    }
+
+    public function setPsychologist(string $psychologist): void
+    {
+        $this->psychologist = $psychologist;
     }
 
     /**
