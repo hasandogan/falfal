@@ -43,8 +43,14 @@ when@prod:
             tarot:
                 type: rotating_file
                 path: "%kernel.logs_dir%/tarot/%kernel.environment%.log"
-                level: debug
+                level: error
                 channels: [ "tarot" ]
+                max_files: 10
+            main:
+                type: rotating_file
+                path: "%kernel.logs_dir%/%kernel.environment%.log"
+                level: error
+                channels: [ "!event" ]
                 max_files: 10
 
             console:
