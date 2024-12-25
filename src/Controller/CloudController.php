@@ -74,7 +74,7 @@ class CloudController extends AbstractController
         $tarotProcess->setUser($this->getUser());
         $tarotProcess->setStatus(CoffeeProcessEnum::STARTED->value);
         $tarotProcess->setCloudImages($requestData);
-        $tarotProcess->setProcessFinishTime((new \DateTime("+15 minutes")));
+        $tarotProcess->setProcessFinishTime((new \DateTime("+3 minutes")));
         $this->entityManager->persist($tarotProcess);
         $this->entityManager->flush();
 

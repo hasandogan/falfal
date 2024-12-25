@@ -77,7 +77,7 @@ class TarotController extends AbstractController
         $tarotProcess->setStatus(TarotProcessEnum::STARTED->value);
         $tarotProcess->setQuestion($requestData["question"]);
         $tarotProcess->setSelectedCards($requestData["selectedTarotsCards"]);
-        $tarotProcess->setProcessFinishTime((new \DateTime("+15 minutes")));
+        $tarotProcess->setProcessFinishTime((new \DateTime("+3 minutes")));
         $this->entityManager->persist($tarotProcess);
         $this->entityManager->flush();
 
