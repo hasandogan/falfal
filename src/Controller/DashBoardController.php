@@ -66,7 +66,7 @@ class DashBoardController extends AbstractController
 
     private function findPendingProcess()
     {
-        $processRepositories = [TarotProcess::class, CoffeeProcess::class, DreamProcess::class, CloudProcess::class];
+        $processRepositories = [TarotProcess::class, CoffeeProcess::class, DreamProcess::class, CloudProcess::class, EventProcess::class];
 
         foreach ($processRepositories as $repository) {
             $process = $this->entityManager
