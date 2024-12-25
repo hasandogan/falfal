@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\CloudProcess;
 use App\Entity\CoffeeProcess;
 use App\Entity\DreamProcess;
+use App\Entity\EventProcess;
 use App\Entity\TarotProcess;
 use App\Enums\TarotProcessEnum;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
@@ -46,7 +47,8 @@ class DashBoardController extends AbstractController
             $this->getFortuneDetails(TarotProcess::class, 'Tarot', 'tarot'),
             $this->getFortuneDetails(CoffeeProcess::class, 'Kahve Falı', 'coffee'),
             $this->getFortuneDetails(DreamProcess::class, 'Rüya Yorumu', 'dream'),
-            $this->getFortuneDetails(CloudProcess::class, 'Bulut Yorumu', 'cloud')
+            $this->getFortuneDetails(CloudProcess::class, 'Bulut Yorumu', 'cloud'),
+            $this->getFortuneDetails(EventProcess::class, 'Olay Yorumu', 'event')
         );
 
         usort($fortunes, fn($a, $b) => strtotime($b['date']) <=> strtotime($a['date']));
@@ -93,6 +95,7 @@ class DashBoardController extends AbstractController
             $process instanceof CoffeeProcess => 'Coffee',
             $process instanceof DreamProcess => 'Dream',
             $process instanceof CloudProcess => 'Cloud',
+            $process instanceof EventProcess => 'Event',
             default => 'Unknown',
         };
     }
