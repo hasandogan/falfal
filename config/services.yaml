@@ -8,16 +8,11 @@ parameters:
 
 services:
 
-    push_logger:
-        class: Psr\Log\LoggerInterface
-        factory: [ '@monolog.logger_factory', 'get' ]
-        arguments: [ 'push' ]
-
     App\Command\DreamFinishCommand:
         arguments:
             $kernel: '@kernel'
             $entityManager: '@doctrine.orm.entity_manager'
-            $logger: '@logger'
+            $logger: '@logger.default'
 
     app.jwt_manager:
         class: Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface
