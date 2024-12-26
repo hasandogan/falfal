@@ -8,6 +8,11 @@ parameters:
 
 services:
 
+    push_logger:
+        class: Psr\Log\LoggerInterface
+        factory: [ '@monolog.logger_factory', 'get' ]
+        arguments: [ 'push' ]
+
     app.jwt_manager:
         class: Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface
         public: false

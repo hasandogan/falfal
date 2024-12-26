@@ -26,15 +26,15 @@ class DreamFinishCommand extends Command
     private LoggerInterface $logger;
     private Logger $pushLogger;
 
-    public function __construct(EntityManagerInterface $entityManager, LoggerInterface $logger)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        LoggerInterface $logger,
+        LoggerInterface $pushLogger  // push kanalı için
+    ) {
         parent::__construct();
         $this->entityManager = $entityManager;
         $this->logger = $logger;
-
-        // Push bildirimleri için özel log
-        $this->pushLogger = new Logger('push_notifications');
-        $this->pushLogger->pushHandler(new StreamHandler('var/log/push_notifications.log', Logger::INFO));
+        $this->pushLogger = $pushLogger;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
