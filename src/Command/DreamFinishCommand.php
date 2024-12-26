@@ -13,6 +13,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Google\Auth\Credentials\ServiceAccountCredentials;
+
 
 #[AsCommand(name: 'dream:finish:status')]
 class DreamFinishCommand extends Command
@@ -23,10 +25,11 @@ class DreamFinishCommand extends Command
     private LoggerInterface $logger;
 
     public function __construct(
-        KernelInterface $kernel,
+        KernelInterface        $kernel,
         EntityManagerInterface $entityManager,
-        LoggerInterface $logger,
-    ) {
+        LoggerInterface        $logger,
+    )
+    {
         $this->kernel = $kernel;
         $this->entityManager = $entityManager;
         $this->logger = $logger;
@@ -47,22 +50,15 @@ class DreamFinishCommand extends Command
                     $dream->setStatus(DreamProcessEnum::COMPLETED->value);
 
                     try {
-                        $response = $this->sendPushNotification(
+                         $this->sendPushNotification(
                             $dream->getFcmToken(),
                             'Rüyanızın Sırrını Çözdük!',
                             'Rüyanızın anlamı ortaya çıktı! Hemen okuyarak bilinçaltınızın size ne söylediğini keşfedin'
                         );
 
-                        $this->logger->info('Push bildirimi gönderildi', [
-                            'dream_id' => $dream->getId(),
-                            'token' => $dream->getFcmToken(),
-                            'response' => $response
-                        ]);
+
                     } catch (GuzzleException $e) {
-                        $this->logger->error('Push bildirimi hatası', [
-                            'dream_id' => $dream->getId(),
-                            'error' => $e->getMessage()
-                        ]);
+                        $this->logger->error('Push notification gönderme hatası', ['error' => $e->getMessage()]);
                     }
 
                     $this->entityManager->persist($dream);
@@ -76,26 +72,30 @@ class DreamFinishCommand extends Command
         }
     }
 
-    private function sendPushNotification(string $fcmToken, string $title, string $body): string
+    public function generateAccessToken()
     {
-        $client = new Client();
         $configFilePath = $this->kernel->getProjectDir() . '/config/keys/bumbi.json';
 
-        $tokenResponse = $client->post('https://oauth2.googleapis.com/token', [
-            'form_params' => [
-                'grant_type' => 'urn:ietf:params:oauth:grant-type:jwt-bearer',
-                'assertion' => file_get_contents($configFilePath)
-            ]
-        ]);
+        $credentials = new ServiceAccountCredentials(
+            ['https://www.googleapis.com/auth/firebase.messaging'],
+            $configFilePath
+        );
+        $token = $credentials->fetchAuthToken();
+        return $token['access_token'];
+    }
 
-        $accessToken = json_decode($tokenResponse->getBody())->access_token;
+    private function sendPushNotification(string $fcmToken, string $title, string $body)
+    {
+        $client = new Client();
+        $accessToken = $this->generateAccessToken();
+        $fcmEndpoint = "https://fcm.googleapis.com/v1/projects/falfal2-61e4e/messages:send";
 
-        $response = $client->post('https://fcm.googleapis.com/v1/projects/falfal2-61e4e/messages:send', [
+         $client->post($fcmEndpoint, [
             'headers' => [
                 'Authorization' => 'Bearer ' . $accessToken,
                 'Content-Type' => 'application/json',
             ],
-            'json' => [
+            'body' => [
                 'message' => [
                     'token' => $fcmToken,
                     'notification' => [
@@ -105,7 +105,5 @@ class DreamFinishCommand extends Command
                 ]
             ]
         ]);
-
-        return $response->getBody()->getContents();
     }
 }
