@@ -69,27 +69,33 @@ class DreamFinishCommand extends Command
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     function sendPushNotification($fcmToken, $title, $body) {
-        $client = new Client();
 
-        try {
-            $response = $client->post('https://fcm.googleapis.com/fcm/send', [
-                'headers' => [
-                    'Authorization' => 'key=BCTin6GZTxP338MqBRJ1mX_fwEuzn-fr21t_vThi6jt2BOZaL1Z9EXxQr30x81ZQDvSjzdK2KDtGPSQmIXqZ_8c',
-                    'Content-Type' => 'application/json',
-                ],
-                'json' => [
-                    'to' => $fcmToken,
+        // Access token alma
+        $client = new Client();
+        $response = $client->post('https://oauth2.googleapis.com/token', [
+            'form_params' => [
+                'grant_type' => 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+                'assertion' => file_get_contents(getenv('GOOGLE_APPLICATION_CREDENTIALS_BUMBI'))
+            ]
+        ]);
+
+        $accessToken = json_decode($response->getBody())->access_token;
+
+        // Bildirim gönderme
+        return $client->post('https://fcm.googleapis.com/v1/projects/falfal2-61e4e/messages:send', [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $accessToken,
+                'Content-Type' => 'application/json',
+            ],
+            'json' => [
+                'message' => [
+                    'token' => $fcmToken,
                     'notification' => [
                         'title' => $title,
-                        'body' => $body,
-                        'sound' => 'default'
+                        'body' => $body
                     ]
                 ]
-            ]);
-
-            return $response->getBody()->getContents();
-        } catch (\Exception $e) {
-            return $e->getMessage();
-        }
+            ]
+        ]);
     }
 }
