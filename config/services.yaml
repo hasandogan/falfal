@@ -7,13 +7,6 @@ parameters:
     OPENAI_API_KEY: '%env(OPENAI_API_KEY)%'
 
 services:
-
-    App\Command\DreamFinishCommand:
-        arguments:
-            $kernel: '@kernel'
-            $entityManager: '@doctrine.orm.entity_manager'
-            $logger: '@logger.default'
-
     app.jwt_manager:
         class: Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface
         public: false
