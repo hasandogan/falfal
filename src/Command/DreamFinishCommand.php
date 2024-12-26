@@ -12,14 +12,21 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 #[AsCommand(name: 'dream:finish:status')]
 class DreamFinishCommand extends Command
 {
+
+    private KernelInterface $kernel;
+
     public function __construct(
+        KernelInterface $kernel,
         private EntityManagerInterface $entityManager,
         private LoggerInterface $logger,
     ) {
+        $this->kernel = $kernel;
+
         parent::__construct();
     }
 
@@ -69,11 +76,12 @@ class DreamFinishCommand extends Command
     private function sendPushNotification(string $fcmToken, string $title, string $body): string
     {
         $client = new Client();
+        $configFilePath = $this->kernel->getProjectDir() . '/config/keys/bumbi.json';
 
         $tokenResponse = $client->post('https://oauth2.googleapis.com/token', [
             'form_params' => [
                 'grant_type' => 'urn:ietf:params:oauth:grant-type:jwt-bearer',
-                'assertion' => file_get_contents(getenv('GOOGLE_APPLICATION_CREDENTIALS_BUMBI'))
+                'assertion' => file_get_contents($configFilePath)
             ]
         ]);
 
