@@ -56,7 +56,6 @@ class DreamFinishCommand extends Command
                             'Rüyanızın anlamı ortaya çıktı! Hemen okuyarak bilinçaltınızın size ne söylediğini keşfedin'
                         );
 
-
                     } catch (GuzzleException $e) {
                         $this->logger->error('Push notification gönderme hatası', ['error' => $e->getMessage()]);
                     }
@@ -90,12 +89,12 @@ class DreamFinishCommand extends Command
         $accessToken = $this->generateAccessToken();
         $fcmEndpoint = "https://fcm.googleapis.com/v1/projects/falfal2-61e4e/messages:send";
 
-         $client->post($fcmEndpoint, [
+        $client->post($fcmEndpoint, [
             'headers' => [
                 'Authorization' => 'Bearer ' . $accessToken,
                 'Content-Type' => 'application/json',
             ],
-            'body' => [
+            'json' => [
                 'message' => [
                     'token' => $fcmToken,
                     'notification' => [
@@ -105,5 +104,6 @@ class DreamFinishCommand extends Command
                 ]
             ]
         ]);
+
     }
 }
