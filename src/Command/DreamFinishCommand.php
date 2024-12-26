@@ -22,8 +22,8 @@ class DreamFinishCommand extends Command
 
     public function __construct(
         KernelInterface $kernel,
-        private EntityManagerInterface $entityManager,
-        private LoggerInterface $logger,
+        EntityManagerInterface $entityManager,
+        LoggerInterface $logger,
     ) {
         $this->kernel = $kernel;
 
