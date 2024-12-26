@@ -43,6 +43,9 @@ class DreamProcess
     #[ORM\Column(name: "psychologist", type: "text", nullable: true)]
     private string $psychologist;
 
+    #[ORM\Column(name: "fcmToken", type: "text", nullable: true)]
+    private string $fcmToken;
+
     #[ORM\Column(name: "created_at", type: Types::DATETIME_MUTABLE, nullable: true)]
     private \DateTime $createdAt;
 
@@ -152,16 +155,20 @@ class DreamProcess
         $this->psychologist = $psychologist;
     }
 
+    public function getFcmToken(): string
+    {
+        return $this->fcmToken;
+    }
+
+    public function setFcmToken(string $fcmToken): void
+    {
+        $this->fcmToken = $fcmToken;
+    }
 
     #[ORM\PreUpdate]
     public function setUpdatedAtValue(): void
     {
         $this->updatedAt = new \DateTime();
-    }
-
-    public function getProcesses(): Collection
-    {
-        return $this->processes;
     }
 
     /**

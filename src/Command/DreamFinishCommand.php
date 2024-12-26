@@ -6,12 +6,14 @@ use App\Entity\DreamProcess;
 use App\Enums\DreamProcessEnum;
 use App\Enums\TarotProcessEnum;
 use Doctrine\ORM\EntityManagerInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use GuzzleHttp\Client;
 
 #[AsCommand(
     name: 'dream:finish:status',
@@ -32,6 +34,9 @@ class DreamFinishCommand extends Command
         $this->logger = $logger;
     }
 
+    /**
+     * @throws GuzzleException
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
@@ -48,9 +53,43 @@ class DreamFinishCommand extends Command
                 $dream->setStatus(DreamProcessEnum::COMPLETED->value);
                 $this->entityManager->persist($dream);
                 $this->entityManager->flush();
+                 $this->sendPushNotification($dream->getFcmToken(), 'Rüyanızın Sırrını Çözdük!', 'Rüyanızın anlamı ortaya çıktı! 
+                 Hemen okuyarak bilinçaltınızın size ne söylediğini keşfedin');
+
             }
         }
         return Command::SUCCESS;
     }
 
+    /**
+     * @param $fcmToken
+     * @param $title
+     * @param $body
+     * @return string
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    function sendPushNotification($fcmToken, $title, $body) {
+        $client = new Client();
+
+        try {
+            $response = $client->post('https://fcm.googleapis.com/fcm/send', [
+                'headers' => [
+                    'Authorization' => 'key=BCTin6GZTxP338MqBRJ1mX_fwEuzn-fr21t_vThi6jt2BOZaL1Z9EXxQr30x81ZQDvSjzdK2KDtGPSQmIXqZ_8c',
+                    'Content-Type' => 'application/json',
+                ],
+                'json' => [
+                    'to' => $fcmToken,
+                    'notification' => [
+                        'title' => $title,
+                        'body' => $body,
+                        'sound' => 'default'
+                    ]
+                ]
+            ]);
+
+            return $response->getBody()->getContents();
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
 }
