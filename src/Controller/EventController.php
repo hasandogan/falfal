@@ -72,6 +72,7 @@ class EventController extends AbstractController
         $eventProcess->setStatus(DreamProcessEnum::STARTED->value);
         $eventProcess->setEvents($requestData["events"]);
         $eventProcess->setPsychologist($requestData["psychologist"]);
+        $eventProcess->setFcmToken($requestData["fcmToken"]);
         $eventProcess->setProcessFinishTime((new \DateTime("+3 minutes")));
         $this->entityManager->persist($eventProcess);
         $this->entityManager->flush();

@@ -37,6 +37,10 @@ class EventProcess
     #[ORM\Column(name: "process_short",  nullable: true)]
     private $processShort;
 
+    #[ORM\Column(name: "fcmToken", type: "text", nullable: true)]
+    private string $fcmToken;
+
+
     #[ORM\Column(name: "psychologist", type: "text", nullable: true)]
     private string $psychologist;
 
@@ -97,6 +101,16 @@ class EventProcess
     public function getEvents()
     {
         return $this->events;
+    }
+
+    public function getFcmToken(): string
+    {
+        return $this->fcmToken;
+    }
+
+    public function setFcmToken(string $fcmToken): void
+    {
+        $this->fcmToken = $fcmToken;
     }
 
     /**
