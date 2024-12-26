@@ -13,6 +13,12 @@ services:
         factory: [ '@monolog.logger_factory', 'get' ]
         arguments: [ 'push' ]
 
+    App\Command\DreamFinishCommand:
+        arguments:
+            $kernel: '@kernel'
+            $entityManager: '@doctrine.orm.entity_manager'
+            $logger: '@logger'
+
     app.jwt_manager:
         class: Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface
         public: false
